@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  overflow-x: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+
+@keyframes slide-br {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(50px) translateX(50px);
+  }
+}
+
+@keyframes slide-bl {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(100px) translateX(-100px);
+  }
+}
+
+@media (max-width: 767px) {
+  .responsive-image {
+    bottom: 30%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 767px) {
+  .responsive-image2 {
+    bottom: 50%;
+    height: 60vh;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-image2 {
+    top: -40%;
+  }
+}
+
+@media (max-width: 767px){
+  .frameImage{
+    height: 60vh;
+    bottom: 0%;
+    left: 10%;
+  }
+}

@@ -2,11 +2,12 @@ import { styled } from "@mui/system";
 
 export const Wrapper = styled("div")({
   display: "flex",
+  height: "100vh",
+  width: "100vw"
 });
 
 export const Container = styled("div")({
-  border: "1px solid red",
-  width: "100%"
+  width: "100%",
 })
 
 export const SidebarContainer = styled("div")({

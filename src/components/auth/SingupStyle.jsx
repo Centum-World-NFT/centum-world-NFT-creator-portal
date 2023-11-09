@@ -1,20 +1,22 @@
-import { TextField } from "@mui/material";
-import {styled} from "@mui/system";
+import styled from "@emotion/styled";
+import { Dialog, TextField } from "@mui/material";
 
-export const CssTextField = styled(TextField)({
-    "& label.Mui-focused": {
-        color: "white"
-      },
-  
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-          borderColor: "blue"
-        },
-        "&:hover fieldset": {
-          borderColor: "white"
-        },
-        "&.Mui-focused fieldset": {
-          borderColor: "blue"
-        }
-      }
-})
+export const SignUpContainer = styled(Dialog)({
+  ".css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+    borderRadius: "10px",
+    width: "60%",
+    height: "60%",
+  },
+});
+
+export const Form = styled("form")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
+
+export const Input = styled(TextField)(({ theme }) => ({
+  width: "70%",
+  margin: "10px 0", 
+}));
+

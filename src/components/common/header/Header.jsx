@@ -29,7 +29,7 @@ const Header = () => {
         </HeaderLeftContainer>
         <HeaderRightContainer>
           <Button variant="outlined" onClick={handleOpen}>
-            Creator Sign in
+            <SignUp/>
           </Button>
         </HeaderRightContainer>
       </HeaderWrapper>

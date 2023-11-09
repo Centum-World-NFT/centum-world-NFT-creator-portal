@@ -1,5 +1,4 @@
-import { Wrapper } from "./CreaterDashboardStyle";
-import OverviewSection from "../OverviewSection/OverviewSection";
+import { Wrapper, Container, SidebarContainer } from "./CreaterDashboardStyle";
 import { Outlet } from "react-router";
 import CreatorSidebar from "../../components/common/sidebar/CreatorSidebar";
 import { Box } from "@mui/material";
@@ -7,12 +6,12 @@ import { Box } from "@mui/material";
 const CreaterDashboard = () => {
   return (
     <Wrapper>
-      <Box>
+      <SidebarContainer>
         <CreatorSidebar />
-      </Box>
-      <Box>
+      </SidebarContainer>
+      <Container>
         <Outlet />
-      </Box>
+      </Container>
     </Wrapper>
   );
 };

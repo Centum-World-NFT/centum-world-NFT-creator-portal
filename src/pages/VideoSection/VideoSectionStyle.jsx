@@ -3,7 +3,6 @@ import { Typography } from "@mui/material";
 
 export const Wrapper = styled("div")({
     padding:"40px",
-    width:"80vw"
 })
 
 export const VodeoHeader = styled("div")({

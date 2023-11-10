@@ -9,7 +9,7 @@ import {
 } from "./VideoSectionStyle";
 import { FormControl, OutlinedInput } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-
+import image from "../../utils/cardimages/image.jpg";
 
 
 // ===================
@@ -30,30 +30,27 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(id, name, calories, fat, carbs, protein) {
+function createData(id, name, subscribe, like, view, date) {
   return {
     id,
     name,
-    calories,
-    fat,
-    carbs,
-    protein,
+    subscribe,
+    like,
+    view,
+    date,
   };
 }
 
 const rows = [
-  createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-  createData(2, 'Donut', 452, 25.0, 51, 4.9),
-  createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-  createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-  createData(6, 'Honeycomb', 408, 3.2, 87, 6.5)
+  createData(1, 'Cupcake', 305, 3.7, 67,  '12/12/2023'),
+  createData(2, 'Donut', 452, 25.0, 51, '12/12/2023'),
+  createData(3,  'Eclair', 262, 16.0, 24, '12/12/2023'),
+  createData(4,  'Frozen yoghurt', 159, 6.0, 24, '12/12/2023'),
+  createData(5,   'Gingerbread', 356, 16.0, 49, '12/12/2023'),
+  createData(6,  'Honeycomb', 408, 3.2, 87,'12/12/2023')
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -91,25 +88,25 @@ const headCells = [
     label: 'Title',
   },
   {
-    id: 'calories',
+    id: 'subscribe',
     numeric: true,
     disablePadding: false,
     label: 'Subscriber',
   },
   {
-    id: 'fat',
+    id: 'view',
     numeric: true,
     disablePadding: false,
     label: 'Views',
   },
   {
-    id: 'carbs',
+    id: 'like',
     numeric: true,
     disablePadding: false,
     label: 'Like',
   },
   {
-    id: 'protein',
+    id: 'date',
     numeric: true,
     disablePadding: false,
     label: 'Upload date',
@@ -355,13 +352,15 @@ const VideoSection = () => {
                         id={labelId}
                         scope="row"
                         padding="none"
+                        style={{display:"flex", alignItems:"center"}}
                       >
+                        <img src={image} style={{ width: '53px', height: '53px', borderRadius:'50%', marginRight:'10px' }} />
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.subscribe}</TableCell>
+                      <TableCell align="right">{row.like}</TableCell>
+                      <TableCell align="right">{row.view}</TableCell>
+                      <TableCell align="right">{row.date}</TableCell>
                     </TableRow>
                   );
                 })}

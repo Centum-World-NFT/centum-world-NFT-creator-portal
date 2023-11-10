@@ -23,7 +23,7 @@ const navItems = [
   },
   {
     item: "Account",
-    path: "/account",
+    path: "/creatorDashboard/account",
     icon: <Person2RoundedIcon />,
   },
   {

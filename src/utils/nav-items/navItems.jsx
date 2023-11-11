@@ -28,7 +28,7 @@ const navItems = [
   },
   {
     item: "Upload Content",
-    path: "/uploadVideo",
+    path: "/creatorDashboard/uploadVideo",
     icon: <UploadRoundedIcon />,
   },
   {

@@ -12,22 +12,48 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DialogTitle,
   DialogWrapper,
   InputFields,
   PasswordField,
 } from "./SingupStyle";
-import { HideEyeButton, ShowEyeButton } from "../../utils/icons";
+import { signUp } from "../../redux/slices/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const Singup = ({ open, handleClose }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [fieldValues, setFieldValues] = useState({
+    firstName: "",
+    surName: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const authState = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (authState.data) {
+      navigate("/creatorDashboard");
+    } else {
+      navigate("/");
+    }
+  }, [authState.data]);
+
+  const dispatch = useDispatch();
+
+  const handleFieldChange = (e) => {
+    setFieldValues((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    dispatch(signUp(fieldValues));
   };
 
   return (
@@ -54,6 +80,8 @@ const Singup = ({ open, handleClose }) => {
                 type="text"
                 fullWidth
                 variant="outlined"
+                name="firstName"
+                onChange={handleFieldChange}
               />
               <InputFields
                 autoFocus
@@ -62,6 +90,8 @@ const Singup = ({ open, handleClose }) => {
                 type="text"
                 fullWidth
                 variant="outlined"
+                name="surName"
+                onChange={handleFieldChange}
               />
             </Box>
             <InputFields
@@ -72,6 +102,8 @@ const Singup = ({ open, handleClose }) => {
               type="phone"
               variant="outlined"
               fullWidth
+              name="phone"
+              onChange={handleFieldChange}
             />
             <InputFields
               autoFocus
@@ -81,6 +113,8 @@ const Singup = ({ open, handleClose }) => {
               type="email"
               fullWidth
               variant="outlined"
+              name="email"
+              onChange={handleFieldChange}
             />
             <PasswordField
               autoFocus
@@ -89,23 +123,14 @@ const Singup = ({ open, handleClose }) => {
               placeholder="*******"
               type="password"
               fullWidth
+              name="password"
               variant="outlined"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {showPassword ? <ShowEyeButton /> : <HideEyeButton />}
-                  </IconButton>
-                </InputAdornment>
-              }
+              onChange={handleFieldChange}
             ></PasswordField>
           </DialogContent>
           <DialogActions>
             <Typography>Already Have an account ? Sign in</Typography>
-            <Button onClick={handleClose} variant="outlined">
+            <Button onClick={handleSubmit} variant="outlined">
               Sign Up
             </Button>
           </DialogActions>

@@ -9,7 +9,7 @@ import {
 import CentumWorldLogo from "@/assets/png/centum-logo.png";
 import { Button } from "@mui/material";
 import { useState } from "react";
-import SignUp from "../../auth/Singup";
+import Singup from "../../auth/Singup";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -31,6 +31,7 @@ const Header = () => {
           <Button variant="outlined" onClick={handleOpen}>
             Creator Sign in
           </Button>
+          <Singup open={open} handleClose={handleClose}/>
         </HeaderRightContainer>
       </HeaderWrapper>
     </>

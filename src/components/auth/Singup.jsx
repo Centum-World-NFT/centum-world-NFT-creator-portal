@@ -1,15 +1,7 @@
 import {
   Box,
-  Button,
-  Dialog,
   DialogActions,
   DialogContent,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -19,7 +11,7 @@ import {
   InputFields,
   PasswordField,
 } from "./SingupStyle";
-import { signUp } from "../../redux/slices/auth";
+import { signUp } from "@/redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -37,7 +29,7 @@ const Singup = ({ open, handleClose }) => {
 
   useEffect(() => {
     if (authState.data) {
-      navigate("/creatorDashboard");
+      navigate("/creatorDashboard/overview");
     } else {
       navigate("/");
     }

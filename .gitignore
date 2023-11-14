@@ -25,3 +25,5 @@ dist-ssr
 
 
 .env
+
+baseUrl.js

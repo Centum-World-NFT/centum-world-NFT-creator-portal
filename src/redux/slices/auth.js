@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { signUpAPI } from "../apis/signUp";
 
 export const signUp = createAsyncThunk("auth", async (payload) => {
   console.log(payload);
   try {
-    const response = await axios.post(
-      "http://localhost:8000/api/v1/creator/signup-creator",
-      payload
-    );
-    return response.data
+    const response = await signUpAPI(payload);
+    return response.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -27,7 +24,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.data = action.payload;
       state.isError = false;
-      localStorage.setItem("access_token", action.payload.token)
+      localStorage.setItem("access_token", action.payload.token);
     });
     builder.addCase(signUp.pending, (state, action) => {
       state.isLoading = true;
@@ -39,6 +36,8 @@ const authSlice = createSlice({
       console.log("Error", action.error.message);
       state.isError = true;
     });
+
+    // login
   },
 });
 

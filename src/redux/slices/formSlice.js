@@ -7,6 +7,7 @@ const formSlice = createSlice({
     uploadVideo: null,
     videoTitle: "",
     videoDescription: "",
+    uploadPdf: null,
   },
   reducers: {
     setUploadThumbnail: (state, action) => {
@@ -22,6 +23,9 @@ const formSlice = createSlice({
     setVideoDescription: (state, action) => {
       state.videoDescription = action.payload;
     },
+    setUploadPdf: (state, action) => {
+      state.uploadPdf = action.payload;
+    },
   },
 });
 
@@ -30,5 +34,6 @@ export const {
   setUploadVideo,
   setVideoTitle,
   setVideoDescription,
+  setUploadPdf,
 } = formSlice.actions;
 export default formSlice.reducer;

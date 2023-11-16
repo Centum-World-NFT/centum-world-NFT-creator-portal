@@ -4,7 +4,7 @@ import {
   VisuallyHiddenInput,
   Wrapper,
 } from "./FirstFormStyle";
-import { Alert, Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { UploadFileRounded } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -29,7 +29,6 @@ const FirstForm = () => {
     if (file) {
       const videoElement = document.createElement("video");
       videoElement.src = URL.createObjectURL(file);
-      console.log(videoElement.src);
 
       videoElement.onloadedmetadata = () => {
         const { duration } = videoElement;

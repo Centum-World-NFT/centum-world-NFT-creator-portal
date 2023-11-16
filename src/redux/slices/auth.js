@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { signUpAPI } from "../apis/signUp";
 
 export const signUp = createAsyncThunk("auth", async (payload) => {
-  console.log(payload);
   try {
     const response = await signUpAPI(payload);
     return response.data;

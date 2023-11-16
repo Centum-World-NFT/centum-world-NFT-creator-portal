@@ -1,19 +1,10 @@
-import React, { useState } from "react";
 import {
   DescriptionBox,
   UploadContainer,
   VisuallyHiddenInput,
   Wrapper,
 } from "./FirstFormStyle";
-import {
-  Box,
-  Button,
-  FormControl,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, TextField, Typography } from "@mui/material";
 import { UploadFileRounded } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,6 +13,7 @@ import {
   setVideoDescription,
   setVideoTitle,
 } from "../../../redux/slices/formSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const FirstForm = () => {
   const dispatch = useDispatch();
@@ -34,7 +26,31 @@ const FirstForm = () => {
 
   const handleVideoChange = (event) => {
     const file = event.target.files[0];
-    dispatch(setUploadVideo(URL.createObjectURL(file)));
+    if (file) {
+      const videoElement = document.createElement("video");
+      videoElement.src = URL.createObjectURL(file);
+      console.log(videoElement.src);
+
+      videoElement.onloadedmetadata = () => {
+        const { duration } = videoElement;
+        if (duration >= 28 * 60 && duration <= 31 * 60) {
+          dispatch(setUploadVideo(videoElement.src));
+        } else {
+          toast("Please upload video length of 28 to 30 minutes", {
+            position: "top-right",
+            style: {
+              border: "1px solid #d90429",
+              padding: "16px",
+              color: "#d90429",
+            },
+            iconTheme: {
+              primary: "#d90429",
+              secondary: "#FFFAEE",
+            },
+          });
+        }
+      };
+    }
   };
 
   const handleVideoTitleChange = (event) => {
@@ -47,6 +63,7 @@ const FirstForm = () => {
 
   return (
     <>
+      <Toaster />
       <Wrapper>
         <UploadContainer>
           {form.uploadThumbnail && <img src={form.uploadThumbnail} />}

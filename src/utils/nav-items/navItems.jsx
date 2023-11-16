@@ -18,7 +18,7 @@ const navItems = [
   },
   {
     item: "Subscribers",
-    path: "/subscribers",
+    path: "/creatorDashboard/subscribers",
     icon: <PeopleAltRoundedIcon />,
   },
   {

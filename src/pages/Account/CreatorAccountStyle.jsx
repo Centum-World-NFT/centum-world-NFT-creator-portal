@@ -1,9 +1,16 @@
 import styled from "@emotion/styled";
-import { Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 
 export const Wrapper = styled("div")({
+  width:"100%",
   padding: "40px",
 });
+
+export const MainDivConatainer = styled("div")({
+  display:"flex",
+  padding:"15px",
+  width:"100%"
+})
 
 export const AccountHeader = styled(Typography)({
   fontSize: "30px",
@@ -12,102 +19,91 @@ export const AccountHeader = styled(Typography)({
   marginBottom: "15px",
 });
 
-export const AccountContainer = styled("div")({
+export const ProfilePicCard = styled(Card)({
+  width: "max-content",
+  padding: "20px 10px 20px 10px",
   display: "flex",
-  gap: "20px",
-});
+  justifyContent:"center",
+  height: "150px",
+  width: "30%",
+  marginRight:"30px",
+  boxShadow:
+    "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
 
-export const ProfileContainer = styled("div")({
+  ":hover": {
+    transform: "translateY(-5px)",
+    transition: "all 200ms ease-in-out",
+  },
+})
+
+export const ProfileAndAboutme = styled("div")({
+  display:"flex",
+  flexWrap:"wrap",
+  flexDirection:"column",
+  padding:"5px",
+  width:"70%"
+})
+
+export const ProfileDetails = styled(Card)({
+  width: "max-content",
+  padding: "20px 10px 20px 10px",
+  display: "column",
+  height: "250px",
+  width: "70%",
+  marginBottom:"10px",
+  boxShadow:
+    "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
+
+  ":hover": {
+    transform: "translateY(-5px)",
+    transition: "all 200ms ease-in-out",
+  },
+})
+
+export const Aboutme = styled(Card)({
+  width: "max-content",
+  padding: "20px 10px 20px 10px",
   display: "flex",
-  alignItems: "center",
-  flexWrap: "wrap",
-  flexDirection: "column",
-  height: "200px",
-  width: "300px",
-  background: "#fefefe",
-  boxShadow: `
-    3px 3px 5px 0px rgba(0, 0, 0, 0.1), /* top left */
-    -3px 3px 5px 0px rgba(0, 0, 0, 0.1), /* top right */
-    0px 3px 5px 0px rgba(0, 0, 0, 0.06), /* bottom left */
-    0px -3px 5px 0px rgba(0, 0, 0, 0.06) /* bottom right */
-  `,
-  borderRadius: "10px",
-  padding: "20px 30px 20px 30px",
-});
+  height: "auto",
+  width: "70%",
+  boxShadow:
+    "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
 
-export const ProfilePicture = styled("div")({});
+  ":hover": {
+    transform: "translateY(-5px)",
+    transition: "all 200ms ease-in-out",
+  },
+})
 
-export const CreatorName = styled(Typography)({
-  fontSize: "24px",
-  fontFamily: "'Poppins', sans-serif",
-  fontWeight: "600",
-});
+export const ProfilePic = styled("div")({
+  
+})
 
-export const CreatorAddress = styled(Typography)({
-  fontSize: "14px",
-  fontFamily: "'Poppins', sans-serif",
-  color: "#7d838e",
-});
+export const CardContantDiv = styled("div")({
+  display:"flex",
+  flexWrap:"wrap",
+  flexDirection:"column",
+  alignItems:"center"
+})
 
-export const Line = styled("div")({
-  border: "1px solid #f2f4f7",
-  width: "100%",
-  marginTop: "20px",
-});
+export const ProfileHeading = styled("div")({
+  display:"flex",
+  justifyContent:"start",
+  flexWrap:"wrap",
+  flexDirection:"column"
+})
 
-export const UploadPicture = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: "5px",
-});
+export const FormDiv = styled("div")({
 
-export const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
-export const FormContainer = styled("div")({
-  background: "#fefefe",
-  boxShadow: `
-    3px 3px 5px 0px rgba(0, 0, 0, 0.1), /* top left */
-    -3px 3px 5px 0px rgba(0, 0, 0, 0.1), /* top right */
-    0px 3px 5px 0px rgba(0, 0, 0, 0.06), /* bottom left */
-    0px -3px 5px 0px rgba(0, 0, 0, 0.06) /* bottom right */
-  `,
-  borderRadius: "10px",
-  padding: "20px 30px 20px 30px",
-});
-
-export const FormHeading = styled("div")({
-  flexWrap: "wrap",
-  flexDirection: "column",
-  fontSize: "20px",
-  fontFamily: "'Poppins', sans-serif",
-  fontWeight: "500",
-});
-
-export const FormInformation = styled(Typography)({
-  fontSize: "14px",
-  color: "#828792",
-  marginBottom: "10px",
-});
-
-export const FormFieldContainer = styled("div")({
-  position: "relative",
-});
+})
 
 export const FormField = styled("div")({
-  margin: "2px",
-});
+  display:"flex",
+  justifyContent:"space-between",
+  marginBottom:"15px"
+})
 
-export const SubmitForm = styled("div")({
-  float:"right",
-});
+export const SubmitButton = styled("div")({
+  display:"flex",
+  justifyContent:"center"
+})

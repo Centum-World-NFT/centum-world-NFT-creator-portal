@@ -1,176 +1,147 @@
 import React from "react";
 import {
-  AccountContainer,
+  Aboutme,
   AccountHeader,
-  CreatorAddress,
-  CreatorName,
-  FormContainer,
+  CardContantDiv,
+  FormDiv,
   FormField,
-  FormFieldContainer,
-  FormHeading,
-  FormInformation,
-  Line,
-  ProfileContainer,
-  ProfilePicture,
-  SubmitForm,
-  UploadPicture,
-  VisuallyHiddenInput,
+  MainDivConatainer,
+  ProfileAndAboutme,
+  ProfileDetails,
+  ProfileHeading,
+  ProfilePic,
+  ProfilePicCard,
+  SubmitButton,
   Wrapper,
 } from "./CreatorAccountStyle";
 import image from "../../utils/cardimages/image.jpg";
-import { Box, Button, Grid, TextField } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Button, TextField, Typography } from "@mui/material";
+import { EditButton, SaveAIcon, UploadIcon } from "../../utils/icons";
+import styled from "@emotion/styled";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const CreatorAccount = () => {
   return (
     <Wrapper>
       <AccountHeader>Account</AccountHeader>
-      <AccountContainer>
-        <ProfileContainer>
-          <ProfilePicture>
-            <img
-              src={image}
-              alt="profile"
-              style={{ width: "60px", height: "60px", borderRadius: "50%" }}
-            />
-          </ProfilePicture>
-          <CreatorName>Raju Balmuchu</CreatorName>
-          <CreatorAddress>Chisbasa Jharkhand</CreatorAddress>
-          <Line></Line>
-          <UploadPicture>
+      <MainDivConatainer>
+        <ProfilePicCard>
+          <CardContantDiv>
+            <ProfilePic>
+              <img
+                src={image}
+                width={50}
+                height={50}
+                alt="profile pic"
+                style={{ borderRadius: "50%" }}
+              />
+            </ProfilePic>
+
+            <Typography
+              style={{
+                fontSize: "20px",
+                fontWeight: "600",
+                marginBottom: "15px",
+              }}
+            >
+              Raju Balmuchu
+            </Typography>
+
             <Button
               component="label"
               variant="contained"
-              startIcon={<CloudUploadIcon />}
+              startIcon={<UploadIcon />}
             >
               Upload picture
               <VisuallyHiddenInput type="file" />
             </Button>
-          </UploadPicture>
-        </ProfileContainer>
+          </CardContantDiv>
+        </ProfilePicCard>
 
-        <FormContainer>
-          <FormHeading>Profile</FormHeading>
-          <FormInformation>This information can be edited</FormInformation>
-          <FormFieldContainer>
-            <FormField>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between" // Adjust this based on your layout needs
-              >
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "40ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
+        <ProfileAndAboutme>
+          <ProfileDetails>
+            <ProfileHeading>
+              <Typography style={{ fontSize: "24px", fontWeight: "600" }}>
+                Profile
+              </Typography>
+              <Typography>This frofile can be edited</Typography>
+            </ProfileHeading>
+            <FormDiv>
+              <FormField>
+                <TextField
+                  style={{ width: "45%" }}
+                  id="outlined-basic"
+                  placeholder="First name"
+                  variant="outlined"
+                />
+                <TextField
+                  style={{ width: "45%" }}
+                  id="outlined-basic"
+                  placeholder="Last name"
+                  variant="outlined"
+                />
+              </FormField>
+              <FormField>
+                <TextField
+                  style={{ width: "45%" }}
+                  id="outlined-basic"
+                  placeholder="Email"
+                  variant="outlined"
+                />
+                <TextField
+                  style={{ width: "45%" }}
+                  id="outlined-basic"
+                  placeholder="Phone no"
+                  variant="outlined"
+                />
+              </FormField>
+              <SubmitButton>
+                <Button
+                  component="label"
+                  variant="contained"
+                  startIcon={<EditButton />}
                 >
-                  <TextField
-                    id="outlined-basic-1"
-                    label="First name"
-                    variant="outlined"
-                  />
-                </Box>
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "40ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <TextField
-                    id="outlined-basic-2"
-                    label="Last name"
-                    variant="outlined"
-                  />
-                </Box>
-              </Box>
-            </FormField>
+                  Edit details
+                </Button>
+              </SubmitButton>
+            </FormDiv>
+          </ProfileDetails>
+          <Aboutme>
+            <ProfileHeading>
+              <Typography style={{ fontSize: "24px", fontWeight: "600" }}>
+                About me
+              </Typography>
 
-            <FormField>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between" // Adjust this based on your layout needs
-              >
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "40ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
+              <TextField
+                id="outlined-textarea"
+                placeholder="Enter about here"
+                multiline
+                sx={{ m: 1, width: '50ch' }}
+              />
+              <SubmitButton>
+                <Button
+                  component="label"
+                  variant="contained"
+                  startIcon={<SaveAIcon />}
                 >
-                  <TextField
-                    id="outlined-basic-1"
-                    label="Email"
-                    variant="outlined"
-                    type="email"
-                  />
-                </Box>
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "40ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <TextField
-                    id="outlined-basic-2"
-                    label="Phone Number"
-                    variant="outlined"
-                    type="tel"
-                  />
-                </Box>
-              </Box>
-            </FormField>
-
-            <FormField>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between" // Adjust this based on your layout needs
-              >
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "40ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <TextField
-                    id="outlined-basic-1"
-                    label="Country"
-                    variant="outlined"
-                  />
-                </Box>
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "40ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <TextField
-                    id="outlined-basic-2"
-                    label="Select state"
-                    variant="outlined"
-                  />
-                </Box>
-              </Box>
-            </FormField>
-          </FormFieldContainer>
-          <SubmitForm>
-              <Button variant="contained">Save details</Button>
-            </SubmitForm>
-        </FormContainer>
-      </AccountContainer>
+                  Save me
+                </Button>
+              </SubmitButton>
+            </ProfileHeading>
+          </Aboutme>
+        </ProfileAndAboutme>
+      </MainDivConatainer>
     </Wrapper>
   );
 };

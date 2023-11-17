@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Filtercard,
   SubscriberCard,
@@ -7,13 +7,23 @@ import {
   SubscriberHeading,
   Warrper,
 } from "./SubscriberStyle";
-import { Button, Divider, InputAdornment, TextField, Typography } from "@mui/material";
+import { Button, Divider, TextField, Typography } from "@mui/material";
 import image from "../../utils/cardimages/image.jpg";
 import { FilterIcon, INR } from "../../utils/icons";
 import BlockIcon from "@mui/icons-material/Block";
-import { AccountCircle } from "@mui/icons-material";
+import BlockModal from "../../components/common/Modal/BlockModal";
 
 const Subscriber = () => {
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const handleButtonClick = () => {
+      setModalOpen(true);
+    };
+  
+    const handleCloseModal = () => {
+      setModalOpen(false);
+    };
+  
   return (
     <Warrper>
       <Typography
@@ -22,12 +32,12 @@ const Subscriber = () => {
         Our subscribers
       </Typography>
       <Filtercard>
-        <FilterIcon/>
+        <FilterIcon />
         <TextField
           id="input-with-icon-textfield"
           placeholder="Search by subscriber"
           variant="standard"
-          style={{marginLeft:"10px"}}
+          style={{ marginLeft: "10px" }}
         />
       </Filtercard>
       <SubscriberContainer>
@@ -71,6 +81,7 @@ const Subscriber = () => {
             variant="contained"
             startIcon={<BlockIcon />}
             fullWidth
+            onClick={handleButtonClick}
           >
             Block
           </Button>
@@ -116,6 +127,7 @@ const Subscriber = () => {
             variant="contained"
             startIcon={<BlockIcon />}
             fullWidth
+            onClick={handleButtonClick}
           >
             Block
           </Button>
@@ -161,6 +173,7 @@ const Subscriber = () => {
             variant="contained"
             startIcon={<BlockIcon />}
             fullWidth
+            onClick={handleButtonClick}
           >
             Block
           </Button>
@@ -207,6 +220,7 @@ const Subscriber = () => {
             variant="contained"
             startIcon={<BlockIcon />}
             fullWidth
+            onClick={handleButtonClick}
           >
             Block
           </Button>
@@ -252,6 +266,7 @@ const Subscriber = () => {
             variant="contained"
             startIcon={<BlockIcon />}
             fullWidth
+            onClick={handleButtonClick}
           >
             Block
           </Button>
@@ -302,6 +317,8 @@ const Subscriber = () => {
           </Button>
         </SubscriberCard>
       </SubscriberContainer>
+
+      <BlockModal isOpen={isModalOpen} handleClose={handleCloseModal} />
     </Warrper>
   );
 };

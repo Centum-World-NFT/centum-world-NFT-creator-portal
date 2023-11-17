@@ -12,7 +12,7 @@ import {
   InputFields,
   PasswordField,
 } from "./SingupStyle";
-import { signUp, signIn } from "@/redux/slices/auth"; // Assuming you have a signIn action
+import { signUp, signIn } from "@/redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -189,8 +189,8 @@ const Signup = ({ open, handleClose }) => {
           <DialogActions>
             <Typography>
               {isSignInMode
-                ? "Don't have an account? Sign up"
-                : "Already have an account? Sign in"}
+                ? "Don't have an account ?"
+                : "Already have an account ?"}
             </Typography>
             <Button onClick={handleToggleMode} variant="outlined">
               {isSignInMode ? "Sign Up" : "Sign In"}

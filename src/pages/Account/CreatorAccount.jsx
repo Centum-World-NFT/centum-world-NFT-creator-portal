@@ -75,7 +75,7 @@ const CreatorAccount = () => {
               <Typography style={{ fontSize: "24px", fontWeight: "600" }}>
                 Profile
               </Typography>
-              <Typography>This frofile can be edited</Typography>
+              <Typography>This profile can be edited</Typography>
             </ProfileHeading>
             <FormDiv>
               <FormField>

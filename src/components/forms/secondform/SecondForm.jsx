@@ -11,13 +11,7 @@ const SecondForm = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        dispatch(setUploadPdf(e.target.result));
-      };
-      fileReader.readAsDataURL(file);
-    }
+    dispatch(setUploadPdf(file))
   };
 
   return (
@@ -45,7 +39,7 @@ const SecondForm = () => {
         <>
           <iframe
             title="PDF Preview"
-            src={form.pdf}
+            src={URL.createObjectURL(form.pdf)}
             style={{ width: "100%", height: "600px" }}
           />
         </>

@@ -41,11 +41,11 @@ const SecondForm = () => {
           />
         </Button>
       </Box>
-      {form.uploadPdf && (
+      {form.pdf && (
         <>
           <iframe
             title="PDF Preview"
-            src={form.uploadPdf}
+            src={form.pdf}
             style={{ width: "100%", height: "600px" }}
           />
         </>

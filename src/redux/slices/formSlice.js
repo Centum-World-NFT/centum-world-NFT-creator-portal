@@ -3,28 +3,28 @@ import { createSlice } from "@reduxjs/toolkit";
 const formSlice = createSlice({
   name: "form",
   initialState: {
-    uploadThumbnail: null,
-    uploadVideo: null,
-    videoTitle: "",
-    videoDescription: "",
-    uploadPdf: null,
+    thumbnail: null,
+    video: null,
+    title: "",
+    description: "",
+    pdf: null,
   },
   reducers: {
     setUploadThumbnail: (state, action) => {
-      state.uploadThumbnail = action.payload;
+      state.thumbnail = action.payload;
     },
 
     setUploadVideo: (state, action) => {
-      state.uploadVideo = action.payload;
+      state.video = action.payload;
     },
     setVideoTitle: (state, action) => {
-      state.videoTitle = action.payload;
+      state.title = action.payload;
     },
     setVideoDescription: (state, action) => {
-      state.videoDescription = action.payload;
+      state.description = action.payload;
     },
     setUploadPdf: (state, action) => {
-      state.uploadPdf = action.payload;
+      state.pdf = action.payload;
     },
   },
 });

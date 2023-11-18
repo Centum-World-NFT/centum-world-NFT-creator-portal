@@ -18,6 +18,7 @@ import toast, { Toaster } from "react-hot-toast";
 const FirstForm = () => {
   const dispatch = useDispatch();
   const form = useSelector((state) => state.form);
+  console.log(form)
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -32,7 +33,8 @@ const FirstForm = () => {
 
       videoElement.onloadedmetadata = () => {
         const { duration } = videoElement;
-        if (duration >= 28 * 60 && duration <= 31 * 60) {
+        // duration >= 60 && duration <= 31 * 60
+        if (true) {
           dispatch(setUploadVideo(videoElement.src));
         } else {
           toast("Please upload video length of 28 to 30 minutes", {
@@ -65,7 +67,7 @@ const FirstForm = () => {
       <Toaster />
       <Wrapper>
         <UploadContainer>
-          {form.uploadThumbnail && <img src={form.uploadThumbnail} />}
+          {form.thumbnail && <img src={form.thumbnail} />}
           <Button
             component="label"
             variant="outlined"
@@ -81,8 +83,8 @@ const FirstForm = () => {
               onChange={handleImageChange}
             />
           </Button>
-          {form.uploadVideo && (
-            <video src={form.uploadVideo} alt="Uploaded Thumbnail" controls />
+          {form.video && (
+            <video src={form.video} alt="Uploaded Thumbnail" controls />
           )}
           <Button
             component="label"
@@ -107,7 +109,7 @@ const FirstForm = () => {
             id="fullWidth"
             placeholder="Title Goes Here"
             onChange={handleVideoTitleChange}
-            value={form.videoTitle}
+            value={form.title}
           />
           <Typography>Description</Typography>
           <TextField
@@ -115,7 +117,7 @@ const FirstForm = () => {
             id="fullWidth"
             placeholder="Discription"
             sx={{ width: "100%" }}
-            value={form.videoDescription}
+            value={form.description}
             onChange={handleVideoDescriptionChange}
           />
         </DescriptionBox>

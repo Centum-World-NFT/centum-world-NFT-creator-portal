@@ -8,20 +8,20 @@ const Confirm = () => {
     <Wrapper>
       <Typography>Your Video</Typography>
       <Box sx={{display: "flex", alignItems: "start"}}>
-        <video src={formState.uploadVideo} controls />
+        <video src={formState.video} controls />
         <iframe
           title="PDF Preview"
-          src={formState.uploadPdf}
+          src={formState.pdf}
           style={{ width: "100%", height: "600px" }}
         />
       </Box>
       <Typography>Your Title</Typography>
       <Typography sx={{ background: "#ced4da" }}>
-        {formState.videoTitle}
+        {formState.title}
       </Typography>
       <Typography>Your Description</Typography>
       <Typography sx={{ background: "#ced4da" }}>
-        {formState.videoDescription}
+        {formState.description}
       </Typography>
     </Wrapper>
   );

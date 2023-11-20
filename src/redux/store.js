@@ -3,6 +3,7 @@ import authReducer from "./slices/auth";
 import subscribeReducer from "./slices/subscribeSlice"
 import videoReducer from "./slices/videoSlice";
 import thunk from "redux-thunk";
+import formReducer from "./slices/formSlice"
 
 const middleware = [thunk]
 export const store = configureStore({

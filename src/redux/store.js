@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth";
 import formReducer from "./slices/formSlice"; 
 import subscribeReducer from "./slices/subscribeSlice"
-import formReducer from "./slices/formSlice";
 import videoReducer from "./slices/videoSlice";
 
 export const store = configureStore({

@@ -1,11 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createVideoAPI } from "../apis/createVideo";
+import axios from "axios";
+import BASE_URL from "../../../baseUrl";
 
 export const publishVideo = createAsyncThunk(
   "video",
-  async (payload) => {
+  async ({thumbnail, video, title, description, pdf}) => {
     try {
-      const response = await createVideoAPI(payload)
+      const formData = new FormData();
+      formData.append("thumbnail", thumbnail);
+      formData.append("video", video);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("pdf", pdf);
+      const response = await axios.post(`${BASE_URL}/video/upload-video`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       return response.data;
     } catch (error) {
       console.log(error.message);

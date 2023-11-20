@@ -8,10 +8,10 @@ const Confirm = () => {
     <Wrapper>
       <Typography>Your Video</Typography>
       <Box sx={{display: "flex", alignItems: "start"}}>
-        <video src={formState.video} controls />
+        <video src={URL.createObjectURL(formState.video)} controls />
         <iframe
           title="PDF Preview"
-          src={formState.pdf}
+          src={URL.createObjectURL(formState.pdf)}
           style={{ width: "100%", height: "600px" }}
         />
       </Box>

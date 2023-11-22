@@ -34,6 +34,9 @@ const Singup = ({ open, handleClose }) => {
     } else {
       navigate("/");
     }
+    if (localStorage.getItem("access_token")) {
+      navigate("/creatorDashboard/overview");
+    }
   }, [authState.data]);
 
   const dispatch = useDispatch();

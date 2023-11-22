@@ -13,8 +13,14 @@ import Confirm from "../../forms/confirm/Confirm";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { publishVideo } from "../../../redux/slices/videoSlice";
+import PlaylistForm from "../../forms/playlistform/PlaylistForm";
 
-const steps = ["Upload Video", "Upload Doc/pdf", "Confirmation"];
+const steps = [
+  "Create Playlist",
+  "Upload Video",
+  "Upload Doc/pdf",
+  "Confirmation",
+];
 
 const StepForm = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -22,7 +28,6 @@ const StepForm = () => {
 
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.form);
-  console.log(formData);
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -80,9 +85,10 @@ const StepForm = () => {
         })}
       </Stepper>
       <>
-        {activeStep === 0 && <FirstForm />}
-        {activeStep === 1 && <SecondForm />}
-        {activeStep === 2 && <Confirm />}
+        {activeStep === 0 && <PlaylistForm />}
+        {activeStep === 1 && <FirstForm />}
+        {activeStep === 2 && <SecondForm />}
+        {activeStep === 3 && <Confirm />}
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
             color="inherit"

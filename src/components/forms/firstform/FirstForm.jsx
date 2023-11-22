@@ -17,17 +17,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 const FirstForm = () => {
-  const [isMounted, setIsMounted] = useState(true);
   const dispatch = useDispatch();
   const form = useSelector((state) => state.form);
-  console.log(form);
-
-  useEffect(() => {
-    return () => {
-      // Component is unmounting, update the flag
-      setIsMounted(false);
-    };
-  }, []);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -46,8 +37,6 @@ const FirstForm = () => {
   const handleVideoDescriptionChange = (event) => {
     dispatch(setVideoDescription(event.target.value));
   };
-
-  console.log(form.thumbnail)
 
   return (
     <>

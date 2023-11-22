@@ -24,6 +24,7 @@ const authSlice = createSlice({
       state.data = action.payload;
       state.isError = false;
       localStorage.setItem("access_token", action.payload.token);
+      localStorage.setItem("userID", action.payload.data._id);
     });
     builder.addCase(signUp.pending, (state, action) => {
       state.isLoading = true;

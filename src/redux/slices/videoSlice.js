@@ -3,9 +3,16 @@ import { createVideoAPI } from "../apis/createVideo";
 
 export const publishVideo = createAsyncThunk(
   "video",
-  async (payload) => {
+  async ({ thumbnail, video, title, description, pdf }) => {
     try {
-      const response = await createVideoAPI(payload)
+      const formData = new FormData();
+      formData.append("thumbnail", thumbnail);
+      formData.append("video", video);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("pdf", pdf);
+      formData.append("creatorId", localStorage.getItem("userID"));
+      const response = await createVideoAPI(formData);
       return response.data;
     } catch (error) {
       console.log(error.message);

@@ -40,7 +40,10 @@ const Signup = ({ open, handleClose }) => {
     } else {
       navigate("/");
     }
-  }, [authState.data, navigate]);
+    if (localStorage.getItem("access_token")) {
+      navigate("/creatorDashboard/overview");
+    }
+  }, [authState.data]);
 
   const dispatch = useDispatch();
 

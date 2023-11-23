@@ -31,7 +31,6 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {}, 
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state) => {
@@ -44,6 +43,7 @@ const authSlice = createSlice({
         state.data = action.payload;
         state.isError = false;
         localStorage.setItem("access_token", action.payload.token);
+        localStorage.setItem("userID", action.payload.data._id);
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
@@ -52,7 +52,7 @@ const authSlice = createSlice({
       })
 
       // login
-      
+
       .addCase(signIn.pending, (state) => {
         state.isLoading = true;
         state.data = null;
@@ -63,6 +63,7 @@ const authSlice = createSlice({
         state.data = action.payload;
         state.isError = false;
         localStorage.setItem("access_token", action.payload.token);
+        localStorage.setItem("userID", action.payload.data._id);
       })
       .addCase(signIn.rejected, (state, action) => {
         state.isLoading = false;

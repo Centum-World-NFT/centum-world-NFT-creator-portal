@@ -13,7 +13,6 @@ const formSlice = createSlice({
     setUploadThumbnail: (state, action) => {
       state.thumbnail = action.payload;
     },
-
     setUploadVideo: (state, action) => {
       state.video = action.payload;
     },

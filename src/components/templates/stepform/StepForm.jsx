@@ -14,15 +14,18 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { publishVideo } from "../../../redux/slices/videoSlice";
 
-const steps = ["Upload Video", "Upload Doc/pdf", "Confirmation"];
+const steps = [
+  "Upload Video",
+  "Upload Doc/pdf",
+  "Confirmation",
+];
 
 const StepForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
 
   const dispatch = useDispatch();
-  const formData = useSelector(state => state.form)
-  console.log(formData)
+  const formData = useSelector((state) => state.form);
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -45,13 +48,26 @@ const StepForm = () => {
   };
 
   const handlePublish = () => {
-    console.log("Button PRessed")
+    console.log("Button PRessed");
     dispatch(publishVideo(formData));
+    if (dispatch(publishVideo(formData))) {
+      toast("Video Published", {
+        position: "top-right",
+        style: {
+          border: "1px solid #70e000",
+          padding: "16px",
+          color: "#000",
+        },
+        iconTheme: {
+          primary: "#70e000",
+          secondary: "#FFFAEE",
+        },
+      });
+    }
   };
 
   return (
     <>
-      <Toaster />
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -88,6 +104,7 @@ const StepForm = () => {
           )}
         </Box>
       </>
+      <Toaster />
     </>
   );
 };

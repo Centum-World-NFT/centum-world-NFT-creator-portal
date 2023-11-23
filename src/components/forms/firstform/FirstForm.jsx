@@ -14,44 +14,20 @@ import {
   setVideoTitle,
 } from "../../../redux/slices/formSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const FirstForm = () => {
   const dispatch = useDispatch();
   const form = useSelector((state) => state.form);
-  console.log(form)
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    dispatch(setUploadThumbnail(URL.createObjectURL(file)));
+    dispatch(setUploadThumbnail(file));
   };
 
   const handleVideoChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const videoElement = document.createElement("video");
-      videoElement.src = URL.createObjectURL(file);
-
-      videoElement.onloadedmetadata = () => {
-        const { duration } = videoElement;
-        // duration >= 60 && duration <= 31 * 60
-        if (true) {
-          dispatch(setUploadVideo(videoElement.src));
-        } else {
-          toast("Please upload video length of 28 to 30 minutes", {
-            position: "top-right",
-            style: {
-              border: "1px solid #d90429",
-              padding: "16px",
-              color: "#d90429",
-            },
-            iconTheme: {
-              primary: "#d90429",
-              secondary: "#FFFAEE",
-            },
-          });
-        }
-      };
-    }
+   dispatch(setUploadVideo(file))
   };
 
   const handleVideoTitleChange = (event) => {
@@ -67,7 +43,7 @@ const FirstForm = () => {
       <Toaster />
       <Wrapper>
         <UploadContainer>
-          {form.thumbnail && <img src={form.thumbnail} />}
+          {form.thumbnail && <img src={URL.createObjectURL(form.thumbnail)} />}
           <Button
             component="label"
             variant="outlined"
@@ -84,7 +60,7 @@ const FirstForm = () => {
             />
           </Button>
           {form.video && (
-            <video src={form.video} alt="Uploaded Thumbnail" controls />
+            <video src={URL.createObjectURL(form.video)} alt="Uploaded Thumbnail" controls />
           )}
           <Button
             component="label"

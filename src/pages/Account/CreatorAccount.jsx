@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Aboutme,
   AccountHeader,
@@ -18,6 +18,8 @@ import image from "../../utils/cardimages/image.jpg";
 import { Button, TextField, Typography } from "@mui/material";
 import { EditButton, SaveAIcon, UploadIcon } from "../../utils/icons";
 import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { accountDetails } from "../../redux/slices/accountSlice";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -32,6 +34,19 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const CreatorAccount = () => {
+  const accountState = useSelector((state) => state.account)
+  console.log(accountState)
+  const value = {
+    creatorId: "655c812ca3633c45cec15e77",
+  };
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(accountDetails(value))
+  },[])
+
+  const firstName = accountState.data?.data?.firstName || '';
+
   return (
     <Wrapper>
       <AccountHeader>Account</AccountHeader>
@@ -84,6 +99,7 @@ const CreatorAccount = () => {
                   id="outlined-basic"
                   placeholder="First name"
                   variant="outlined"
+                  value={firstName}
                 />
                 <TextField
                   style={{ width: "45%" }}

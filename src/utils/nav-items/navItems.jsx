@@ -4,6 +4,7 @@ import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 import Person2RoundedIcon from "@mui/icons-material/Person2Rounded";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import MeetingRoomRoundedIcon from "@mui/icons-material/MeetingRoomRounded";
+import PlaylistAddCheckRoundedIcon from '@mui/icons-material/PlaylistAddCheckRounded';
 
 const navItems = [
   {
@@ -30,6 +31,11 @@ const navItems = [
     item: "Upload Content",
     path: "/creatorDashboard/uploadVideo",
     icon: <UploadRoundedIcon />,
+  },
+  {
+    item: "Create Playlist",
+    path: "/creatorDashboard/createplaylist",
+    icon: <PlaylistAddCheckRoundedIcon />,
   },
   {
     item: "Logout",

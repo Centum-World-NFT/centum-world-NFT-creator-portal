@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createVideoAPI } from "../apis/createVideo";
-import axios from "axios";
-import BASE_URL from "../../../baseUrl";
-import { useSelector } from "react-redux";
 
 export const publishVideo = createAsyncThunk(
   "video",

@@ -13,10 +13,8 @@ import Confirm from "../../forms/confirm/Confirm";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { publishVideo } from "../../../redux/slices/videoSlice";
-import PlaylistForm from "../../forms/playlistform/PlaylistForm";
 
 const steps = [
-  "Create Playlist",
   "Upload Video",
   "Upload Doc/pdf",
   "Confirmation",
@@ -85,10 +83,9 @@ const StepForm = () => {
         })}
       </Stepper>
       <>
-        {activeStep === 0 && <PlaylistForm />}
-        {activeStep === 1 && <FirstForm />}
-        {activeStep === 2 && <SecondForm />}
-        {activeStep === 3 && <Confirm />}
+        {activeStep === 0 && <FirstForm />}
+        {activeStep === 1 && <SecondForm />}
+        {activeStep === 2 && <Confirm />}
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
             color="inherit"

@@ -11,9 +11,8 @@ const formSlice = createSlice({
   },
   reducers: {
     setUploadThumbnail: (state, action) => {
-      state.thumbnail = action.payload
+      state.thumbnail = action.payload;
     },
-
     setUploadVideo: (state, action) => {
       state.video = action.payload;
     },

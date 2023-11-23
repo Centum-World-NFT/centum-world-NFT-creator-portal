@@ -12,7 +12,7 @@ const Confirm = () => {
         <iframe
           title="PDF Preview"
           src={URL.createObjectURL(formState.pdf)}
-          style={{ width: "100%", height: "600px" }}
+          style={{ height: "600px", width: "120%" }}
         />
       </Box>
       <Typography>Your Title</Typography>

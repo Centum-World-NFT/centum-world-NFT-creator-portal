@@ -8,3 +8,5 @@ export const signUpAPI = (payload) => {
 export const signInAPI = (payload) => {
   return axios.post(`${BASE_URL}/creator/login-creator`, payload);
 };
+
+

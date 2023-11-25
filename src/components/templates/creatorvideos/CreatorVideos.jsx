@@ -20,7 +20,7 @@ const CreatorVideos = () => {
     <Box sx={{ display: "flex", flexDirection: "column", width: "60%" }}>
       <SectionNumber>Step 2</SectionNumber>
       <Divider />
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", mt: "1rem", pb: "20px" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem", mt: "1rem", pb: "20px" }}>
         {videos.map((item, index) => {
           return (
             <>

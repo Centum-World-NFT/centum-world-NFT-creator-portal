@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
 
 export const playlistSlice = createSlice({
   name: "playlist",
@@ -19,9 +19,38 @@ export const playlistSlice = createSlice({
     setPlaylistPrice: (state, action) => {
       state.price = action.payload;
     },
+    setPlaylistThumbnail: (state, action) => {
+      state.playlistThumbnail = action.payload;
+    },
+    setPlaylistPreviewVideo: (state, action) => {
+      state.playlistPreviewVideo = action.payload;
+    },
   },
 });
 
-export const { setPlaylistTitle, setPlaylistDescription, setPlaylistPrice } =
-  playlistSlice.actions;
-export default playlistSlice.reducer;
+const cardsSlice = createSlice({
+  name: "cards",
+  initialState: [],
+  reducers: {
+    addCard: (state, action) => {
+      state.push(action.payload);
+    },
+  },
+});
+
+const rootReducer = combineReducers({
+  playlist: playlistSlice.reducer,
+  cards: cardsSlice.reducer,
+});
+
+export const { addCard } = cardsSlice.actions;
+
+export const {
+  setPlaylistTitle,
+  setPlaylistDescription,
+  setPlaylistPrice,
+  setPlaylistThumbnail,
+  setPlaylistPreviewVideo,
+} = playlistSlice.actions;
+
+export default rootReducer;

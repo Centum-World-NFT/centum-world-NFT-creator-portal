@@ -14,12 +14,14 @@ import {
   CardMedia,
   Divider,
   Popover,
-  Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addCard } from "../../../redux/slices/playlist";
 
 const CreatorVideos = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const dispatch = useDispatch();
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -35,9 +37,16 @@ const CreatorVideos = () => {
 
   const videos = creatorVideos.data || [];
 
+  const handleAddToPlaylist = (videoId) => {
+    const selectedVideo = videos.find((video) => video._id === videoId);
+    if (selectedVideo) {
+      dispatch(addCard(selectedVideo));
+    }
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", width: "60%" }}>
-      <SectionNumber>Step 2</SectionNumber>
+      <SectionNumber>Step 2 &#10629;Select Videos&#10630;</SectionNumber>
       <Divider />
       <Box
         sx={{
@@ -71,7 +80,11 @@ const CreatorVideos = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => handleAddToPlaylist(item._id)}
+                  >
                     Add to Playlist
                   </Button>
                 </CardActions>
@@ -79,22 +92,22 @@ const CreatorVideos = () => {
               <Popover
                 id="mouse-over-popover"
                 sx={{
-                  pointerEvents: 'none',
+                  pointerEvents: "none",
                 }}
                 open={open}
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
+                  vertical: "bottom",
+                  horizontal: "center",
                 }}
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
+                  vertical: "top",
+                  horizontal: "left",
                 }}
                 onClose={handlePopoverClose}
                 disableRestoreFocus
               >
-                <video src={item.video} height={240} controls autoPlay/>
+                <video src={item.video} height={240} controls autoPlay />
               </Popover>
             </>
           );

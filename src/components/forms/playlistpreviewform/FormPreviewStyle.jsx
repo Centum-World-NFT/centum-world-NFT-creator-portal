@@ -6,3 +6,8 @@ export const PlaylistTitle = styled(Typography)({
     fontFamily: "Poppins, 'sans-serif'",
     fontSize: "1.5rem"
 })
+
+export const SectionNumber = styled(Typography)({
+    fontWeight: "600",
+    fontFamily: "Poppins, 'sans-serif'",
+  });

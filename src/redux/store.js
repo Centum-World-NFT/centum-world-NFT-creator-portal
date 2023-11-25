@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import formReducer from "./slices/formSlice"
 import playlistReducer  from "./slices/playlist";
 import fetchVideoReducer from "./slices/creatorVideos"
+import playlistVideos from "./slices/playlist"
 
 const middleware = [thunk]
 export const store = configureStore({
@@ -17,7 +18,8 @@ export const store = configureStore({
     video: videoReducer,
     playlist: playlistReducer,
     fetchVideo: fetchVideoReducer,
-    account: accountReducer
+    account: accountReducer,
+    playlistVideos: playlistVideos
   },
   middleware
 });

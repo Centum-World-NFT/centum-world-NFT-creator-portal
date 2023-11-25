@@ -2,10 +2,8 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const Wrapper = styled("div")({
-  display: "flex",
-  alignItems: "center",
+  // display: "flex",
   gap: "1rem",
-  justifyContent: "space-between",
   margin: "1rem auto",
 });
 
@@ -24,7 +22,9 @@ export const VisuallyHiddenInput = styled("input")({
 export const ButtonContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
   gap: "1rem",
+  margin: "1rem auto"
 });
 
 export const FieldContainer = styled("div")({

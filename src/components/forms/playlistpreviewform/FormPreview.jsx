@@ -1,14 +1,18 @@
 import { Box, Divider, Typography } from "@mui/material";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { PlaylistTitle } from "./FormPreviewStyle";
+import { PlaylistTitle, SectionNumber } from "./FormPreviewStyle";
 
 const FormPreview = () => {
   const playlistFormdata = useSelector((state) => state.playlist);
-  const description = playlistFormdata.playlistDescription.substring(0, 100);
+
+  const description = playlistFormdata.playlistDescription
+    ? playlistFormdata.playlistDescription.substring(0, 100)
+    : "";
+
   return (
     <>
-      <Typography>Step 3</Typography>
+      <SectionNumber>Step 3 &#10629;Final Preview&#10630;</SectionNumber>
       <Divider />
       <PlaylistTitle>{playlistFormdata.playlistTitle}</PlaylistTitle>
       <Typography>{description && `${description}....`}</Typography>

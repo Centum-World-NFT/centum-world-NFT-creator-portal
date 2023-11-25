@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 const CreatorVideos = () => {
   const creatorVideos = useSelector((state) => state.fetchVideo);
   const videos = creatorVideos.data || [];
-  console.log(videos);
   return (
     <Box sx={{ display: "flex", flexDirection: "column", width: "60%" }}>
       <SectionNumber>Step 2</SectionNumber>

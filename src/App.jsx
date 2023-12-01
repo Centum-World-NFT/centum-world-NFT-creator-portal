@@ -12,7 +12,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<CreaterDashboard />}>
-          <Route path="overview" element={<OverviewSection />} />
+          <Route path="/" element={<OverviewSection />} />
           <Route path="yourVideos" element={<VideoSection />} />
           <Route path="subscribers" element={<Subscriber />} />
           <Route path="uploadVideo" element={<UploadVideo />} />

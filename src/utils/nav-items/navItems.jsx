@@ -9,32 +9,32 @@ import PlaylistAddCheckRoundedIcon from '@mui/icons-material/PlaylistAddCheckRou
 const navItems = [
   {
     item: "Overview",
-    path: "/creatorDashboard/overview",
+    path: "/overview",
     icon: <BarChartRoundedIcon />,
   },
   {
     item: "Your Videos",
-    path: "/creatorDashboard/yourVideos",
+    path: "/yourVideos",
     icon: <PersonalVideoRoundedIcon />,
   },
   {
     item: "Subscribers",
-    path: "/creatorDashboard/subscribers",
+    path: "/subscribers",
     icon: <PeopleAltRoundedIcon />,
   },
   {
     item: "Account",
-    path: "/creatorDashboard/account",
+    path: "/account",
     icon: <Person2RoundedIcon />,
   },
   {
     item: "Upload Content",
-    path: "/creatorDashboard/uploadVideo",
+    path: "/uploadVideo",
     icon: <UploadRoundedIcon />,
   },
   {
     item: "Create Playlist",
-    path: "/creatorDashboard/createplaylist",
+    path: "/createplaylist",
     icon: <PlaylistAddCheckRoundedIcon />,
   },
   {

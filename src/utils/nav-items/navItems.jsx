@@ -9,7 +9,7 @@ import PlaylistAddCheckRoundedIcon from '@mui/icons-material/PlaylistAddCheckRou
 const navItems = [
   {
     item: "Overview",
-    path: "/",
+    path: "/overview",
     icon: <BarChartRoundedIcon />,
   },
   {

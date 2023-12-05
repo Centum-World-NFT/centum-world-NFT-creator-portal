@@ -57,7 +57,6 @@ const Signup = ({ open, handleClose }) => {
   const handleFieldChanges = (e) => {
     setFieldValuess(
       (prev) => (
-        console.log(prev),
         {
           ...prev,
           [e.target.name]: e.target.value,

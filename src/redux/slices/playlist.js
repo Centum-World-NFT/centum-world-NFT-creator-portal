@@ -35,6 +35,9 @@ const cardsSlice = createSlice({
     addCard: (state, action) => {
       state.push(action.payload);
     },
+    removeCard: (state, action) => {
+      state.pop(action.payload);
+    },
   },
 });
 
@@ -43,7 +46,7 @@ const rootReducer = combineReducers({
   cards: cardsSlice.reducer,
 });
 
-export const { addCard } = cardsSlice.actions;
+export const { addCard, removeCard } = cardsSlice.actions;
 
 export const {
   setPlaylistTitle,

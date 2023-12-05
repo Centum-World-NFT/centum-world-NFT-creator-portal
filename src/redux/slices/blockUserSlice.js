@@ -2,10 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { blockUserApi } from "../apis/userblock";
 
 export const  blockUser = createAsyncThunk("block", async (payload) => {
-    console.log(payload)
     try{
         const response = await blockUserApi(payload);
-        console.log(response.data)
         return response.data;
     }catch(error) {
         console.log(error.message)

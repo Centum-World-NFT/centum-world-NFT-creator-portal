@@ -35,7 +35,6 @@ const VisuallyHiddenInput = styled("input")({
 
 const CreatorAccount = () => {
   const accountState = useSelector((state) => state.account)
-  console.log(accountState)
   const value = {
     creatorId: "655c812ca3633c45cec15e77",
   };

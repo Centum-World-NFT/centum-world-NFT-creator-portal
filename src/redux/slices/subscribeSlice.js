@@ -2,10 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { subscriberDerailsApi } from "../apis/subscriberDetail";
 
 export const  subcriberDetails = createAsyncThunk("subscriber", async (payload) => {
-    console.log(payload)
     try{
         const response = await subscriberDerailsApi(payload);
-        console.log(response.data)
         return response.data;
     }catch(error) {
         console.log(error.message)

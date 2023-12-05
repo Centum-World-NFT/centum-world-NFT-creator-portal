@@ -33,7 +33,6 @@ export const SidebarNavItems = styled("div")({
   fontFamily: "'Poppins', sans-serif",
   display: "flex",
   flexDirection: "column",
-  gap: "2rem",
 });
 
 export const NavItem = styled("div")({

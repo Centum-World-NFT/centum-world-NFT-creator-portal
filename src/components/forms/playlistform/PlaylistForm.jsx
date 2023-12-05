@@ -18,14 +18,14 @@ import {
 
 const PlaylistForm = () => {
   const dispatch = useDispatch();
-  const platlistFormData = useSelector((state) => state.playlist);
+  const playistFormData = useSelector((state) => state.playlist.playlist);
 
-  const thumbnailURL = platlistFormData.playlistThumbnail
-    ? URL.createObjectURL(platlistFormData.playlistThumbnail)
+  const thumbnailURL = playistFormData.playlistThumbnail
+    ? URL.createObjectURL(playistFormData.playlistThumbnail)
     : "";
 
-    const videoURL = platlistFormData.playlistPreviewVideo
-    ? URL.createObjectURL(platlistFormData.playlistPreviewVideo)
+  const videoURL = playistFormData.playlistPreviewVideo
+    ? URL.createObjectURL(playistFormData.playlistPreviewVideo)
     : "";
 
   const handlePlaylistTitleChange = (event) => {
@@ -55,8 +55,29 @@ const PlaylistForm = () => {
       <SectionNumber>Step 1&#10629;Playlist Value&#10630;</SectionNumber>
       <Divider />
       <Wrapper>
+        <FieldContainer>
+          <TextField
+            placeholder="Playlist Title"
+            onChange={handlePlaylistTitleChange}
+            value={playistFormData.playlistTitle}
+          />
+          <TextField
+            placeholder="Playlist Description"
+            multiline
+            maxRows={4}
+            fullWidth
+            onChange={handleDescriptionChange}
+            value={playistFormData.playlistDescription}
+          />
+          <TextField
+            placeholder="Playlist Price"
+            type="phone"
+            onChange={handlePriceChange}
+            value={playistFormData.price}
+          />
+        </FieldContainer>
         <ButtonContainer>
-          {platlistFormData.playlistThumbnail && (
+          {playistFormData.playlistThumbnail && (
             <>
               <Typography>Thumbnail Preview</Typography>
               <img src={thumbnailURL} width={400} alt="playlist Thumbnail" />
@@ -71,12 +92,12 @@ const PlaylistForm = () => {
             Upload Playlist Thumbnail
             <VisuallyHiddenInput type="file" onChange={handleThumbnailChange} />
           </Button>
-          {platlistFormData.playlistPreviewVideo && (
-        <>
-          <Typography>Video Preview</Typography>
-          <video src={videoURL} width={400} controls></video>
-        </>
-      )}
+          {playistFormData.playlistPreviewVideo && (
+            <>
+              <Typography>Video Preview</Typography>
+              <video src={videoURL} width={400} controls></video>
+            </>
+          )}
           <Button
             component="label"
             variant="outlined"
@@ -87,27 +108,6 @@ const PlaylistForm = () => {
             <VisuallyHiddenInput type="file" onChange={handleVideoChange} />
           </Button>
         </ButtonContainer>
-        <FieldContainer>
-          <TextField
-            placeholder="Playlist Title"
-            onChange={handlePlaylistTitleChange}
-            value={platlistFormData.playlistTitle}
-          />
-          <TextField
-            placeholder="Playlist Description"
-            multiline
-            maxRows={4}
-            fullWidth
-            onChange={handleDescriptionChange}
-            value={platlistFormData.playlistDescription}
-          />
-          <TextField
-            placeholder="Playlist Price"
-            type="phone"
-            onChange={handlePriceChange}
-            value={platlistFormData.price}
-          />
-        </FieldContainer>
       </Wrapper>
     </>
   );

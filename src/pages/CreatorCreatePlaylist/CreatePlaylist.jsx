@@ -17,7 +17,7 @@ const CreatePlaylist = () => {
     <WrapperBox>
       <PageTitle>Create Playlist</PageTitle>
       <Box sx={{ display: "flex", mt: "1rem",gap: "1rem" }}>
-        <Box>
+        <Box width="70%">
           <PlaylistForm />
           <FormPreview />
         </Box>

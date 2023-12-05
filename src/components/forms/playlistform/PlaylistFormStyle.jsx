@@ -2,7 +2,8 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const Wrapper = styled("div")({
-  // display: "flex",
+  display: "flex",
+  alignItems: "start",
   gap: "1rem",
   margin: "1rem auto",
 });

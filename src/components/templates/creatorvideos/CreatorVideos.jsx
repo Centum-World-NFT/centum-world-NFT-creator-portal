@@ -16,7 +16,8 @@ import {
   Popover,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addCard } from "../../../redux/slices/playlist";
+import { addCard, addToPlaylist } from "../../../redux/slices/playlist";
+import { addToPlaylistAPI } from "../../../redux/apis/playlistVideo";
 
 const CreatorVideos = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,8 +40,11 @@ const CreatorVideos = () => {
 
   const handleAddToPlaylist = (videoId) => {
     const selectedVideo = videos.find((video) => video._id === videoId);
+    const finalVideos = videos.find((video) => video.isSelected === true);
+    console.log(finalVideos);
     if (selectedVideo) {
-      dispatch(addCard(selectedVideo));
+      dispatch(addToPlaylist(selectedVideo._id));
+      if (finalVideos) dispatch(addCard(finalVideos));
     }
   };
 
@@ -59,8 +63,8 @@ const CreatorVideos = () => {
       >
         {videos.map((item, index) => {
           return (
-            <>
-              <Card sx={{ maxWidth: 345 }} key={index}>
+            <Box key={index}>
+              <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -109,7 +113,7 @@ const CreatorVideos = () => {
               >
                 <video src={item.video} height={240} controls autoPlay />
               </Popover>
-            </>
+            </Box>
           );
         })}
       </Box>

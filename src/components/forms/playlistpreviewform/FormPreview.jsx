@@ -18,7 +18,7 @@ import {
   VideoDescription,
   VideoTitle,
 } from "./FormPreviewStyle";
-import { addCard, removeCard } from "../../../redux/slices/playlist";
+import { addCard, publishPlaylist, removeCard } from "../../../redux/slices/playlist";
 
 const FormPreview = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,8 +35,7 @@ const FormPreview = () => {
   const open = Boolean(anchorEl);
   const playlistFormdata = useSelector((state) => state.playlist.playlist);
   const videoCard = useSelector((state) => state.playlist.cards);
-  const finalData = useSelector((state) => state.playlist);
-  console.log(finalData)
+  const finalData = useSelector((state) => state.playlist.playlist);
 
   const description = playlistFormdata.playlistDescription
     ? playlistFormdata.playlistDescription.substring(0, 100)
@@ -47,6 +46,11 @@ const FormPreview = () => {
     if (selectedVideo) {
       dispatch(removeCard(selectedVideo));
     }
+  };
+
+  const submitPlaylistHandler = () => {
+    console.log(finalData)
+    dispatch(publishPlaylist(finalData))
   };
   return (
     <>
@@ -59,61 +63,68 @@ const FormPreview = () => {
       </PlaylistTitle>
       <Divider />
       <Typography variant="h6">Selected Videos</Typography>
-      {videoCard.map((item, index) => {
-        return (
-          <>
-            <Card sx={{ maxWidth: 345 }} key={index}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="190"
-                  image={item.thumbnail}
-                  alt="video-thumbnail"
-                  aria-owns={open ? "mouse-over-popover" : undefined}
-                  aria-haspopup="true"
-                  onMouseEnter={handlePopoverOpen}
-                  onMouseLeave={handlePopoverClose}
-                />
-                <CardContent>
-                  <VideoTitle>{item.title}</VideoTitle>
-                  <VideoDescription color="text.secondary">
-                    {item.description}
-                  </VideoDescription>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() => handleRemoveFromPlaylist(item._id)}
-                >
-                  Remove from Playlist
-                </Button>
-              </CardActions>
-            </Card>
-            <Popover
-              id="mouse-over-popover"
-              sx={{
-                pointerEvents: "none",
-              }}
-              open={open}
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              onClose={handlePopoverClose}
-              disableRestoreFocus
-            >
-              <video src={item.video} height={240} controls autoPlay />
-            </Popover>
-          </>
-        );
-      })}
+      <Box display="flex" gap="1rem" flexWrap="wrap" pt="10px" pb="20px">
+        {videoCard.map((item, index) => {
+          return (
+            <>
+              <Card sx={{ maxWidth: 345 }} key={index}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="190"
+                    image={item.thumbnail}
+                    alt="video-thumbnail"
+                    aria-owns={open ? "mouse-over-popover" : undefined}
+                    aria-haspopup="true"
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
+                  />
+                  <CardContent>
+                    <VideoTitle>{item.title} </VideoTitle>
+                    <VideoDescription color="text.secondary">
+                      {item.description}
+                    </VideoDescription>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => handleRemoveFromPlaylist(item._id)}
+                  >
+                    Remove from Playlist
+                  </Button>
+                </CardActions>
+              </Card>
+              <Popover
+                id="mouse-over-popover"
+                sx={{
+                  pointerEvents: "none",
+                }}
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
+              >
+                <video src={item.video} height={240} controls autoPlay />
+              </Popover>
+            </>
+          );
+        })}
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="outlined" onClick={submitPlaylistHandler}>
+          Publish
+        </Button>
+      </Box>
     </>
   );
 };

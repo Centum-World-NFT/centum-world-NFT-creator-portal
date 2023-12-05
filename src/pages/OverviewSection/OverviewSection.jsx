@@ -17,7 +17,7 @@ const OverviewSection = () => {
     <OverViewWrapper>
       <OverviewContainer>
         {cardDeatils.map((item, index) => (
-          <MainCard variant="outlined">
+          <MainCard variant="outlined" key={index}>
             <CardWrapper>
               <Box>
                 <CardHeader>{item.title}</CardHeader>

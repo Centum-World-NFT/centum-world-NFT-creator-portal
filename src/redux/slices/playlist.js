@@ -1,4 +1,47 @@
-import { combineReducers, createSlice } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { addToPlaylistAPI, publishPlaylistAPI } from "../apis/playlistVideo";
+
+export const addToPlaylist = createAsyncThunk(
+  "playlist/addToPlaylist",
+  async (videoId) => {
+    try {
+      const response = await addToPlaylistAPI(videoId);
+      return response.data;
+    } catch (error) {
+      console.log("Error");
+      console.log(error.message);
+    }
+  }
+);
+
+export const publishPlaylist = createAsyncThunk(
+  "playlist/publicPlaylist",
+  async ({
+    playlistDescription,
+    playlistPreviewVideo,
+    playlistTitle,
+    price,
+    playlistThumbnail,
+  }) => {
+    try {
+      const formData = new FormData();
+      formData.append("playlist_thumbnail", playlistThumbnail);
+      formData.append("preview_video", playlistPreviewVideo);
+      formData.append("playlist_title", playlistTitle);
+      formData.append("playlist_description", playlistDescription);
+      formData.append("price", Number(price));
+      formData.append("creatorId", localStorage.getItem("userID"));
+      const response = await publishPlaylistAPI(formData);
+      return response;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
 
 export const playlistSlice = createSlice({
   name: "playlist",
@@ -33,10 +76,10 @@ const cardsSlice = createSlice({
   initialState: [],
   reducers: {
     addCard: (state, action) => {
-      state.push(action.payload);
+      return [...state, action.payload];
     },
-    removeCard: (state, action) => {
-      state.pop(action.payload);
+    removeCard: (state) => {
+      return state.slice(0, -1);
     },
   },
 });

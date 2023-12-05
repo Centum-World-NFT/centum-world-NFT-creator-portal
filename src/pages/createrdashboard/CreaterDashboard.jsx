@@ -1,6 +1,7 @@
 import { Wrapper, Container, SidebarContainer } from "./CreaterDashboardStyle";
 import { Outlet } from "react-router";
 import CreatorSidebar from "../../components/common/sidebar/CreatorSidebar";
+import withAuth from "../../hoc/withAuth";
 
 const CreaterDashboard = () => {
   return (
@@ -15,4 +16,4 @@ const CreaterDashboard = () => {
   );
 };
 
-export default CreaterDashboard;
+export default withAuth(CreaterDashboard);

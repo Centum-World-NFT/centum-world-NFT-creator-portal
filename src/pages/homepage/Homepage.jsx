@@ -27,9 +27,14 @@ const HomePage = () => {
         style={imageStyle2}
         className="responsive-image"
       />
-      <img src={FrameImage1} alt="frame__Image" style={frameImage} className="frameImage" />
+      <img
+        src={FrameImage1}
+        alt="frame__Image"
+        style={frameImage}
+        className="frameImage"
+      />
       <HeroText variant="p">
-        WELCOME TO{" "} <br />
+        WELCOME TO <br />
         <HightLightedText variant="span"> CENTUMO NFT’S </HightLightedText>
       </HeroText>
     </Wrapper>

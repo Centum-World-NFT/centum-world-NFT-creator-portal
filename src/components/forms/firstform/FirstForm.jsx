@@ -27,14 +27,16 @@ const FirstForm = () => {
 
   const handleVideoChange = (event) => {
     const file = event.target.files[0];
-   dispatch(setUploadVideo(file))
+    dispatch(setUploadVideo(file));
   };
 
   const handleVideoTitleChange = (event) => {
+    event.target.value.trim();
     dispatch(setVideoTitle(event.target.value));
   };
 
   const handleVideoDescriptionChange = (event) => {
+    event.target.value.trim();
     dispatch(setVideoDescription(event.target.value));
   };
 
@@ -60,7 +62,11 @@ const FirstForm = () => {
             />
           </Button>
           {form.video && (
-            <video src={URL.createObjectURL(form.video)} alt="Uploaded Thumbnail" controls />
+            <video
+              src={URL.createObjectURL(form.video)}
+              alt="Uploaded Thumbnail"
+              controls
+            />
           )}
           <Button
             component="label"
@@ -91,7 +97,7 @@ const FirstForm = () => {
           <TextField
             multiline
             id="fullWidth"
-            placeholder="Discription"
+            placeholder="Description"
             sx={{ width: "100%" }}
             value={form.description}
             onChange={handleVideoDescriptionChange}

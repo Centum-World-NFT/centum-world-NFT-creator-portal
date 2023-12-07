@@ -4,6 +4,7 @@ import { VisuallyHiddenInput, WrapperBox } from "./SecondFormStyle";
 import { UploadFileRounded } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setUploadPdf } from "../../../redux/slices/formSlice";
+import toast from "react-hot-toast";
 
 const SecondForm = () => {
   const dispatch = useDispatch();

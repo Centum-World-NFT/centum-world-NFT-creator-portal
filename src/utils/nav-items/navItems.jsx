@@ -39,7 +39,7 @@ const navItems = [
   },
   {
     item: "Logout",
-    path: "/logout",
+    path: "/",
     icon: <MeetingRoomRoundedIcon />,
   },
 ];

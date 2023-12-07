@@ -15,6 +15,7 @@ import {
 import { signUp, signIn } from "@/redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast"
 
 const Signup = ({ open, handleClose }) => {
   const [fieldValues, setFieldValues] = useState({
@@ -65,11 +66,19 @@ const Signup = ({ open, handleClose }) => {
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (isSignInMode) {
-      dispatch(signIn(fieldValuess));
+     const response = await dispatch(signUp(fieldValues));
+      if (response.payload.status){
+        toast.success(response.payload.message)
+      }
     } else {
-      dispatch(signUp(fieldValues));
+     const response = await dispatch(signIn(fieldValuess));
+
+     if(response.payload.status){
+
+      toast.success(response.payload.message)
+     }
     }
   };
 
@@ -79,33 +88,6 @@ const Signup = ({ open, handleClose }) => {
 
   const renderFormFields = () => {
     if (isSignInMode) {
-      return (
-        <>
-          <InputFields
-            autoFocus
-            margin="dense"
-            id="name"
-            placeholder="example@gmail.com"
-            type="text"
-            fullWidth
-            variant="outlined"
-            name="emailorPhone"
-            onChange={handleFieldChanges}
-          />
-          <PasswordField
-            autoFocus
-            margin="dense"
-            id="name"
-            placeholder="*******"
-            type="password"
-            fullWidth
-            name="password"
-            variant="outlined"
-            onChange={handleFieldChanges}
-          />
-        </>
-      );
-    } else {
       return (
         <>
           <Box
@@ -171,6 +153,33 @@ const Signup = ({ open, handleClose }) => {
           ></PasswordField>
         </>
       );
+    } else {
+      return (
+        <>
+          <InputFields
+            autoFocus
+            margin="dense"
+            id="name"
+            placeholder="example@gmail.com"
+            type="text"
+            fullWidth
+            variant="outlined"
+            name="emailorPhone"
+            onChange={handleFieldChanges}
+          />
+          <PasswordField
+            autoFocus
+            margin="dense"
+            id="name"
+            placeholder="*******"
+            type="password"
+            fullWidth
+            name="password"
+            variant="outlined"
+            onChange={handleFieldChanges}
+          />
+        </>
+      );
     }
   };
 
@@ -179,13 +188,13 @@ const Signup = ({ open, handleClose }) => {
       {open && (
         <DialogWrapper open={open} onClose={handleClose}>
           <DialogTitle variant="h3">
-            {isSignInMode ? "Sign In" : "Sign Up"}
+            {isSignInMode ? "Sign Up" : "Sign In"}
           </DialogTitle>
           <Typography sx={{ width: "90%" }}>
             Unlock Your Visual Story:{" "}
             {isSignInMode
-              ? "Sign in to access your account"
-              : "Sign up and transform your ideas into vibrant reality!"}
+              ? "Sign up and transform your ideas into vibrant reality!" 
+              :"Sign in to access your account"}
           </Typography>
           <DialogContent>{renderFormFields()}</DialogContent>
           <DialogActions>
@@ -195,10 +204,10 @@ const Signup = ({ open, handleClose }) => {
                 : "Already have an account ?"}
             </Typography>
             <Button onClick={handleToggleMode} variant="outlined">
-              {isSignInMode ? "Sign Up" : "Sign In"}
+              {isSignInMode ? "Sign In" : "Sign Up"}
             </Button>
             <Button onClick={handleSubmit} variant="outlined">
-              {isSignInMode ? "Sign In" : "Sign Up"}
+              {isSignInMode ? "Sign Up" : "Sign In"}
             </Button>
           </DialogActions>
         </DialogWrapper>
@@ -208,3 +217,5 @@ const Signup = ({ open, handleClose }) => {
 };
 
 export default Signup;
+
+

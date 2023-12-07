@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createVideoAPI } from "../apis/createVideo";
+import toast from "react-hot-toast";
 
 export const publishVideo = createAsyncThunk(
   "video",
@@ -15,7 +16,7 @@ export const publishVideo = createAsyncThunk(
       const response = await createVideoAPI(formData);
       return response.data;
     } catch (error) {
-      console.log(error.message);
+      throw(error)
     }
   }
 );
@@ -25,6 +26,7 @@ const initialState = {
   data: null,
   isError: false,
 };
+
 const videoSlice = createSlice({
   name: "video",
   initialState,

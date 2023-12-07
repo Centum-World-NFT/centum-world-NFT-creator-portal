@@ -1,4 +1,5 @@
-import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+
 import {
   ButtonContainer,
   FieldContainer,
@@ -9,6 +10,7 @@ import {
 import { UploadIcon } from "../../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setPlaylistCreatorType,
   setPlaylistDescription,
   setPlaylistPreviewVideo,
   setPlaylistPrice,
@@ -19,6 +21,7 @@ import {
 const PlaylistForm = () => {
   const dispatch = useDispatch();
   const playistFormData = useSelector((state) => state.playlist.playlist);
+
 
   const thumbnailURL = playistFormData.playlistThumbnail
     ? URL.createObjectURL(playistFormData.playlistThumbnail)
@@ -49,6 +52,11 @@ const PlaylistForm = () => {
     const file = event.target.files[0];
     dispatch(setPlaylistPreviewVideo(file));
   };
+
+  const handleTypeChange = (event) =>{
+    console.log(event.target.value)
+    dispatch(setPlaylistCreatorType(event.target.value))
+  }
 
   return (
     <>
@@ -107,6 +115,21 @@ const PlaylistForm = () => {
             Upload Preview Video
             <VisuallyHiddenInput type="file" onChange={handleVideoChange} />
           </Button>
+          <Box sx={{ minWidth: 200 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Creator type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Creator"
+                value={playistFormData.key}
+                onChange={handleTypeChange}
+              >
+                <MenuItem value="VIDHYAM">Vidayam</MenuItem>
+                <MenuItem value="vyavsay">Vyavsay</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </ButtonContainer>
       </Wrapper>
     </>

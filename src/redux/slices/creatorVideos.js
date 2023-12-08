@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchCreatorVideoAPI } from "../apis/fetchVideo";
+import toast from "react-hot-toast"
 
 export const fetchCreatorVideo = createAsyncThunk(
   "fetchVideo",
@@ -8,7 +9,7 @@ export const fetchCreatorVideo = createAsyncThunk(
       const response = await fetchCreatorVideoAPI(payload);
       return response.data.data;
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.response.data.message)
     }
   }
 );

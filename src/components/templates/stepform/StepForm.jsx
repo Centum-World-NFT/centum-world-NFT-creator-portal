@@ -29,6 +29,23 @@ const StepForm = () => {
 
   const handleNext = () => {
     console.log("Next Pressed");
+
+    if (
+      !formData ||
+      !formData.thumbnail ||
+      !formData.video ||
+      !formData.title ||
+      !formData.description
+    ) {
+      toast.error("Please fill all details");
+      return;
+    }
+
+    if (!formData.pdf && activeStep === 1) {
+      toast.error("Please select a document");
+      return;
+    }
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -43,9 +60,11 @@ const StepForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handlePublish = () => {
-    console.log("Button PRessed");
-    dispatch(publishVideo(formData));
+  const handlePublish = async () => {
+    const response = await dispatch(publishVideo(formData));
+    if (response.payload.status) {
+      toast.success(response.payload.message);
+    }
   };
 
   return (

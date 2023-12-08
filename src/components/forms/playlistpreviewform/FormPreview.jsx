@@ -18,7 +18,11 @@ import {
   VideoDescription,
   VideoTitle,
 } from "./FormPreviewStyle";
-import { addCard, publishPlaylist, removeCard } from "../../../redux/slices/playlist";
+import {
+  addCard,
+  publishPlaylist,
+  removeCard,
+} from "../../../redux/slices/playlist";
 
 const FormPreview = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,10 +52,14 @@ const FormPreview = () => {
     }
   };
 
-  const submitPlaylistHandler = () => {
-    console.log(finalData)
-    dispatch(publishPlaylist(finalData))
+  const submitPlaylistHandler = async () => {
+    const response = await dispatch(publishPlaylist(finalData));
+    console.log(response, "response");
+    if (response.payload.status) {
+      toast.success(response.payload.message);
+    }
   };
+
   return (
     <>
       <SectionNumber>Step 3 &#10629;Final Preview&#10630;</SectionNumber>

@@ -12,13 +12,20 @@ import {
 } from "./CreatorSidebarStyle";
 import CentumLogo from "@/assets/png/centum-logo.png";
 import navItems from "../../../utils/nav-items/navItems";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreatorSidebar = () => {
   const [clickedItem, setClickedItem] = useState(null);
+  const navigate = useNavigate();
   const handleItemClick = (item) => {
     setClickedItem(item);
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+
+  };
+
   return (
     <SidebarWrapper>
       <SidebarContainer>
@@ -42,9 +49,15 @@ const CreatorSidebar = () => {
               <NavItems
                 key={index}
                 isClicked={clickedItem === item}
-                onClick={() => handleItemClick(item)}
+                onClick={() =>
+                  item.item === "Logout"? handleLogout():
+                  handleItemClick(item)
+                }
               >
-                <Link to={item.path} style={{color: "currentcolor", textDecoration: "none"}}>
+                <Link
+                  to={item.path}
+                  style={{ color: "currentcolor", textDecoration: "none" }}
+                >
                   <NavItem>
                     <Typography sx={{ fontWeight: "600" }}>
                       {item.icon}

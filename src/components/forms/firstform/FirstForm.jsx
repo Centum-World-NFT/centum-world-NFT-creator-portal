@@ -12,6 +12,7 @@ import {
   setUploadVideo,
   setVideoDescription,
   setVideoTitle,
+  setCourseId
 } from "../../../redux/slices/formSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -37,6 +38,10 @@ const FirstForm = () => {
   const handleVideoDescriptionChange = (event) => {
     dispatch(setVideoDescription(event.target.value));
   };
+
+  const handleCourseIdChange = (event) =>{
+    dispatch(setCourseId(event.target.value))
+  }
 
   return (
     <>
@@ -95,6 +100,14 @@ const FirstForm = () => {
             sx={{ width: "100%" }}
             value={form.description}
             onChange={handleVideoDescriptionChange}
+          />
+          <Typography>Course ID</Typography>
+          <TextField
+            fullWidth
+            id="fullWidth"
+            placeholder="Enter course id"
+            onChange={handleCourseIdChange}
+            value={form.courseId}
           />
         </DescriptionBox>
       </Wrapper>

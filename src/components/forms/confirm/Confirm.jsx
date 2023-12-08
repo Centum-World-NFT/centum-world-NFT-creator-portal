@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 
 const Confirm = () => {
   const formState = useSelector((state) => state.form);
+  console.log(formState)
   return (
     <Wrapper>
       <Typography>Your Video</Typography>

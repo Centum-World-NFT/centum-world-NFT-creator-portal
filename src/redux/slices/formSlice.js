@@ -25,6 +25,9 @@ const formSlice = createSlice({
     setUploadPdf: (state, action) => {
       state.pdf = action.payload;
     },
+    setCourseId : (state, action) => {
+      state.courseId = action.payload;
+    }
   },
 });
 
@@ -34,5 +37,6 @@ export const {
   setVideoTitle,
   setVideoDescription,
   setUploadPdf,
+  setCourseId,
 } = formSlice.actions;
 export default formSlice.reducer;

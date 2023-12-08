@@ -10,7 +10,7 @@ import {
 import { UploadIcon } from "../../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setPlaylistCreatorType,
+  setPlaylistCourseId,
   setPlaylistDescription,
   setPlaylistPreviewVideo,
   setPlaylistPrice,
@@ -53,9 +53,9 @@ const PlaylistForm = () => {
     dispatch(setPlaylistPreviewVideo(file));
   };
 
-  const handleTypeChange = (event) =>{
+  const handleCourseIDChange = (event) =>{
     console.log(event.target.value)
-    dispatch(setPlaylistCreatorType(event.target.value))
+    dispatch(setPlaylistCourseId(event.target.value))
   }
 
   return (
@@ -115,21 +115,11 @@ const PlaylistForm = () => {
             Upload Preview Video
             <VisuallyHiddenInput type="file" onChange={handleVideoChange} />
           </Button>
-          <Box sx={{ minWidth: 200 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Creator type</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Creator"
-                value={playistFormData.key}
-                onChange={handleTypeChange}
-              >
-                <MenuItem value="VIDHYAM">Vidayam</MenuItem>
-                <MenuItem value="vyavsay">Vyavsay</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+          <TextField
+            placeholder="Course ID"
+            onChange={handleCourseIDChange}
+            value={playistFormData.courseId}
+          />
         </ButtonContainer>
       </Wrapper>
     </>

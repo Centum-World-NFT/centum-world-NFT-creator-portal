@@ -26,7 +26,7 @@ export const publishPlaylist = createAsyncThunk(
     playlistTitle,
     price,
     playlistThumbnail,
-    key
+    courseId
   }) => {
     try {
       const formData = new FormData();
@@ -36,7 +36,7 @@ export const publishPlaylist = createAsyncThunk(
       formData.append("playlist_description", playlistDescription);
       formData.append("price", Number(price));
       formData.append("creatorId", localStorage.getItem("userID"));
-      formData.append("key",key)
+      formData.append("course_id",courseId)
       const response = await publishPlaylistAPI(formData);
       return response;
     } catch (error) {
@@ -53,7 +53,7 @@ export const playlistSlice = createSlice({
     playlistPreviewVideo: null,
     price: "",
     playlistDescription: "",
-    key: ""
+    courseId: ""
   },
   reducers: {
     setPlaylistTitle: (state, action) => {
@@ -71,8 +71,8 @@ export const playlistSlice = createSlice({
     setPlaylistPreviewVideo: (state, action) => {
       state.playlistPreviewVideo = action.payload;
     },
-    setPlaylistCreatorType: (state , action) => {
-      state.key = action.payload;
+    setPlaylistCourseId: (state , action) => {
+      state.courseId = action.payload;
     }
   },
 });
@@ -103,7 +103,7 @@ export const {
   setPlaylistPrice,
   setPlaylistThumbnail,
   setPlaylistPreviewVideo,
-  setPlaylistCreatorType,
+  setPlaylistCourseId,
 } = playlistSlice.actions;
 
 export default rootReducer;

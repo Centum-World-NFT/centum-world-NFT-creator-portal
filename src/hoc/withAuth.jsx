@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomePage from "../pages/homepage/Homepage";
 
 const withAuth = (Component) => {
   return function ProtectedRoute(props) {
@@ -13,9 +14,9 @@ const withAuth = (Component) => {
       } else {
         navigate("/");
       }
-    }, [navigate]);
+    }, []);
 
-    return <>{token ? <Component {...props} /> : <div>loading</div>}</>;
+    return <>{token ? <Component {...props} /> : <HomePage/>}</>;
   };
 };
 

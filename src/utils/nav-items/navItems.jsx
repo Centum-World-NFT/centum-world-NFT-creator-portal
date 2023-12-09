@@ -38,12 +38,7 @@ const navItems = [
     path: "/creatorDashboard/createplaylist",
     icon: <PlaylistAddCheckRoundedIcon />,
   },
-  // {
-  //   item: "Logout",
-  //   path: "/",
-  //   icon: <MeetingRoomRoundedIcon />,
-   
-  // },
+  
 ];
 
 export default navItems;

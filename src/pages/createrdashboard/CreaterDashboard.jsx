@@ -1,7 +1,8 @@
-import { Wrapper, Container, SidebarContainer } from "./CreaterDashboardStyle";
+import { Wrapper, Container, SidebarContainer, MainHeader } from "./CreaterDashboardStyle";
 import { Outlet } from "react-router";
 import CreatorSidebar from "../../components/common/sidebar/CreatorSidebar";
 import withAuth from "../../hoc/withAuth";
+import DashboardHeader from "../../components/common/dashboardheader/DashboardHeader";
 
 const CreaterDashboard = () => {
   return (
@@ -10,6 +11,9 @@ const CreaterDashboard = () => {
         <CreatorSidebar />
       </SidebarContainer>
       <Container>
+        <MainHeader>
+            <DashboardHeader/>
+        </MainHeader>
         <Outlet />
       </Container>
     </Wrapper>

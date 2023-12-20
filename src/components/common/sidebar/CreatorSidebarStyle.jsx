@@ -3,8 +3,9 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const SidebarWrapper = styled("div")({
-  height: "100%",
+  height: "100vh",
   backgroundColor: "rgb(28, 37, 54)",
+  
 });
 
 export const SidebarContainer = styled("div")({
@@ -33,6 +34,8 @@ export const SidebarNavItems = styled("div")({
   fontFamily: "'Poppins', sans-serif",
   display: "flex",
   flexDirection: "column",
+  maxHeight:"65vh",
+  overflow:"hidden",
 });
 
 export const NavItem = styled("div")({
@@ -43,7 +46,7 @@ export const NavItem = styled("div")({
 
 export const NavItems = styled("div")(({ isClicked }) => ({
   cursor: "pointer",
-  padding: "20px",
+  padding: "12px",
   borderRadius: "10px",
   backgroundColor: isClicked ? "rgba(255, 255, 255, 0.06)" : "transparent",
   color: isClicked ? "#fff" : "rgba(255, 255, 255, 0.5)",

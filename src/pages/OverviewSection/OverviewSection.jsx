@@ -22,12 +22,12 @@ const OverviewSection = () => {
               <Box>
                 <CardHeader>{item.title}</CardHeader>
                 <ViewsCount>{item.detail}</ViewsCount>
-                <CardSubtitle>{item.subtitle}</CardSubtitle>
               </Box>
               <CardIconContainer background={item.color}>
                 {item.icon}
               </CardIconContainer>
             </CardWrapper>
+            <CardSubtitle>{item.subtitle}</CardSubtitle>
           </MainCard>
         ))}
       </OverviewContainer>

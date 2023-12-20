@@ -10,12 +10,27 @@ export const OverviewContainer = styled("div")({
   justifyContent: "space-between",
   flexWrap: "wrap",
   padding: "10px",
+  "@media (max-width: 768px)": {
+    flexWrap: "wrap", // Display cards in a column
+    justifyContent: "center", // Center the cards
+    "& > *": {
+      flexBasis: "40%", // Two cards in a row (48% width each)
+      marginBottom: "10px", // Add some margin between the cards
+    },
+  },
+  "@media (max-width: 640px)": {
+    flexWrap: "wrap", // Display cards in a column
+    justifyContent: "center", // Center the cards
+    "& > *": {
+      flexBasis: "95%", // A single card in a row (90% width)
+      marginBottom: "10px", // Add some margin between the cards
+    },
+  },
 });
 
 export const MainCard = styled(Card)({
   width: "max-content",
   padding: "20px 10px 20px 10px",
-  display: "flex",
   height: "100px",
   width: "20%",
   boxShadow:
@@ -25,6 +40,7 @@ export const MainCard = styled(Card)({
     transform: "translateY(-5px)",
     transition: "all 200ms ease-in-out",
   },
+ 
 });
 
 export const CardHeader = styled(Typography)({
@@ -35,8 +51,8 @@ export const CardHeader = styled(Typography)({
 });
 
 export const ViewsCount = styled(Typography)({
-  fontSize: "2rem",
-  fontWeight: "900",
+  fontSize: "1.5rem",
+  fontWeight: "700",
 });
 
 export const CardSubtitle = styled(Typography)({
@@ -54,8 +70,8 @@ export const CardWrapper = styled("div")({
 export const CardIconContainer = styled("div")(({ background }) => ({
   borderRadius: "50px",
   backgroundColor: background,
-  height: "max-content",
-  width: "max-content",
+  height: "30px",
+  width: "30px",
   padding: "10px",
   color: "#fff",
 }));

@@ -12,7 +12,7 @@ const cardDeatils = [
     color: "red"
   },
   {
-    title: "Your Subscriber",
+    title: "Subscriber",
     detail: "2k",
     subtitle: "Your total subscriber",
     icon: <SubscriptionsRoundedIcon />,

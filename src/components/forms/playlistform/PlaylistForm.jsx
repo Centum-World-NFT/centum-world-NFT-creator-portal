@@ -65,7 +65,7 @@ const PlaylistForm = () => {
       <Wrapper>
         <FieldContainer>
           <TextField
-            placeholder="Playlist Title"
+            placeholder="Course name"
             onChange={handlePlaylistTitleChange}
             value={playistFormData.playlistTitle}
           />

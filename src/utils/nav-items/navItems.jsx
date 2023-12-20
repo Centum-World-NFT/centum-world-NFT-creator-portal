@@ -6,6 +6,7 @@ import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import MeetingRoomRoundedIcon from "@mui/icons-material/MeetingRoomRounded";
 import PlaylistAddCheckRoundedIcon from '@mui/icons-material/PlaylistAddCheckRounded';
 
+
 const navItems = [
   {
     item: "Overview",
@@ -37,11 +38,7 @@ const navItems = [
     path: "/creatorDashboard/createplaylist",
     icon: <PlaylistAddCheckRoundedIcon />,
   },
-  {
-    item: "Logout",
-    path: "/",
-    icon: <MeetingRoomRoundedIcon />,
-  },
+  
 ];
 
 export default navItems;

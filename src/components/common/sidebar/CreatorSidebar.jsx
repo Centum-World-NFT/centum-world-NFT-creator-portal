@@ -1,9 +1,8 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import {
   HeaderSubtitle,
   NavItem,
-  NavItemLink,
   NavItems,
   SidebarContainer,
   SidebarHeader,
@@ -12,18 +11,20 @@ import {
 } from "./CreatorSidebarStyle";
 import CentumLogo from "@/assets/png/centum-logo.png";
 import navItems from "../../../utils/nav-items/navItems";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const CreatorSidebar = () => {
   const [clickedItem, setClickedItem] = useState(null);
   const navigate = useNavigate();
+
   const handleItemClick = (item) => {
     setClickedItem(item);
   };
+
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
-
+    navigate('/');
   };
 
   return (
@@ -43,34 +44,42 @@ const CreatorSidebar = () => {
             opacity: "0.2",
           }}
         ></Divider>
-        {
-          <SidebarNavItems>
-            {navItems.map((item, index) => (
-              <NavItems
-                key={index}
-                isClicked={clickedItem === item}
-                onClick={() =>
-                  item.item === "Logout"? handleLogout():
-                  handleItemClick(item)
-                }
+
+        <SidebarNavItems>
+          {navItems.map((item, index) => (
+            <NavItems
+              key={index}
+              isClicked={clickedItem === item}
+              onClick={() => handleItemClick(item)}
+            >
+              <Link
+                to={item.path}
+                style={{ color: "currentcolor", textDecoration: "none" }}
               >
-                <Link
-                  to={item.path}
-                  style={{ color: "currentcolor", textDecoration: "none" }}
-                >
-                  <NavItem>
-                    <Typography sx={{ fontWeight: "600" }}>
-                      {item.icon}
-                    </Typography>
-                    <Typography sx={{ fontWeight: "600" }}>
-                      {item.item}
-                    </Typography>
-                  </NavItem>
-                </Link>
-              </NavItems>
-            ))}
-          </SidebarNavItems>
-        }
+                <NavItem>
+                  <Typography sx={{ fontWeight: "600" }}>
+                    {item.icon}
+                  </Typography>
+                  <Typography sx={{ fontWeight: "600" }}>
+                    {item.item}
+                  </Typography>
+                </NavItem>
+              </Link>
+            </NavItems>
+          ))}
+
+          {/* Logout button */}
+          <NavItems>
+            <Button
+              variant="text"
+              color="inherit"
+              startIcon={<LogoutIcon />}
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </NavItems>
+        </SidebarNavItems>
       </SidebarContainer>
     </SidebarWrapper>
   );

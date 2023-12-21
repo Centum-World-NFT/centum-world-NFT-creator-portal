@@ -14,8 +14,9 @@ export const OverviewContainer = styled("div")({
     flexWrap: "wrap", // Display cards in a column
     justifyContent: "center", // Center the cards
     "& > *": {
-      flexBasis: "40%", // Two cards in a row (48% width each)
-      marginBottom: "10px", // Add some margin between the cards
+      flexBasis: "45%", // Two cards in a row (48% width each)
+      marginBottom: "10px",
+      marginRight:"5px" // Add some margin between the cards
     },
   },
   "@media (max-width: 640px)": {

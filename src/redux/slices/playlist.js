@@ -40,7 +40,7 @@ export const publishPlaylist = createAsyncThunk(
       const response = await publishPlaylistAPI(formData);
       return response;
     } catch (error) {
-      console.log(error.message);
+      return error.response;
     }
   }
 );

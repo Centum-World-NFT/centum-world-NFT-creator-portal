@@ -2,7 +2,12 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const Wrapper = styled("div")({
-    padding: "40px",
+    padding: "20px",
+    background:"#fbfcfe",
+    height: "calc(100vh - 165px)",
+    "@media (max-width: 640px)": {
+        padding:"5px"
+    },
 })
 
 export const VideoContainer = styled("div")({
@@ -14,5 +19,9 @@ export const VideoContainer = styled("div")({
 export const PageTitle = styled(Typography)({
     fontWeight: "600",
     fontFamily: "Poppins, sans-serif",
-    fontSize: "2rem"
+    fontSize: "2rem",
+    "@media (max-width: 640px)": {
+        fontWeight:"600",
+        fontSize:"1rem"
+    },
 })

@@ -16,12 +16,12 @@ const CreatePlaylist = () => {
   return (
     <WrapperBox>
       <PageTitle>Create Playlist</PageTitle>
-      <Box sx={{ display: "flex", mt: "1rem",gap: "1rem" }}>
-        <Box width="70%">
+      <Box sx={{ mt: "1rem",gap: "1rem" }}>
+        <Box sx={{width:["100%","90%"]}}>
           <PlaylistForm />
           <FormPreview />
         </Box>
-        <CreatorVideos />
+        {/* <CreatorVideos /> */}
       </Box>
     </WrapperBox>
   );

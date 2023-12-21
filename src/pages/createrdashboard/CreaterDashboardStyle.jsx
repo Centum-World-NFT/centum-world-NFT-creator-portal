@@ -22,4 +22,7 @@ export const MainHeader = styled("div")({
   width:"100%",
   background:"#1c2536",
   height:"80px",
+  position:"sticky",
+  top:"0",
+  zIndex:"10"
 })

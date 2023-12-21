@@ -6,6 +6,9 @@ export const Wrapper = styled("div")({
   alignItems: "start",
   gap: "1rem",
   margin: "1rem auto",
+  "@media (max-width:640px)":{
+    display:"block"
+  }
 });
 
 export const VisuallyHiddenInput = styled("input")({

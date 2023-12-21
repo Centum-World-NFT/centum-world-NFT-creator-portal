@@ -57,10 +57,11 @@ const PlaylistForm = () => {
     console.log(event.target.value)
     dispatch(setPlaylistCourseId(event.target.value))
   }
+  const thumbnailWidth = window.innerWidth >= 640 ? 400 : '100%';
 
   return (
     <>
-      <SectionNumber>Step 1&#10629;Playlist Value&#10630;</SectionNumber>
+      <SectionNumber>Step 1&#10629;Playlist Details&#10630;</SectionNumber>
       <Divider />
       <Wrapper>
         <FieldContainer>
@@ -88,34 +89,35 @@ const PlaylistForm = () => {
           {playistFormData.playlistThumbnail && (
             <>
               <Typography>Thumbnail Preview</Typography>
-              <img src={thumbnailURL} width={400} alt="playlist Thumbnail" />
+              <img src={thumbnailURL} width={thumbnailWidth} height={200} alt="playlist Thumbnail" />
             </>
           )}
           <Button
             component="label"
-            variant="standard"
+            variant="contained"
             startIcon={<UploadIcon />}
-            sx={{ textTransform: "inherit" }}
+            sx={{ textTransform: "inherit", width:["100%","225px"] }}
           >
-            Upload Playlist Thumbnail
+            Upload Thumbnail
             <VisuallyHiddenInput type="file" onChange={handleThumbnailChange} />
           </Button>
           {playistFormData.playlistPreviewVideo && (
             <>
               <Typography>Video Preview</Typography>
-              <video src={videoURL} width={400} controls></video>
+              <video src={videoURL} width={thumbnailWidth} controls></video>
             </>
           )}
           <Button
             component="label"
             variant="outlined"
             startIcon={<UploadIcon />}
-            sx={{ textTransform: "inherit" }}
+            sx={{ textTransform: "inherit", width:["100%","225px"] }}
           >
             Upload Preview Video
             <VisuallyHiddenInput type="file" onChange={handleVideoChange} />
           </Button>
           <TextField
+            sx={{width:["100%"]}}
             placeholder="Course ID"
             onChange={handleCourseIDChange}
             value={playistFormData.courseId}

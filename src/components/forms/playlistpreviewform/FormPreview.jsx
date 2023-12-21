@@ -6,6 +6,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Divider,
   Popover,
   Typography,
@@ -23,10 +24,12 @@ import {
   publishPlaylist,
   removeCard,
 } from "../../../redux/slices/playlist";
+import toast from "react-hot-toast";
 
 const FormPreview = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
+  const [spin, setSpin] = useState(false);
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -53,16 +56,26 @@ const FormPreview = () => {
   };
 
   const submitPlaylistHandler = async () => {
-    const response = await dispatch(publishPlaylist(finalData));
-    console.log(response, "response");
-    if (response.payload.status) {
-      toast.success(response.payload.message);
+    setSpin(true);
+    try {
+      const response = await dispatch(publishPlaylist(finalData));
+      console.log(response, "response");
+      if (response.payload.data.status) {
+        setSpin(false);
+        toast.success(response.payload.data.message);
+      }else{
+        setSpin(false);
+        toast.error(response.payload.data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      setSpin(false);
     }
   };
 
   return (
     <>
-      <SectionNumber>Step 3 &#10629;Final Preview&#10630;</SectionNumber>
+      <SectionNumber>Step 2 &#10629;Final Preview&#10630;</SectionNumber>
       <Divider />
       <PlaylistTitle>{playlistFormdata.playlistTitle}</PlaylistTitle>
       <Typography>{description && `${description}....`}</Typography>
@@ -130,7 +143,14 @@ const FormPreview = () => {
       </Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button variant="outlined" onClick={submitPlaylistHandler}>
-          Publish
+          {spin ? (
+            <>
+              <CircularProgress style={{ height: "15px", width: "15px" }} />
+              Publishing...
+            </>
+          ) : (
+            "Publish"
+          )}
         </Button>
       </Box>
     </>

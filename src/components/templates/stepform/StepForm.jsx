@@ -14,7 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { publishVideo } from "../../../redux/slices/videoSlice";
 
-const steps = ["Upload Video", "Upload Doc/pdf", "Confirmation"];
+const steps = ["Upload Video", "Upload Doc/pdf", "Confirm"];
 
 const StepForm = () => {
   const [activeStep, setActiveStep] = useState(0);

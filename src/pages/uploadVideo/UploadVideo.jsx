@@ -7,7 +7,7 @@ const UploadVideo = () => {
     <Wrapper>
       <VideoContainer>
         <PageTitle>Upload Your Content</PageTitle>
-        <Box sx={{width: "60%", margin: "10px auto 0px auto"}}>
+        <Box sx={{width: ['100%', '80%'], margin: "10px auto 0px auto"}}>
           <StepForm />
         </Box>
       </VideoContainer>

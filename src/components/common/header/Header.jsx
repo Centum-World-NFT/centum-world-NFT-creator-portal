@@ -10,6 +10,7 @@ import CentumWorldLogo from "@/assets/png/centum-logo.png";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import Singup from "../../auth/Singup";
+import { LoginIcon } from "../../../utils/icons";
 
 const Header = () => {
   const [open, setOpen] = useState(false);

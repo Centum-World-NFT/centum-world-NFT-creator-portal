@@ -1,0 +1,8 @@
+.react-hot-toast-container {
+    max-width: 800px; /* Set a maximum width for the toast container */
+    max-height: 200px; /* Set a maximum height for the toast container */
+    /* You can adjust these values based on your UI requirements */
+  }
+  .react-hot-toast-message {
+    font-size: 20px; /* Adjust the font size for toast messages */
+  }

@@ -1,5 +1,6 @@
 import { Button, Link, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import { LoginIcon } from "../../../utils/icons";
 
 export const HeaderWrapper = styled("div")({
   position: "fixed",
@@ -49,13 +50,18 @@ export const LinkBox = styled("div")({
   display: "flex",
 });
 
-export const HeaderRightContainer = styled("div")(({theme}) => ({
+export const HeaderRightContainer = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  [theme.breakpoints.down('md')]:{
-    display: "none"
-  }
-}))
+  [theme.breakpoints.down('md')]: {
+    "& button": {
+      padding: ".5rem 1rem",
+      fontSize: "0.5rem",
+    },
+  },
+}));
+
+
 
 export const LoginButton = styled(Button)({
   borderRadius: "50px",
@@ -63,6 +69,7 @@ export const LoginButton = styled(Button)({
   padding: ".7rem 1.5rem",
   display: "flex",
   gap: ".2rem",
+  
 });
 
 export const SearchInput = styled(TextField)({

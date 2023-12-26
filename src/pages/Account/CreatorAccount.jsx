@@ -1,163 +1,236 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Aboutme,
+  AccountContainer,
   AccountHeader,
-  CardContantDiv,
-  FormDiv,
-  FormField,
-  MainDivConatainer,
-  ProfileAndAboutme,
-  ProfileDetails,
-  ProfileHeading,
-  ProfilePic,
-  ProfilePicCard,
-  SubmitButton,
+  CardDiv,
+  ContentDiv,
+  ProfileDiv,
+  TextFieldDiv,
   Wrapper,
 } from "./CreatorAccountStyle";
-import image from "../../utils/cardimages/image.jpg";
-import { Button, TextField, Typography } from "@mui/material";
-import { EditButton, SaveAIcon, UploadIcon } from "../../utils/icons";
-import styled from "@emotion/styled";
+import {
+  Avatar,
+  Button,
+  ButtonGroup,
+  Card,
+  CardActions,
+  CardContent,
+  CardOverflow,
+  Chip,
+  CircularProgress,
+  Typography,
+} from "@mui/joy";
+import { InfoOutlined } from "@mui/icons-material";
+import { EditIcon, EmailIcon, PhoneIcon, UserIcon } from "../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { accountDetails } from "../../redux/slices/accountSlice";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import { profilepicUpload } from "../../redux/slices/profilepicSlice";
+import { Divider, InputAdornment, TextField } from "@mui/material";
+import { fetchProfileDetails } from "../../redux/slices/profileDetailSlice";
 
 const CreatorAccount = () => {
-  const accountState = useSelector((state) => state.account)
-  const value = {
-    creatorId: "655c812ca3633c45cec15e77",
+  const dispatch = useDispatch();
+  const [previewImage, setPreviewImage] = useState(null);
+  const [imageSelected, setImageSelected] = useState(false);
+  const [profile_pic, setProfilePic] = useState(null);
+  const [spin, setSpin] = useState(false);
+  const [profileData, setProfileData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    phone: "",
+  });
+
+  const fileInputRef = useRef(null);
+  const handleAvatarClick = () => {
+    fileInputRef.current.click();
   };
 
-  const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(accountDetails(value))
-  },[])
+  useEffect(() => {
+    const callApiToProfileDetails = async () => {
+      try {
+        let formData = {
+          creatorId: localStorage.getItem("userID"),
+        };
+        const response = await dispatch(fetchProfileDetails(formData));
+        console.log(response, "48");
+        if (response.payload.data.profile_pic !== undefined) {
+          setImageSelected(true);
+          setPreviewImage(response.payload.data.profile_pic);
+          setProfileData({
+            fname: response.payload.data.firstName,
+            lname: response.payload.data.surName,
+            email: response.payload.data.email,
+            phone: response.payload.data.phone,
+          });
+        }
+      } catch (error) {}
+    };
 
-  const firstName = accountState.data?.data?.firstName || '';
+    callApiToProfileDetails();
+  }, [dispatch]);
+
+  const data = useSelector((state) => state.profiledetails);
+  console.log(data);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setProfilePic(selectedFile);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewImage(reader.result);
+      setImageSelected(true);
+    };
+    if (selectedFile) {
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const uploadprofilepic = async () => {
+    console.log(profile_pic);
+    setSpin(true);
+    const formData = new FormData();
+    formData.append("userId", localStorage.getItem("userID"));
+    formData.append("profile_pic", profile_pic);
+    const response = await dispatch(profilepicUpload(formData));
+    if (response.payload) {
+      setSpin(false);
+    } else {
+      setSpin(false);
+    }
+  };
 
   return (
-    <Wrapper>
-      <AccountHeader>Account</AccountHeader>
-      <MainDivConatainer>
-        <ProfilePicCard>
-          <CardContantDiv>
-            <ProfilePic>
-              <img
-                src={image}
-                width={50}
-                height={50}
-                alt="profile pic"
-                style={{ borderRadius: "50%" }}
-              />
-            </ProfilePic>
-
-            <Typography
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "15px",
+    <>
+      <Wrapper>
+        <AccountHeader>Profile details</AccountHeader>
+        <AccountContainer>
+          <ProfileDiv>
+            <Card
+              sx={{
+                width: 300,
+                maxWidth: "100%",
+                boxShadow: "lg",
+                "@media (max-width: 767px)": {
+                  width: "85%",
+                  marginR: "10px",
+                },
               }}
             >
-              Raju Balmuchu
-            </Typography>
-
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<UploadIcon />}
-            >
-              Upload picture
-              <VisuallyHiddenInput type="file" />
-            </Button>
-          </CardContantDiv>
-        </ProfilePicCard>
-
-        <ProfileAndAboutme>
-          <ProfileDetails>
-            <ProfileHeading>
-              <Typography style={{ fontSize: "24px", fontWeight: "600" }}>
-                Profile
+              <CardContent sx={{ alignItems: "center", textAlign: "center" }}>
+                <div>
+                  {imageSelected ? (
+                    <>
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={previewImage}
+                          alt="Preview"
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            borderRadius: "50%",
+                            cursor: "pointer",
+                          }}
+                          onClick={handleAvatarClick}
+                        />
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          style={{ display: "none" }}
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Avatar
+                        sx={{ "--Avatar-size": "4rem" }}
+                        onClick={handleAvatarClick}
+                        style={{ cursor: "pointer" }}
+                      />
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        style={{ display: "none" }}
+                        onChange={handleFileChange}
+                      />
+                    </>
+                  )}
+                </div>
+                <Chip
+                  size="sm"
+                  variant="soft"
+                  color="primary"
+                  sx={{
+                    mt: -1,
+                    mb: 1,
+                    border: "3px solid",
+                    borderColor: "background.surface",
+                  }}
+                >
+                  Creator
+                </Chip>
+                <Typography level="title-lg">
+                  {profileData.fname} &nbsp;{profileData.lname}
+                </Typography>
+                <Typography level="body-sm" sx={{ maxWidth: "24ch" }}>
+                  Hello, I am creator.
+                </Typography>
+              </CardContent>
+              <CardOverflow sx={{ bgcolor: "background.level1" }}>
+                <CardActions buttonFlex="1">
+                  <ButtonGroup
+                    variant="outlined"
+                    sx={{ bgcolor: "background.surface" }}
+                  >
+                    <Button>Edit</Button>
+                    <Button onClick={uploadprofilepic}>
+                      {spin ? (
+                        <>
+                          <CircularProgress /> Uploading...
+                        </>
+                      ) : (
+                        "Save"
+                      )}
+                    </Button>
+                  </ButtonGroup>
+                </CardActions>
+              </CardOverflow>
+            </Card>
+          </ProfileDiv>
+          <ContentDiv>
+            <CardDiv>
+              <Typography level="title-lg">
+                <EditIcon />
+                &nbsp;Edit your profile
               </Typography>
-              <Typography>This frofile can be edited</Typography>
-            </ProfileHeading>
-            <FormDiv>
-              <FormField>
+              <Divider />
+              <TextFieldDiv>
                 <TextField
-                  style={{ width: "45%" }}
-                  id="outlined-basic"
+                  value={profileData.fname}
                   placeholder="First name"
-                  variant="outlined"
-                  value={firstName}
                 />
+                <TextField value={profileData.lname} placeholder="Last name" />
+              </TextFieldDiv>
+              <TextFieldDiv>
                 <TextField
-                  style={{ width: "45%" }}
-                  id="outlined-basic"
-                  placeholder="Last name"
-                  variant="outlined"
+                  value={profileData.phone}
+                  placeholder="Enter your phone no."
+                  sx={{ width: "100%" }}
                 />
-              </FormField>
-              <FormField>
+              </TextFieldDiv>
+              <TextFieldDiv>
                 <TextField
-                  style={{ width: "45%" }}
-                  id="outlined-basic"
-                  placeholder="Email"
-                  variant="outlined"
+                  value={profileData.email}
+                  placeholder="Enter valid email id"
+                  sx={{ width: "100%" }}
                 />
-                <TextField
-                  style={{ width: "45%" }}
-                  id="outlined-basic"
-                  placeholder="Phone no"
-                  variant="outlined"
-                />
-              </FormField>
-              <SubmitButton>
-                <Button
-                  component="label"
-                  variant="contained"
-                  startIcon={<EditButton />}
-                >
-                  Edit details
-                </Button>
-              </SubmitButton>
-            </FormDiv>
-          </ProfileDetails>
-          <Aboutme>
-            <ProfileHeading>
-              <Typography style={{ fontSize: "24px", fontWeight: "600" }}>
-                About me
-              </Typography>
-
-              <TextField
-                id="outlined-textarea"
-                placeholder="Enter about here"
-                multiline
-                sx={{ m: 1, width: '50ch' }}
-              />
-              <SubmitButton>
-                <Button
-                  component="label"
-                  variant="contained"
-                  startIcon={<SaveAIcon />}
-                >
-                  Save me
-                </Button>
-              </SubmitButton>
-            </ProfileHeading>
-          </Aboutme>
-        </ProfileAndAboutme>
-      </MainDivConatainer>
-    </Wrapper>
+              </TextFieldDiv>
+              <Button sx={{ width: "100%", marginTop: "8px" }}>Submit</Button>
+            </CardDiv>
+          </ContentDiv>
+        </AccountContainer>
+      </Wrapper>
+    </>
   );
 };
 

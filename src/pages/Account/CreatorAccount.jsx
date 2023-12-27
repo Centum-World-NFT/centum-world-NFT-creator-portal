@@ -20,12 +20,13 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/joy";
-import { InfoOutlined } from "@mui/icons-material";
 import { EditIcon, EmailIcon, PhoneIcon, UserIcon } from "../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { profilepicUpload } from "../../redux/slices/profilepicSlice";
 import { Divider, InputAdornment, TextField } from "@mui/material";
 import { fetchProfileDetails } from "../../redux/slices/profileDetailSlice";
+import { updateProfile } from "../../redux/slices/updateprofile";
+import toast from "react-hot-toast";
 
 const CreatorAccount = () => {
   const dispatch = useDispatch();
@@ -33,9 +34,10 @@ const CreatorAccount = () => {
   const [imageSelected, setImageSelected] = useState(false);
   const [profile_pic, setProfilePic] = useState(null);
   const [spin, setSpin] = useState(false);
+  const [formSpin, setFormSpin] = useState(false);
   const [profileData, setProfileData] = useState({
-    fname: "",
-    lname: "",
+    firstName: "",
+    surName: "",
     email: "",
     phone: "",
   });
@@ -57,8 +59,8 @@ const CreatorAccount = () => {
           setImageSelected(true);
           setPreviewImage(response.payload.data.profile_pic);
           setProfileData({
-            fname: response.payload.data.firstName,
-            lname: response.payload.data.surName,
+            firstName: response.payload.data.firstName,
+            surName: response.payload.data.surName,
             email: response.payload.data.email,
             phone: response.payload.data.phone,
           });
@@ -70,7 +72,7 @@ const CreatorAccount = () => {
   }, [dispatch]);
 
   const data = useSelector((state) => state.profiledetails);
-  console.log(data);
+  // console.log(data);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -96,6 +98,35 @@ const CreatorAccount = () => {
       setSpin(false);
     } else {
       setSpin(false);
+    }
+  };
+
+  const handleChangeData = (event) => {
+    const { name, value } = event.target;
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const submitData = async (e) => {
+    try {
+      e.preventDefault();
+      setFormSpin(true);
+      let data = {
+        firstName: profileData.firstName,
+        surName: profileData.surName,
+        email: profileData.email,
+        phone: profileData.phone,
+        creatorId: localStorage.getItem("userID"),
+      };
+      const response = await dispatch(updateProfile(data));
+      if(response.payload){
+        setFormSpin(false);
+      }
+      
+    } catch (error) {
+      setFormSpin(false);
     }
   };
 
@@ -170,7 +201,7 @@ const CreatorAccount = () => {
                   Creator
                 </Chip>
                 <Typography level="title-lg">
-                  {profileData.fname} &nbsp;{profileData.lname}
+                  {profileData.firstName} &nbsp;{profileData.surName}
                 </Typography>
                 <Typography level="body-sm" sx={{ maxWidth: "24ch" }}>
                   Hello, I am creator.
@@ -206,26 +237,48 @@ const CreatorAccount = () => {
               <Divider />
               <TextFieldDiv>
                 <TextField
-                  value={profileData.fname}
+                  name="firstName"
+                  value={profileData.firstName}
                   placeholder="First name"
+                  onChange={handleChangeData}
                 />
-                <TextField value={profileData.lname} placeholder="Last name" />
+                <TextField
+                  name="lname"
+                  value={profileData.surName}
+                  placeholder="Last name"
+                  onChange={handleChangeData}
+                />
               </TextFieldDiv>
               <TextFieldDiv>
                 <TextField
+                  name="phone"
                   value={profileData.phone}
                   placeholder="Enter your phone no."
                   sx={{ width: "100%" }}
+                  onChange={handleChangeData}
                 />
               </TextFieldDiv>
               <TextFieldDiv>
                 <TextField
+                  name="email"
                   value={profileData.email}
                   placeholder="Enter valid email id"
                   sx={{ width: "100%" }}
+                  onChange={handleChangeData}
                 />
               </TextFieldDiv>
-              <Button sx={{ width: "100%", marginTop: "8px" }}>Submit</Button>
+              <Button
+                sx={{ width: "100%", marginTop: "8px" }}
+                onClick={submitData}
+              >
+                {formSpin ? (
+                  <>
+                    <CircularProgress />&nbsp; Uploading...
+                  </>
+                ) : (
+                  "Upload"
+                )}
+              </Button>
             </CardDiv>
           </ContentDiv>
         </AccountContainer>

@@ -4,7 +4,8 @@ import { styled } from "@mui/system";
 
 export const SidebarWrapper = styled("div")({
   height: "100vh",
-  backgroundColor: "rgb(28, 37, 54)",
+  // backgroundColor: "rgb(28, 37, 54)",
+  background: 'linear-gradient(to right, #614385 , #516395)',
   
 });
 
@@ -17,6 +18,7 @@ export const SidebarContainer = styled("div")({
 export const SidebarHeader = styled("div")({
   padding: "20px",
   backgroundColor: "rgba(255, 255, 255, 0.04)",
+  // background: 'linear-gradient(to right, #ff6b6b, #3b5998)',
   borderRadius: "10px",
   color: "#fff",
   fontFamily: "'Poppins', sans-serif",

@@ -8,6 +8,7 @@ export const Wrapper = styled("div")({
 
 export const Container = styled("div")({
   width: "100%",
+  background:"#"
 })
 
 export const SidebarContainer = styled("div")({
@@ -20,7 +21,8 @@ export const SidebarContainer = styled("div")({
 
 export const MainHeader = styled("div")({
   width:"100%",
-  background:"#1c2536",
+  // background:"#1c2536",
+  background: 'linear-gradient(to right, #614385 , #516395)',
   height:"80px",
   position:"sticky",
   top:"0",

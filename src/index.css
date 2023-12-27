@@ -4,7 +4,10 @@
   overflow-x: hidden;
   padding: 0px;
   margin: 0px;
+}
 
+.hoverable-card:hover {
+  transform: translateY(-10px); /* Adjust the value based on your preferred distance */
 }
 
 @keyframes slide-br {
@@ -52,3 +55,4 @@
     left: 10%;
   }
 }
+

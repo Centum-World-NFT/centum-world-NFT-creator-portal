@@ -8,7 +8,8 @@ import formReducer from "./slices/formSlice";
 import playlistReducer  from "./slices/playlist";
 import fetchVideoReducer from "./slices/creatorVideos";
 import playlistVideos from "./slices/playlist";
-import fetchProfileDetails from "./slices/profileDetailSlice"
+import fetchProfileDetails from "./slices/profileDetailSlice";
+import myCourse from "./slices/mycourseSlice"
 
 const middleware = [thunk]
 export const store = configureStore({
@@ -22,6 +23,7 @@ export const store = configureStore({
     account: accountReducer,
     playlistVideos: playlistVideos,
     profiledetails : fetchProfileDetails,
+    mycourse : myCourse
   },
   middleware
 });

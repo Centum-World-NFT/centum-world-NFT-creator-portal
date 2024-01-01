@@ -15,8 +15,8 @@ import {
 import { signUp, signIn } from "@/redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import toast from "react-hot-toast"
 import '../../App.css'
+import { toast } from "react-toastify";
 
 
 const Signup = ({ open, handleClose }) => {
@@ -72,7 +72,7 @@ const Signup = ({ open, handleClose }) => {
     if (isSignInMode) {
      const response = await dispatch(signUp(fieldValues));
       if (response.payload.status){
-        toast.success(response.payload.message)
+        toast.success(response.payload.message);
       }
     } else {
      const response = await dispatch(signIn(fieldValuess));

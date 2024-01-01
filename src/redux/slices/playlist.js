@@ -20,24 +20,18 @@ export const addToPlaylist = createAsyncThunk(
 
 export const publishPlaylist = createAsyncThunk(
   "playlist/publicPlaylist",
-  async ({
-    playlistDescription,
-    playlistPreviewVideo,
-    playlistTitle,
-    price,
-    playlistThumbnail,
-    courseId
-  }) => {
+  async (payload) => {
     try {
-      const formData = new FormData();
-      formData.append("playlist_thumbnail", playlistThumbnail);
-      formData.append("preview_video", playlistPreviewVideo);
-      formData.append("playlist_title", playlistTitle);
-      formData.append("playlist_description", playlistDescription);
-      formData.append("price", Number(price));
-      formData.append("creatorId", localStorage.getItem("userID"));
-      formData.append("course_id",courseId)
-      const response = await publishPlaylistAPI(formData);
+      console.log(payload);
+      // const formData = new FormData();
+      // formData.append("playlist_thumbnail", playlistThumbnail);
+      // formData.append("preview_video", playlistPreviewVideo);
+      // formData.append("playlist_title", playlistTitle);
+      // formData.append("playlist_description", playlistDescription);
+      // formData.append("price", Number(price));
+      // formData.append("creatorId", localStorage.getItem("userID"));
+      // formData.append("course_id",courseId)
+      const response = await publishPlaylistAPI(payload);
       return response;
     } catch (error) {
       return error.response;

@@ -21,10 +21,10 @@ const VideoTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHeader>
             <TableRow>
-              <TableCellName>Title</TableCellName>
-              <TableCellName align="right">Likes/Dislikes</TableCellName>
-              <TableCellName align="right">Views</TableCellName>
+              <TableCellName>Cours name</TableCellName>
+              <TableCellName align="right">Price</TableCellName>
               <TableCellName align="right">Comments</TableCellName>
+              <TableCellName align="right">Date</TableCellName>
               <TableCellName align="right">Actions</TableCellName>
             </TableRow>
           </TableHeader>

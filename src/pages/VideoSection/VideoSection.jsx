@@ -12,7 +12,7 @@ import VideoTable from "../../components/templates/videotable/VideoTable";
 const VideoSection = () => {
   return (
     <VideoWrapper>
-      <PageTitle>Your Videos</PageTitle>
+      <PageTitle>Your Playlist</PageTitle>
       <VideoTable />
     </VideoWrapper>
   );

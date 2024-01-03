@@ -3,7 +3,7 @@ import { Card } from "@mui/material";
 
 export const Warrper = styled("div")({
   padding: "20px",
-  height:"77vh"
+  height:"82vh"
 });
 
 export const SubscriberHeader = styled("div")({

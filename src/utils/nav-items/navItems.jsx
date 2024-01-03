@@ -14,7 +14,7 @@ const navItems = [
     icon: <BarChartRoundedIcon />,
   },
   {
-    item: "Your Videos",
+    item: "Your Playlist",
     path: "/creatorDashboard/yourVideos",
     icon: <PersonalVideoRoundedIcon />,
   },

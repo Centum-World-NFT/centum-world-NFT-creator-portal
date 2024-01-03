@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export const publishVideo = createAsyncThunk(
   "video",
-  async ({ thumbnail, video, title, description, pdf , courseId}) => {
+  async ({ thumbnail, video, title, description, pdf , course_id}) => {
     try {
       const formData = new FormData();
       formData.append("thumbnail", thumbnail);
@@ -12,7 +12,7 @@ export const publishVideo = createAsyncThunk(
       formData.append("title", title);
       formData.append("description", description);
       formData.append("pdf", pdf);
-      formData.append("course_id", courseId);
+      formData.append("course_id", course_id);
       formData.append("creatorId", localStorage.getItem("userID"));
       const response = await createVideoAPI(formData);
       return response.data;

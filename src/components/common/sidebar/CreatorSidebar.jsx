@@ -30,17 +30,20 @@ const CreatorSidebar = () => {
   return (
     <SidebarWrapper>
       <SidebarContainer>
-        <img src={CentumLogo} alt="" height={70} width={60} />
+        
         <SidebarHeader>
+        <img src={CentumLogo} alt="" height={70} width={60} />
+          <div style={{paddingTop:'12px'}}>
           Creator Dashboard
           <HeaderSubtitle>Create Content Here</HeaderSubtitle>
+          </div>
         </SidebarHeader>
         <Divider
           sx={{
-            mt: "30px",
-            color: "#fff",
-            borderColor: "#fff",
-            mb: "30px",
+            mt: "10px",
+            color: "#a023cc",
+            borderColor: "#a023cc",
+            mb: "10px",
             opacity: "0.2",
           }}
         ></Divider>
@@ -71,6 +74,7 @@ const CreatorSidebar = () => {
           {/* Logout button */}
           <NavItems>
             <Button
+              sx={{fontWeight:"700",fontSize:"16px", fontFamily:"sans-serif",textTransform: 'none',}}
               variant="text"
               color="inherit"
               startIcon={<LogoutIcon />}

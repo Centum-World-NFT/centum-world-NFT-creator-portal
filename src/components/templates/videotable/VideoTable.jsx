@@ -16,20 +16,26 @@ import {
 import { DeleteIcon, EditIcon, ThreeIcon, ViewIcon } from "../../../utils/icons";
 import { fetchPlaylistDetails } from "../../../redux/slices/playlistFetchSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 const VideoTable = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [courseid, setCourseID] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event, value) => {
     setAnchorEl(event.currentTarget);
+    setCourseID(value)
   };
-  const handleClose = () => {
+  const handleClose = (id) => {
     setAnchorEl(null);
+    console.log(id);
+    navigate(`/creatorDashboard/yourVideos/${id}`)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -90,7 +96,7 @@ const VideoTable = () => {
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
+                    onClick={(event)=>handleClick(event, item.course_id)}
                   ><ThreeIcon/></Button>
                 </TableCell>
               </TableRow>
@@ -127,9 +133,9 @@ const VideoTable = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}><ViewIcon/>&nbsp;View</MenuItem>
-        <MenuItem onClick={handleClose}><EditIcon/> &nbsp; Edit</MenuItem>
-        <MenuItem onClick={handleClose}><DeleteIcon/> &nbsp;Delete</MenuItem>
+        <MenuItem onClick={()=>handleClose(courseid)}><ViewIcon/>&nbsp;View</MenuItem>
+        <MenuItem onClick={()=>handleClose(courseid)}><EditIcon/> &nbsp; Edit</MenuItem>
+        <MenuItem onClick={()=>handleClose(courseid)}><DeleteIcon/> &nbsp;Delete</MenuItem>
       </Menu>
     </>
   );

@@ -12,7 +12,7 @@ const DashboardHeader = () => {
           <img src={CentumLogo} alt="" height={70} width={60} />
           <LogoContent>
             <Typography style={{ color: "#fff", fontFamily:"sans-serif"}}>Creator Dashboard</Typography>
-            <Typography style={{color:"#838891", fontSize:".8rem",fontWeight:"400", fontFamily:"sans-serif"}}>Create Content Here</Typography>
+            <Typography style={{color:"#fff", fontSize:".8rem",fontWeight:"400", fontFamily:"sans-serif"}}>Create Content Here</Typography>
           </LogoContent>
         </LogoDiv>
         <DrawerSidebar/>

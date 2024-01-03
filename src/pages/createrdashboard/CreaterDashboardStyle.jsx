@@ -21,10 +21,14 @@ export const SidebarContainer = styled("div")({
 
 export const MainHeader = styled("div")({
   width:"100%",
-  // background:"#1c2536",
-  background: 'linear-gradient(to right, #614385 , #516395)',
+  backgroundColor:"#fbfaff",
+  //  background:"#1c2536",
+  // background: 'linear-gradient(to right, #614385 , #516395)',
   height:"80px",
   position:"sticky",
   top:"0",
-  zIndex:"10"
+  zIndex:"10",
+  '@media (max-width: 1024px)': {
+    backgroundColor: '#a023cc',  // Change background color for screens with max-width 1024px
+  },
 })

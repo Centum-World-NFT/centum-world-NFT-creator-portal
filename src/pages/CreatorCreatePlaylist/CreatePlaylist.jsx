@@ -97,16 +97,6 @@ const CreatePlaylist = () => {
   };
 
   return (
-    // <WrapperBox>
-    //   <PageTitle>Create Playlist</PageTitle>
-    //   <Box sx={{ mt: "1rem",gap: "1rem" }}>
-    //     <Box sx={{width:["100%","90%"]}}>
-    //       <PlaylistForm />
-    // <FormPreview />
-    //     </Box>
-    //     {/* <CreatorVideos /> */}
-    //   </Box>
-    // </WrapperBox>
     <>
       <Box
         sx={{
@@ -125,7 +115,7 @@ const CreatePlaylist = () => {
               display: "column",
               justifyContent: "center",
               alignItems: "center",
-              border: "1px solid black",
+              border: "1px solid #a023cc",
               padding: "20px",
               width: { xs: "70%", md: "50%" },
               gap: "10px",
@@ -223,7 +213,7 @@ const CreatePlaylist = () => {
               display: "column",
               justifyContent: "center",
               alignItems: "center",
-              border: "1px solid black",
+              border: "1px solid #a023cc",
               padding: "20px",
               width: { xs: "70%", md: "50%" },
               gap: "10px",

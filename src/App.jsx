@@ -7,6 +7,7 @@ import CreatorAccount from "./pages/Account/CreatorAccount";
 import UploadVideo from "./pages/uploadVideo/UploadVideo";
 import Subscriber from "./pages/Subscribe/Subscriber"
 import CreatePlaylist from "./pages/CreatorCreatePlaylist/CreatePlaylist";
+import ViewPlaylistVideo from "./pages/viewplaylist/ViewPlaylistVideo";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/creatorDashboard" element={<CreaterDashboard />}>
-          <Route path="overview" element={<OverviewSection />} />
-          <Route path="yourVideos" element={<VideoSection />} />
+          <Route path="overview" element={<OverviewSection />}/>
+          <Route path="yourVideos" element={<VideoSection />}/>
+          <Route path="yourVideos/:id" element={<ViewPlaylistVideo/>} />
           <Route path="subscribers" element={<Subscriber />} />
           <Route path="uploadVideo" element={<UploadVideo />} />
           <Route path="account" element={<CreatorAccount />} />

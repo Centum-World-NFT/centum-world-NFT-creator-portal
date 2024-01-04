@@ -18,8 +18,17 @@ import { SendIcon } from "../../utils/icons.jsx";
 
 const ViewPlaylistVideo = () => {
   const [data, setData] = useState([]);
-  const [myVideo, setMyVedio] = useState("");
-  const [firstVideo, setFirstVideo] = useState('');
+  const [vedioConten, setVideoContent] = useState({
+    videoUrl: "",
+    videoTitle: "",
+    videoDescription: "",
+  });
+
+  const [firstVideo, setFirstVideo] = useState({
+    firstUrl: "",
+    firstDescription: "",
+    firstTitle: "",
+  });
   const dispatch = useDispatch();
   const param = useParams();
   console.log(param);
@@ -28,15 +37,24 @@ const ViewPlaylistVideo = () => {
       try {
         const respnse = await dispatch(fetchPlaylistAllVideo(param));
         setData(respnse.payload.data);
-        setFirstVideo(respnse.payload.data[0].video);
+        setFirstVideo({
+          firstUrl: respnse.payload.data[0].video,
+          firstDescription: respnse.payload.data[0].description,
+          firstTitle: respnse.payload.data[0].title,
+        });
       } catch (error) {}
     };
     callApiToFetchPlaylistVidoe();
   }, [dispatch]);
 
-  const handleVideo = (video)=>{
-    setMyVedio(video)
-  }
+  const handleVideo = (video) => {
+    setVideoContent({
+      videoUrl: video.video,
+      videoDescription: video.description,
+      videoTitle: video.title,
+    });
+    console.log(video);
+  };
   return (
     <>
       <VideoMainContainer>
@@ -46,7 +64,7 @@ const ViewPlaylistVideo = () => {
               controls
               width="100%"
               borderRadius="10px"
-              src={myVideo? myVideo : firstVideo}
+              src={vedioConten.videoUrl ? vedioConten.videoUrl : firstVideo.firstUrl}
               autoPlay
             />
             <Box sx={{ backgroundColor: "" }}>
@@ -57,7 +75,7 @@ const ViewPlaylistVideo = () => {
                   fontFamily: "sans-serif",
                 }}
               >
-                This our Video and description
+                {vedioConten.videoTitle? vedioConten.videoTitle: firstVideo.firstTitle }
               </Typography>
               <Typography
                 sx={{
@@ -66,11 +84,11 @@ const ViewPlaylistVideo = () => {
                   fontFamily: "sans-serif",
                 }}
               >
-                This our Video and description
+                {vedioConten.videoDescription? vedioConten.videoDescription: firstVideo.firstDescription}
               </Typography>
               <Box>
                 <TextField
-                  sx={{width:"100%"}}
+                  sx={{ width: "100%" }}
                   label="Add a comment..."
                   id="standard-size-normal"
                   variant="standard"
@@ -80,7 +98,7 @@ const ViewPlaylistVideo = () => {
                         edge="end"
                         aria-label="send comment" // Replace with your send comment function
                       >
-                        <SendIcon/>
+                        <SendIcon />
                       </IconButton>
                     ),
                   }}
@@ -90,22 +108,41 @@ const ViewPlaylistVideo = () => {
           </Box>
         </VideoContainer>
         <SideThumbnailVideo>
-          {data.map((item,index)=>(
-            <Box sx={{display:"flex", width: "auto", paddingRight: "1rem", marginBottom:"5px" }} key={index} onClick={()=>handleVideo(item.video)}>
-            <Box sx={{width:"60%", height:"100px",borderRadius:"8px", overflow:"hidden"}}>
-              <img src={item.thumbnail}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
+          {data.map((item, index) => (
+            <Box
+              sx={{
+                display: "flex",
+                width: "auto",
+                paddingRight: "1rem",
+                marginBottom: "5px",
+              }}
+              key={index}
+              onClick={() => handleVideo(item)}
+            >
+              <Box
+                sx={{
+                  width: "60%",
+                  height: "100px",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  src={item.thumbnail}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Box>
+              <Box sx={{ width: "40%", height: "100px", overflow: "hidden" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>
+                  {item.title}
+                </Typography>
+                <Typography
+                  sx={{ fontWeight: "400", fontSize: "12px", color: "#86846d" }}
+                >
+                  {item.description}
+                </Typography>
+              </Box>
             </Box>
-            <Box sx={{width:"40%", height:"100px", overflow:"hidden"}}>
-              <Typography sx={{fontWeight:"600", fontSize:"16px"}}>
-                {item.title}
-              </Typography>
-              <Typography sx={{fontWeight:"400", fontSize:"12px", color:"#86846d"}}>
-                {item.description}
-              </Typography>
-            </Box>
-          </Box>
           ))}
         </SideThumbnailVideo>
       </VideoMainContainer>

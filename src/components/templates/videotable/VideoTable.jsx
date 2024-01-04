@@ -25,17 +25,27 @@ const VideoTable = () => {
   const [courseid, setCourseID] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [editID, setEditID] = useState('');
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event, value) => {
+  const handleClick = (event, value, editID) => {
     setAnchorEl(event.currentTarget);
     setCourseID(value)
+    setEditID(editID)
   };
-  const handleClose = (id) => {
+  const handleClose = (id,text) => {
     setAnchorEl(null);
-    console.log(id);
-    navigate(`/creatorDashboard/yourVideos/${id}`)
+    console.log(id, text);
+    if(text === 'view'){
+      navigate(`/creatorDashboard/yourVideos/${id}`)
+    }
+    if(text === 'edit'){
+      navigate(`/creatorDashboard/editPlaylist/${id}`)
+    }
+    if(text === 'delete'){
+      navigate(`/creatorDashboard/yourVideos/${id}`)
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -89,14 +99,14 @@ const VideoTable = () => {
                 </TableCell>
                 <TableCell align="right">₹{item.price}</TableCell>
                 <TableCell align="right">{item.course_id}</TableCell>
-                <TableCell align="right">{item.carbs}</TableCell>
+                <TableCell align="right">{item._id}</TableCell>
                 <TableCell align="right">
                   <Button
                     id="basic-button"
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
-                    onClick={(event)=>handleClick(event, item.course_id)}
+                    onClick={(event)=>handleClick(event, item.course_id, item._id)}
                   ><ThreeIcon/></Button>
                 </TableCell>
               </TableRow>
@@ -133,9 +143,9 @@ const VideoTable = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={()=>handleClose(courseid)}><ViewIcon/>&nbsp;View</MenuItem>
-        <MenuItem onClick={()=>handleClose(courseid)}><EditIcon/> &nbsp; Edit</MenuItem>
-        <MenuItem onClick={()=>handleClose(courseid)}><DeleteIcon/> &nbsp;Delete</MenuItem>
+        <MenuItem onClick={()=>handleClose(courseid,'view')}><ViewIcon/>&nbsp;View</MenuItem>
+        <MenuItem onClick={()=>handleClose(editID,'edit')}><EditIcon/> &nbsp; Edit</MenuItem>
+        <MenuItem onClick={()=>handleClose(courseid,'delete')}><DeleteIcon/> &nbsp;Delete</MenuItem>
       </Menu>
     </>
   );

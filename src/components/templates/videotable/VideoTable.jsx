@@ -17,12 +17,14 @@ import { DeleteIcon, EditIcon, ThreeIcon, ViewIcon } from "../../../utils/icons"
 import { fetchPlaylistDetails } from "../../../redux/slices/playlistFetchSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import DeletePLaylistModal from "../../common/Modal/DeletePLaylistModal";
 
 const VideoTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [courseid, setCourseID] = useState('');
+  const [deletePlaylist, setDeletePlalist] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [editID, setEditID] = useState('');
@@ -44,7 +46,7 @@ const VideoTable = () => {
       navigate(`/creatorDashboard/editPlaylist/${id}`)
     }
     if(text === 'delete'){
-      navigate(`/creatorDashboard/yourVideos/${id}`)
+      setDeletePlalist(true);
     }
   };
 
@@ -99,7 +101,7 @@ const VideoTable = () => {
                 </TableCell>
                 <TableCell align="right">₹{item.price}</TableCell>
                 <TableCell align="right">{item.course_id}</TableCell>
-                <TableCell align="right">{item._id}</TableCell>
+                <TableCell align="right">12/01/2024</TableCell>
                 <TableCell align="right">
                   <Button
                     id="basic-button"
@@ -145,8 +147,9 @@ const VideoTable = () => {
       >
         <MenuItem onClick={()=>handleClose(courseid,'view')}><ViewIcon/>&nbsp;View</MenuItem>
         <MenuItem onClick={()=>handleClose(editID,'edit')}><EditIcon/> &nbsp; Edit</MenuItem>
-        <MenuItem onClick={()=>handleClose(courseid,'delete')}><DeleteIcon/> &nbsp;Delete</MenuItem>
+        <MenuItem onClick={()=>handleClose(editID,'delete')}><DeleteIcon/> &nbsp;Delete</MenuItem>
       </Menu>
+      <DeletePLaylistModal deletePlaylsit={deletePlaylist}/>
     </>
   );
 };

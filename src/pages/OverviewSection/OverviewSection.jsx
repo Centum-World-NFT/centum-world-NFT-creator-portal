@@ -11,8 +11,32 @@ import {
 } from "./OverviewSectionStyle";
 import cardDeatils from "../../utils/dashboardcard/dashboardCard";
 import OverviewChart from "../../components/templates/charts/OverviewChart";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { allRenvenueData } from "../../redux/slices/revenueSlice";
 
 const OverviewSection = () => {
+ const [data, setData] = useState({
+  playlistCount:0,
+  subscriberCount:0,
+  totalRevenue:0
+ })
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    const callApiToAllRevenue =async ()=> {
+      try {
+        const response =await dispatch(allRenvenueData())
+        setData((prev) => ({
+          ...prev,
+          playlistCount:response.payload.data.playlistsCount,
+        }));
+      } catch (error) {
+        
+      }
+    }
+    callApiToAllRevenue()
+  },[])
+
   return (
     <OverViewWrapper>
       <OverviewContainer>
@@ -21,7 +45,7 @@ const OverviewSection = () => {
             <CardWrapper>
               <Box>
                 <CardHeader>{item.title}</CardHeader>
-                <ViewsCount>{item.detail}</ViewsCount>
+                <ViewsCount>{data.playlistCount}</ViewsCount>
               </Box>
               <CardIconContainer background={item.color}>
                 {item.icon}

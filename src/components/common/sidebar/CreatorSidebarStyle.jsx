@@ -4,9 +4,9 @@ import { styled } from "@mui/system";
 
 export const SidebarWrapper = styled("div")({
   height: "100vh",
-  backgroundColor:"#fbfaff",
-  // backgroundColor: "rgb(28, 37, 54)",
-  // background: 'linear-gradient(to right, #614385 , #516395)',
+  // backgroundColor:"#fbfaff",
+  backgroundColor:"#a023cc",
+  
   
 });
 
@@ -21,10 +21,8 @@ export const SidebarHeader = styled("div")({
   alignContent:"center",
   justifyContent:"space-between",
   padding: "20px",
-  // backgroundColor: "rgba(255, 255, 255, 0.04)",
   backgroundColor:"#faebff",
   borderRadius: "10px",
-  // color: "#fff",
   color:"#a023cc",
   fontFamily: "'Poppins', sans-serif",
 });
@@ -35,10 +33,8 @@ export const HeaderSubtitle = styled(Typography)({
 });
 
 export const SidebarNavItems = styled("div")({
-  // backgroundColor: "rgba(255, 255, 255, 0.04)",
   backgroundColor:"#faebff",
   borderRadius: "10px",
-  // color: "#ccc",
   color:"#a023cc",
   fontFamily: "'Poppins', sans-serif",
   display: "flex",

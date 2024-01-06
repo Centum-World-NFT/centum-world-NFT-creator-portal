@@ -2,7 +2,7 @@ import { Card, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const OverViewWrapper = styled("div")({
-  padding: "40px",
+  padding: "15px",
 });
 
 export const OverviewContainer = styled("div")({

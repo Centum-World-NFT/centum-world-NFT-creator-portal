@@ -13,42 +13,66 @@ import {
 } from "@mui/joy";
 import { useDispatch } from "react-redux";
 import { myCourse } from "../../redux/slices/mycourseSlice";
+import YourSubscriberModal from "../../components/common/Modal/YourSubscriberModal";
 
 const Subscriber = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [subscriberModal, setSubcriberModal] = useState({
+    openModal:false,
+    subscriberId:"",
+  })
   const searchText = (e) => {
     setText(e.target.value);
+    filterData(e.target.value)
   };
+
+  const clearText = ()=>{
+    setText("");
+    setFilteredData(data);
+  }
+
+  const filterData = (searchText) => {
+    if (searchText === null || searchText.trim() === "") {
+      setFilteredData(data);
+    }else{
+    const filtered = data.filter((item) =>
+      item.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredData(filtered);
+    }
+  };
+
   useEffect(() => {
     const callApiMyCourse = async () => {
       let data = {
         creatorId: localStorage.getItem("userID"),
       };
       const response = await dispatch(myCourse(data));
+      console.log(response.payload.data)
       setData(response.payload.data);
+      setFilteredData(response.payload.data);
     };
     callApiMyCourse();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (text === null || text.trim() === "") {
-  //     if (playlistData.data) {
-  //       setData(playlistData.data.playlists);
-  //     }
-  //   } else {
-  //     const filteredData = playlistData.data.playlists.filter((item) =>
-  //       item.playlist_title.toLowerCase().includes(text.toLowerCase())
-  //     );
-  //     setData(filteredData);
-  //   }
-  // }, [text]);
+
+  const knowYourSubscriber = (id) =>{
+    console.log(id)
+    setSubcriberModal((prev)=>({...prev, openModal:true, subscriberId:id}))
+  }
+
+  const closeSubscriberModal = ()=>{
+    setSubcriberModal((prev)=>({...prev, openModal:false}))
+  }
+
 
   return (
     <Warrper>
       <SubscriberHeader>
-        <Typography sx={{ fontSize: "30px", fontWeight: "700" }}>
+        <Typography sx={{ fontSize: ["18px","30px"], fontWeight: "700" }}>
           Our Subscriber ({data.length > 0 ? data.length : 0})
         </Typography>
         <Paper
@@ -57,7 +81,7 @@ const Subscriber = () => {
             p: "2px 4px",
             display: "flex",
             alignItems: "center",
-            width: 200,
+            width:200,
           }}
         >
           <IconButton sx={{ p: "10px" }} aria-label="menu">
@@ -74,7 +98,7 @@ const Subscriber = () => {
               type="button"
               sx={{ p: "10px" }}
               aria-label="search"
-              onClick={() => setText("")}
+              onClick={clearText}
             >
               <CancelIcon />
             </IconButton>
@@ -84,7 +108,7 @@ const Subscriber = () => {
         </Paper>
       </SubscriberHeader>
       <SubscriberCard>
-        {data.map((item, index) => {
+        {filteredData.map((item, index) => {
           const dateObject = new Date(item.createdAt);
           const formattedDate = dateObject.toLocaleDateString();
           return (
@@ -114,7 +138,7 @@ const Subscriber = () => {
                   }}
                 >
                   Your subscriber{" "}
-                  <Button variant="outlined" size="sm">
+                  <Button variant="outlined" size="sm" onClick={()=>knowYourSubscriber(item.userId)}>
                     Subscriber
                   </Button>
                 </Typography>
@@ -146,6 +170,7 @@ const Subscriber = () => {
           );
         })}
       </SubscriberCard>
+      <YourSubscriberModal subscriberModal={subscriberModal} handleClose={closeSubscriberModal}/>
     </Warrper>
   );
 };

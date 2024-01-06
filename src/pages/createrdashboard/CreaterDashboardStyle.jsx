@@ -21,9 +21,8 @@ export const SidebarContainer = styled("div")({
 
 export const MainHeader = styled("div")({
   width:"100%",
-  backgroundColor:"#fbfaff",
-  //  background:"#1c2536",
-  // background: 'linear-gradient(to right, #614385 , #516395)',
+  // backgroundColor:"#fbfaff",
+  backgroundColor:"#a023cc",
   height:"80px",
   position:"sticky",
   top:"0",

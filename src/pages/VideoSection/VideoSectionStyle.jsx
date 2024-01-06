@@ -2,7 +2,7 @@ import { TableCell, TableHead, TableRow, Typography } from "@mui/material"
 import {styled} from "@mui/system"
 
 export const VideoWrapper = styled("div")({
-    padding: "40px"
+    padding: "15px"
 })
 
 export const PageTitle = styled(Typography)({

@@ -50,6 +50,10 @@ const VideoTable = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setDeletePlalist(false);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -70,7 +74,7 @@ const VideoTable = () => {
       } catch (error) {}
     };
     callApiToPlaylistData();
-  }, [dispatch]);
+  }, [dispatch,deletePlaylist]);
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const displayedRows = data.slice(startIndex, endIndex);
@@ -86,7 +90,7 @@ const VideoTable = () => {
               <TableCellName>Cours name</TableCellName>
               <TableCellName align="right">Price</TableCellName>
               <TableCellName align="right">Course ID</TableCellName>
-              <TableCellName align="right">Date</TableCellName>
+              <TableCellName align="right">Create Date</TableCellName>
               <TableCellName align="right">Actions</TableCellName>
             </TableRow>
           </TableHeader>
@@ -101,7 +105,7 @@ const VideoTable = () => {
                 </TableCell>
                 <TableCell align="right">₹{item.price}</TableCell>
                 <TableCell align="right">{item.course_id}</TableCell>
-                <TableCell align="right">12/01/2024</TableCell>
+                <TableCell align="right">{new Date(item.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell align="right">
                   <Button
                     id="basic-button"
@@ -149,7 +153,7 @@ const VideoTable = () => {
         <MenuItem onClick={()=>handleClose(editID,'edit')}><EditIcon/> &nbsp; Edit</MenuItem>
         <MenuItem onClick={()=>handleClose(editID,'delete')}><DeleteIcon/> &nbsp;Delete</MenuItem>
       </Menu>
-      <DeletePLaylistModal deletePlaylsit={deletePlaylist}/>
+      <DeletePLaylistModal myId={editID} deletePlaylsit={deletePlaylist} handleClose={handleCloseModal}/>
     </>
   );
 };

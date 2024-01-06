@@ -5,9 +5,9 @@ import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 
 const cardDeatils = [
   {
-    title: "Total Views",
+    title: "Total Playlist",
     detail: "4k",
-    subtitle: "Your total views from every video",
+    subtitle: "Your total course till now",
     icon: <TrendingUpRoundedIcon />,
     color: "red"
   },
@@ -26,7 +26,7 @@ const cardDeatils = [
     color: "blue"
   },
   {
-    title: "Test",
+    title: "Best Course",
     detail: "1234",
     subtitle: "Your best video till now",
     icon: <PeopleAltRoundedIcon />,

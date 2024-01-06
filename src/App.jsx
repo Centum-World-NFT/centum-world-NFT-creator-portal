@@ -8,7 +8,7 @@ import UploadVideo from "./pages/uploadVideo/UploadVideo";
 import Subscriber from "./pages/Subscribe/Subscriber"
 import CreatePlaylist from "./pages/CreatorCreatePlaylist/CreatePlaylist";
 import ViewPlaylistVideo from "./pages/viewplaylist/ViewPlaylistVideo";
-import EditPlaylist from "./pages/editplaylist/EditPlaylist";
+import EditPlaylist from "./pages/edit/EditPlaylist";
 
 function App() {
   return (

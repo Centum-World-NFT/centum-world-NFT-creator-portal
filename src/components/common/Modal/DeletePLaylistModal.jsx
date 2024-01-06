@@ -1,8 +1,22 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import React, { useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { deletePlaylist } from "../../../redux/slices/deletePlaylistSlice";
+import { toast } from "react-toastify";
 
-const DeletePLaylistModal = ({deletePlaylsit, handleClose}) => {
-  
+const DeletePLaylistModal = ({myId, deletePlaylsit, handleClose}) => {
+    const dispatch = useDispatch();
+  const deletePlaylistItem = async () =>{
+    try {
+        console.log(myId)
+        const response = await dispatch(deletePlaylist(myId));
+        toast.success(response.payload.message) 
+        handleClose();
+    } catch (error) {
+        
+    }
+    
+  }
  
   return (
     <>
@@ -22,7 +36,7 @@ const DeletePLaylistModal = ({deletePlaylsit, handleClose}) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={deletePlaylistItem} autoFocus>
             Confirm
           </Button>
         </DialogActions>

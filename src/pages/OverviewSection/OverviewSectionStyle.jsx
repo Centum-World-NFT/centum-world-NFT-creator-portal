@@ -3,6 +3,8 @@ import { styled } from "@mui/system";
 
 export const OverViewWrapper = styled("div")({
   padding: "15px",
+  display:"flex",
+  flexDirection:"column"
 });
 
 export const OverviewContainer = styled("div")({
@@ -57,7 +59,7 @@ export const ViewsCount = styled(Typography)({
 });
 
 export const CardSubtitle = styled(Typography)({
-  fontSize: ".7rem",
+  fontSize: ".9rem",
   opacity: ".5",
   fontWeight: "600",
 });
@@ -76,3 +78,7 @@ export const CardIconContainer = styled("div")(({ background }) => ({
   padding: "10px",
   color: "#fff",
 }));
+
+export const CharContainer = styled("div")({
+  width:"100%"
+})

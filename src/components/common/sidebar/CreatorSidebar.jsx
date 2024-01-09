@@ -1,6 +1,8 @@
 import { Button, Divider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import {
+  CustomButton,
+  CustomText,
   HeaderSubtitle,
   NavItem,
   NavItems,
@@ -72,7 +74,7 @@ const CreatorSidebar = () => {
           ))}
 
           {/* Logout button */}
-          <NavItems>
+          {/* <NavItems>
             <Button
               sx={{fontWeight:"500",fontSize:"20px", gap:'10px', fontFamily:"Calibri",textTransform: 'none',}}
               variant="text"
@@ -82,7 +84,11 @@ const CreatorSidebar = () => {
             >
               Logout
             </Button>
-          </NavItems>
+          </NavItems> */}
+          <CustomButton onClick={handleLogout}>
+            <LogoutIcon/>
+            <CustomText>Logout</CustomText>
+          </CustomButton>
         </SidebarNavItems>
       </SidebarContainer>
     </SidebarWrapper>

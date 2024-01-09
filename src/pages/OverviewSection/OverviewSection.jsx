@@ -9,8 +9,12 @@ import {
   OverViewWrapper,
   OverviewContainer,
   ViewsCount,
+  CustomCard,
+  CustomImage,
+  CustomHeading,
+  CustomUserCount,
 } from "./OverviewSectionStyle";
-import OverviewChart from "../../components/templates/charts/OverviewChart"
+import OverviewChart from "../../components/templates/charts/OverviewChart";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { allRenvenueData } from "../../redux/slices/revenueSlice";
@@ -19,6 +23,7 @@ import SubscriptionsRoundedIcon from "@mui/icons-material/SubscriptionsRounded";
 import MonetizationOnRoundedIcon from "@mui/icons-material/MonetizationOnRounded";
 import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 import { myBestCourse } from "../../redux/slices/bestCourseSlice";
+import logo from "../../assets/svg/circle.svg";
 
 const OverviewSection = () => {
   const [data, setData] = useState({
@@ -63,65 +68,92 @@ const OverviewSection = () => {
   }, [dispatch]);
 
   return (
-    <OverViewWrapper>
-      <OverviewContainer>
-        <MainCard variant="outlined">
-          <CardWrapper>
-            <Box>
-              <CardHeader>Total Playlist</CardHeader>
-              <ViewsCount>{data.playlistCount}</ViewsCount>
-            </Box>
-            <CardIconContainer background="red">
-              <TrendingUpRounded />
-            </CardIconContainer>
-          </CardWrapper>
-          <CardSubtitle>Your total course till now</CardSubtitle>
-        </MainCard>
+    <>
+      <OverViewWrapper>
+        <OverviewContainer>
+          <CustomCard>
+            <CustomImage src={logo} alt="Logo" />
+            <CustomHeading>Total Playlist</CustomHeading>
+            <CustomUserCount>{data.playlistCount}</CustomUserCount>
+          </CustomCard>
+          <CustomCard>
+            <CustomImage src={logo} alt="Logo" />
+            <CustomHeading>Subscriber</CustomHeading>
+            <CustomUserCount>{data.subscriberCount}</CustomUserCount>
+          </CustomCard>
+          <CustomCard>
+            <CustomImage src={logo} alt="Logo" />
+            <CustomHeading>Revenue</CustomHeading>
+            <CustomUserCount>₹{data.totalRevenue}</CustomUserCount>
+          </CustomCard>
+          <CustomCard>
+            <CustomImage src={logo} alt="Logo" />
+            <CustomHeading>{bestCourse.course}</CustomHeading>
+            <CustomUserCount>{bestCourse.no}</CustomUserCount>
+          </CustomCard>
+        </OverviewContainer>
+        <CharContainer>
+          <OverviewChart />
+        </CharContainer>
+      </OverViewWrapper>
+    </>
 
-        <MainCard variant="outlined">
-          <CardWrapper>
-            <Box>
-              <CardHeader>Subscriber</CardHeader>
-              <ViewsCount>{data.subscriberCount}</ViewsCount>
-            </Box>
-            <CardIconContainer background="yellow">
-              <SubscriptionsRoundedIcon />
-            </CardIconContainer>
-          </CardWrapper>
-          <CardSubtitle>Your total subscriber</CardSubtitle>
-        </MainCard>
+    // <OverViewWrapper>
+    //   <OverviewContainer>
+    //     <MainCard variant="outlined">
+    //       <CardWrapper>
+    //         <Box>
+    //           <CardHeader>Total Playlist</CardHeader>
+    //           <ViewsCount>{data.playlistCount}</ViewsCount>
+    //         </Box>
+    //         <CardIconContainer background="red">
+    //           <TrendingUpRounded />
+    //         </CardIconContainer>
+    //       </CardWrapper>
+    //       <CardSubtitle>Your total course till now</CardSubtitle>
+    //     </MainCard>
 
-        <MainCard variant="outlined">
-          <CardWrapper>
-            <Box>
-              <CardHeader>Revenue</CardHeader>
-              <ViewsCount>₹{data.totalRevenue}</ViewsCount>
-            </Box>
-            <CardIconContainer background="blue">
-              <MonetizationOnRoundedIcon />
-            </CardIconContainer>
-          </CardWrapper>
-          <CardSubtitle>Total income</CardSubtitle>
-        </MainCard>
+    //     <MainCard variant="outlined">
+    //       <CardWrapper>
+    //         <Box>
+    //           <CardHeader>Subscriber</CardHeader>
+    //           <ViewsCount>{data.subscriberCount}</ViewsCount>
+    //         </Box>
+    //         <CardIconContainer background="yellow">
+    //           <SubscriptionsRoundedIcon />
+    //         </CardIconContainer>
+    //       </CardWrapper>
+    //       <CardSubtitle>Your total subscriber</CardSubtitle>
+    //     </MainCard>
 
-        <MainCard variant="outlined">
-          <CardWrapper>
-            <Box>
-              <CardHeader>{bestCourse.course}</CardHeader>
-              <ViewsCount>{bestCourse.no}</ViewsCount>
-            </Box>
-            <CardIconContainer background="purple">
-              <PeopleAltRoundedIcon />
-            </CardIconContainer>
-          </CardWrapper>
-          <CardSubtitle>Your best video till now</CardSubtitle>
-        </MainCard>
-      </OverviewContainer>
-      <CharContainer>
-        <OverviewChart/>
-      </CharContainer>
-      
-    </OverViewWrapper>
+    //     <MainCard variant="outlined">
+    //       <CardWrapper>
+    //         <Box>
+    //           <CardHeader>Revenue</CardHeader>
+    //           <ViewsCount>₹{data.totalRevenue}</ViewsCount>
+    //         </Box>
+    //         <CardIconContainer background="blue">
+    //           <MonetizationOnRoundedIcon />
+    //         </CardIconContainer>
+    //       </CardWrapper>
+    //       <CardSubtitle>Total income</CardSubtitle>
+    //     </MainCard>
+
+    //     <MainCard variant="outlined">
+    //       <CardWrapper>
+    //         <Box>
+    //           <CardHeader>{bestCourse.course}</CardHeader>
+    //           <ViewsCount>{bestCourse.no}</ViewsCount>
+    //         </Box>
+    //         <CardIconContainer background="purple">
+    //           <PeopleAltRoundedIcon />
+    //         </CardIconContainer>
+    //       </CardWrapper>
+    //       <CardSubtitle>Your best video till now</CardSubtitle>
+    //     </MainCard>
+    //   </OverviewContainer>
+
+    // </OverViewWrapper>
   );
 };
 

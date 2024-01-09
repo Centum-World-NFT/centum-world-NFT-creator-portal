@@ -33,12 +33,12 @@ const CreatorSidebar = () => {
         
         <SidebarHeader>
         <img src={CentumLogo} alt="" height={70} width={60} />
-          <div style={{paddingTop:'12px'}}>
+          <div style={{paddingTop:'12px',fontFamily:'Calibri',fontSize:'20px',fontWeight:600,color: 'rgba(33, 33, 33, 0.8)'}}>
           Creator Dashboard
-          <HeaderSubtitle>Create Content Here</HeaderSubtitle>
+          {/* <HeaderSubtitle>Create Content Here</HeaderSubtitle> */}
           </div>
         </SidebarHeader>
-        <Divider
+        {/* <Divider
           sx={{
             mt: "10px",
             color: "#a023cc",
@@ -46,7 +46,7 @@ const CreatorSidebar = () => {
             mb: "10px",
             opacity: "0.2",
           }}
-        ></Divider>
+        ></Divider> */}
 
         <SidebarNavItems>
           {navItems.map((item, index) => (
@@ -63,7 +63,7 @@ const CreatorSidebar = () => {
                   <Typography sx={{ fontWeight: "600" }}>
                     {item.icon}
                   </Typography>
-                  <Typography sx={{ fontWeight: "600" }}>
+                  <Typography >
                     {item.item}
                   </Typography>
                 </NavItem>
@@ -74,7 +74,7 @@ const CreatorSidebar = () => {
           {/* Logout button */}
           <NavItems>
             <Button
-              sx={{fontWeight:"700",fontSize:"16px", fontFamily:"sans-serif",textTransform: 'none',}}
+              sx={{fontWeight:"500",fontSize:"20px", gap:'10px', fontFamily:"Calibri",textTransform: 'none',}}
               variant="text"
               color="inherit"
               startIcon={<LogoutIcon />}

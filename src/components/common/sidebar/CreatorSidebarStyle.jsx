@@ -5,7 +5,7 @@ import { styled } from "@mui/system";
 export const SidebarWrapper = styled("div")({
   height: "100vh",
   // backgroundColor:"#fbfaff",
-  backgroundColor:"#a023cc",
+  backgroundColor:"#fff",
   
   
 });
@@ -18,12 +18,14 @@ export const SidebarContainer = styled("div")({
 
 export const SidebarHeader = styled("div")({
   display:"flex",
-  alignContent:"center",
-  justifyContent:"space-between",
+  flexDirection: "column",
+  // alignContent:"center",
+  alignItems:'center',
+  justifyContent:"center",
   padding: "20px",
-  backgroundColor:"#faebff",
+  backgroundColor:"#fff",
   borderRadius: "10px",
-  color:"#a023cc",
+  color:"#000",
   fontFamily: "'Poppins', sans-serif",
 });
 
@@ -33,10 +35,10 @@ export const HeaderSubtitle = styled(Typography)({
 });
 
 export const SidebarNavItems = styled("div")({
-  backgroundColor:"#faebff",
+  backgroundColor:"#fff",
   borderRadius: "10px",
-  color:"#a023cc",
-  fontFamily: "'Poppins', sans-serif",
+  color:"#000",
+  fontFamily: 'Calibri',
   display: "flex",
   flexDirection: "column",
   maxHeight:"65vh",
@@ -56,7 +58,7 @@ export const NavItems = styled("div")(({ isClicked }) => ({
   // backgroundColor: isClicked ? "rgba(255, 255, 255, 0.06)" : "transparent",
   // color: isClicked ? "#fff" : "rgba(255, 255, 255, 0.5)",
   backgroundColor: isClicked ? "rgba(255, 255, 255, 0.06)" : "transparent",
-  color: isClicked ? "rgb(99, 102, 241)" : "#a023cc",
+  color: isClicked ? "rgb(99, 102, 241)" : "#2d3748",
   ":hover": {
     backgroundColor: "rgba(255, 255, 255, 0.06)",
     color: "rgb(99, 102, 241)",

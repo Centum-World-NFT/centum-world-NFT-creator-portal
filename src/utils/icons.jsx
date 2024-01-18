@@ -318,15 +318,16 @@ export const CancelIcon = () => {
   );
 };
 
-export const BackArrow = () => {
+export const BackArrow = ({ width = "32", height = "32" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width={width}
+      height={height}
       fill="currentColor"
       className="bi bi-arrow-left"
       viewBox="0 0 16 16"
+      style={{cursor:"pointer"}}
     >
       <path
         fill-rule="evenodd"

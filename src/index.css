@@ -10,6 +10,30 @@
   transform: translateY(-10px);
 }
 
+
+*{
+  scrollbar-width: thin;
+  scrollbar-color: lightblue darkblue;
+  transition: scrollbar-color 1s ease-out; 
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: lightblue;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: darkblue;
+  border-radius: 20px;
+}
+
+*:hover {
+  scrollbar-color: lightblue darkblue;
+}
+
 @keyframes slide-br {
   0% {
     transform: translateY(0) translateX(0);
@@ -55,4 +79,5 @@
     left: 10%;
   }
 }
+
 

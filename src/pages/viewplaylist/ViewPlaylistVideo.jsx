@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { fetchPlaylistAllVideo } from "../../redux/slices/fetchPlaylistVideoSlice";
@@ -8,6 +8,7 @@ import {
   AccordionSummary,
   Box,
   Button,
+  ButtonGroup,
   IconButton,
   InputAdornment,
   TextField,
@@ -16,23 +17,35 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { formatRelativeTime } from "../../utils/timedate";
+import SendIcon from "@mui/icons-material/Send";
 import {
   SideThumbnailVideo,
   VideoContainer,
   VideoMainContainer,
 } from "./ViewPlaylistVideoStyle.jsx";
-import { BackArrow, SendIcon } from "../../utils/icons.jsx";
+import {
+  BackArrow,
+  DislikeIcon,
+  FillIcon,
+  LikeIcon,
+  // SendIcon,
+} from "../../utils/icons.jsx";
 import { commentInVideo } from "../../redux/slices/commentSlice.js";
 import { toast } from "react-toastify";
 import { fetchComment } from "../../redux/slices/getCommentSlice.js";
 import { replyCommentForCreator } from "../../redux/slices/replyCommentSlice.js";
+import { likeVideoForCreator } from "../../redux/slices/likeSlice.js";
+import { singleVideo } from "../../redux/slices/fetchSingleVideoSlice.js";
 
 const ViewPlaylistVideo = () => {
+  const topRef = useRef(null);
   const [data, setData] = useState([]);
   const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
   const [replyingTo, setReplyingTo] = useState(null);
   const [repliesVisibility, setRepliesVisibility] = useState({});
+  const [repliInputVisibility, setReplyInputVisibility] = useState({});
   const [replyComment, setReplyComment] = useState({
     text: "",
     name: "",
@@ -46,13 +59,17 @@ const ViewPlaylistVideo = () => {
     videoTitle: "",
     videoDescription: "",
     videoId: "",
+    like: 0,
+    likeshow: false,
   });
-
+  const creatorid = localStorage.getItem("userID");
+  const [likeColor, setLikeColor] = useState(false);
   const [firstVideo, setFirstVideo] = useState({
     firstUrl: "",
     firstDescription: "",
     firstTitle: "",
     videoId: "",
+    like: 0,
   });
   const dispatch = useDispatch();
   const param = useParams();
@@ -61,11 +78,13 @@ const ViewPlaylistVideo = () => {
       try {
         const respnse = await dispatch(fetchPlaylistAllVideo(param));
         setData(respnse.payload.data);
+        setLikeColor(respnse.payload.data[0].likes.includes(creatorid));
         setFirstVideo({
           firstUrl: respnse.payload.data[0].video,
           firstDescription: respnse.payload.data[0].description,
           firstTitle: respnse.payload.data[0].title,
           videoId: respnse.payload.data[0]._id,
+          like: respnse.payload.data[0].likes.length,
         });
         callApiToFetchComment(respnse.payload.data[0]._id);
       } catch (error) {}
@@ -73,16 +92,27 @@ const ViewPlaylistVideo = () => {
     callApiToFetchPlaylistVidoe();
   }, [dispatch]);
 
-  const handleVideo = (video) => {
-    setFirstVideo({ videoId: "" });
-    setVideoContent({
-      videoUrl: video.video,
-      videoDescription: video.description,
-      videoTitle: video.title,
-      videoId: video._id,
-    });
-    callApiToFetchComment(video._id);
-    console.log(video);
+  const handleVideo = async (video) => {
+    try {
+      setFirstVideo({ videoId: "" });
+      let data = {
+        videoId: video._id,
+      };
+      const response = await dispatch(singleVideo(data));
+      setLikeColor(response.payload.data.likes.includes(creatorid));
+      setVideoContent({
+        videoUrl: video.video,
+        videoDescription: video.description,
+        videoTitle: video.title,
+        videoId: video._id,
+        like: response.payload.data.likes.length,
+        likeshow: true,
+      });
+      callApiToFetchComment(video._id);
+      if (topRef.current) {
+        topRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    } catch (error) {}
   };
 
   const handleCommentSubmit = async (e) => {
@@ -112,7 +142,11 @@ const ViewPlaylistVideo = () => {
   const comentReply = (text, id, name) => {
     console.log(text, id, name);
     setReplyComment((prev) => ({ ...prev, name: name, text: text, id: id }));
-    setHideCommentBox(true);
+    // setHideCommentBox(true);
+    setReplyInputVisibility((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const handleReplySubmit = async (e) => {
@@ -138,15 +172,31 @@ const ViewPlaylistVideo = () => {
     }));
   };
 
+  const likeVideo = async () => {
+    try {
+      const response = await dispatch(
+        likeVideoForCreator(vedioConten.videoId || firstVideo.videoId)
+      );
+      console.log(response.payload.data.likes);
+      setLikeColor(response.payload.data.likes.includes(creatorid));
+      setVideoContent((prev) => ({
+        ...prev,
+        like: response.payload.data.likes.length,
+        likeshow: true,
+      }));
+    } catch (error) {}
+  };
+
   return (
     <>
+    <div ref={topRef}>
       <VideoMainContainer>
         <VideoContainer>
           <Box sx={{ paddingRight: "2rem" }}>
             <video
               controls
               width="100%"
-              borderRadius="10px"
+              style={{ borderRadius: "10px" }}
               src={
                 vedioConten.videoUrl
                   ? vedioConten.videoUrl
@@ -177,6 +227,25 @@ const ViewPlaylistVideo = () => {
                   ? vedioConten.videoDescription
                   : firstVideo.firstDescription}
               </Typography>
+              <div
+                style={{
+                  width: "80px",
+                  height: "20px",
+                  backgroundColor: "#fff",
+                  border:"1px solid #ccc",
+                  borderRadius: "15px",
+                  padding: "5px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div onClick={likeVideo}>
+                  {likeColor ? <FillIcon /> : <LikeIcon />}
+                </div>
+                &nbsp;&nbsp; |&nbsp;&nbsp;
+                {vedioConten.likeshow ? vedioConten.like : firstVideo.like}{" "}
+              </div>
               {!hideCommentBox ? (
                 <>
                   <form onSubmit={handleCommentSubmit}>
@@ -217,18 +286,36 @@ const ViewPlaylistVideo = () => {
                     </AccordionSummary>
                     {commentData.map((item, index) => (
                       <AccordionDetails key={index}>
-                        <div style={{ display: "flex", gap: "2px" }}>
-                          <Avatar sx={{ width: "20px", height: "20px" }}>
-                            <AccountCircleIcon />
-                          </Avatar>
-                          <div>
-                            <small style={{ color: "#828792" }}>
-                              {item.nameOfUser}
+                        <div>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "2px",
+                              justifyContent: "start",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Avatar sx={{ width: "20px", height: "20px" }}>
+                              <AccountCircleIcon />
+                            </Avatar>
+                            <small
+                              style={{
+                                color: "#20212e",
+                                fontFamily: "calibri",
+                                gap: "5px",
+                                fontSize:"14px"
+                              }}
+                            >
+                              {item.nameOfUser}&nbsp;
+                              {formatRelativeTime(item.createdAt)}
                             </small>
+                          </div>
+                          <div>
                             <p
                               style={{
                                 color: "#828792",
-                                fontFamily: "sans-serif",
+                                fontFamily: "calibri",
+                                fontSize: "16px",
                               }}
                             >
                               {item.text}
@@ -262,12 +349,40 @@ const ViewPlaylistVideo = () => {
                                 Reply
                               </div>
                               <small
-                                style={{ color: "#0000ff",cursor:"pointer" }}
+                                style={{ color: "#0000ff", cursor: "pointer" }}
                                 onClick={() => showReplies(item._id)}
                               >
                                 {item.replies.length} Replies
                               </small>
                             </div>
+                            {repliInputVisibility[item._id] && (
+                              <div>
+                                <form onSubmit={handleReplySubmit}>
+                                  <Box>
+                                    <TextField
+                                      sx={{ width: "100%" }}
+                                      placeholder="Add a reply..."
+                                      id="standard-size-normal"
+                                      variant="standard"
+                                      value={reply}
+                                      onChange={(e) => setReply(e.target.value)}
+                                      InputProps={{
+                                        endAdornment: (
+                                          <IconButton
+                                            type="submit"
+                                            edge="end"
+                                            aria-label="send comment"
+                                            sx={{ padding: "13px" }}
+                                          >
+                                            <SendIcon />
+                                          </IconButton>
+                                        ),
+                                      }}
+                                    />
+                                  </Box>
+                                </form>
+                              </div>
+                            )}
                             {repliesVisibility[item._id] && (
                               <div>
                                 {item.replies.map((item, index) => (
@@ -287,16 +402,21 @@ const ViewPlaylistVideo = () => {
                                       <div>
                                         <small
                                           style={{
+                                            display: "flex",
                                             color: "#828792",
-                                            fontFamily: "sans-serif",
+                                            fontFamily: "calibri",
+                                            fontSize: "14px",
                                           }}
                                         >
-                                          Dummy
+                                          {item.nameOfUser}&nbsp;
+                                          {formatRelativeTime(item.createdAt)}
                                         </small>
+
                                         <p
                                           style={{
                                             color: "#828792",
-                                            fontFamily: "sans-serif",
+                                            fontFamily: "calibri",
+                                            fontSize: "12px",
                                           }}
                                         >
                                           {item.text}
@@ -396,10 +516,11 @@ const ViewPlaylistVideo = () => {
             >
               <Box
                 sx={{
-                  width: "60%",
+                  width: "50%",
                   height: "100px",
                   borderRadius: "8px",
                   overflow: "hidden",
+                  cursor:"pointer"
                 }}
               >
                 <img
@@ -407,20 +528,29 @@ const ViewPlaylistVideo = () => {
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </Box>
-              <Box sx={{ width: "40%", height: "100px", overflow: "hidden" }}>
-                <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>
-                  {item.title}
+              <Box
+                sx={{
+                  width: "50%",
+                  height: "100px",
+                  overflow: "hidden",
+                  padding: "2px",
+                }}
+              >
+                <Typography sx={{ fontWeight: "600", fontSize: "14px" }}>
+                  {/* {item.title} */}
+                  {item.title.substring(0, 55)}
                 </Typography>
                 <Typography
-                  sx={{ fontWeight: "400", fontSize: "12px", color: "#86846d" }}
+                  sx={{ fontWeight: "400", fontSize: "10px", color: "#86846d" }}
                 >
-                  {item.description}
+                  {item.description.substring(0, 70)}
                 </Typography>
               </Box>
             </Box>
           ))}
         </SideThumbnailVideo>
       </VideoMainContainer>
+      </div>
     </>
   );
 };

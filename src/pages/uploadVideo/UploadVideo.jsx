@@ -252,7 +252,9 @@ const UploadVideo = () => {
                   color: "#909090",
                   fontFamily: "Calibri",
                   fontSize: "18px",
-                  width: "30%",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 Title
@@ -262,9 +264,10 @@ const UploadVideo = () => {
                   fontWeight: "900",
                   fontFamily: "Calibri",
                   fontSize: "20px",
-                  width: "70%",
-                  display: "flex",
                   justifyContent: "end",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 {uploadVideo.title}
@@ -284,7 +287,9 @@ const UploadVideo = () => {
                   color: "#909090",
                   fontFamily: "Calibri",
                   fontSize: "18px",
-                  width: "30%",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 Course ID
@@ -294,9 +299,10 @@ const UploadVideo = () => {
                   fontWeight: "900",
                   fontFamily: "Calibri",
                   fontSize: "20px",
-                  width: "70%",
-                  display: "flex",
                   justifyContent: "end",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 {uploadVideo.course_id}
@@ -308,6 +314,10 @@ const UploadVideo = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 marginBottom: "10px",
+                width: "100%",
+                "@media (max-width: 600px)": {
+                  display: "block",
+                },
               }}
             >
               <Typography
@@ -316,7 +326,11 @@ const UploadVideo = () => {
                   color: "#909090",
                   fontFamily: "Calibri",
                   fontSize: "18px",
-                  width: "30%",
+                  width: "20%",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                    width: "100%",
+                  },
                 }}
               >
                 Descripton
@@ -326,9 +340,14 @@ const UploadVideo = () => {
                   fontWeight: "900",
                   fontFamily: "Calibri",
                   fontSize: "20px",
-                  width: "70%",
-                  display: "flex",
-                  justifyContent: "end",
+                  width: "80%",
+                  textAlign: "end",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                    gap: "5px",
+                    width: "100%",
+                    textAlign: "start",
+                  },
                 }}
               >
                 {uploadVideo.description}
@@ -337,7 +356,19 @@ const UploadVideo = () => {
             <hr />
             {uploadVideo.thumbnail && (
               <div>
-                <Typography variant="h6">Thumbnail image:</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "900",
+                    color: "#909090",
+                    fontFamily: "Calibri",
+                    fontSize: "18px",
+                    "@media (max-width: 600px)": {
+                      fontSize: "16px",
+                    },
+                  }}
+                >
+                  Thumbnail image:
+                </Typography>
                 {uploadVideo.thumbnail.type.startsWith("image/") ? (
                   <img
                     width="100%"
@@ -354,7 +385,19 @@ const UploadVideo = () => {
 
             {uploadVideo.video && (
               <div>
-                <Typography variant="h6">Video file:</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "900",
+                    color: "#909090",
+                    fontFamily: "Calibri",
+                    fontSize: "18px",
+                    "@media (max-width: 600px)": {
+                      fontSize: "16px",
+                    },
+                  }}
+                >
+                  Video file:
+                </Typography>
                 {uploadVideo.video.type.startsWith("video/") ? (
                   <video
                     controls

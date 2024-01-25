@@ -61,7 +61,10 @@ const CreatePlaylist = () => {
     const formDataSend = new FormData();
     formDataSend.append("playlist_title", playlistData.playlist_title);
     formDataSend.append("course_id", playlistData.course_id);
-    formDataSend.append("playlist_description", playlistData.playlist_description);
+    formDataSend.append(
+      "playlist_description",
+      playlistData.playlist_description
+    );
     formDataSend.append("playlist_thumbnail", playlistData.playlist_thumbnail);
     formDataSend.append("preview_video", playlistData.preview_video);
     formDataSend.append("price", playlistData.price);
@@ -244,6 +247,9 @@ const CreatePlaylist = () => {
                   color: "#909090",
                   fontFamily: "Calibri",
                   fontSize: "18px",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 Course name
@@ -253,6 +259,9 @@ const CreatePlaylist = () => {
                   fontWeight: "900",
                   fontFamily: "Calibri",
                   fontSize: "20px",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 {playlistData.playlist_title}
@@ -263,6 +272,9 @@ const CreatePlaylist = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 marginBottom: "10px",
+                "@media (max-width: 600px)": {
+                  fontSize: "16px",
+                },
               }}
             >
               <Typography
@@ -271,6 +283,9 @@ const CreatePlaylist = () => {
                   color: "#909090",
                   fontFamily: "Calibri",
                   fontSize: "18px",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 Course ID
@@ -280,6 +295,9 @@ const CreatePlaylist = () => {
                   fontWeight: "900",
                   fontFamily: "Calibri",
                   fontSize: "20px",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                  },
                 }}
               >
                 {playlistData.course_id}
@@ -290,6 +308,10 @@ const CreatePlaylist = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 marginBottom: "10px",
+                width: "100%",
+                "@media (max-width: 600px)": {
+                  display: "block",
+                },
               }}
             >
               <Typography
@@ -298,6 +320,11 @@ const CreatePlaylist = () => {
                   color: "#909090",
                   fontFamily: "Calibri",
                   fontSize: "18px",
+                  width: "20%",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                    width: "100%",
+                  },
                 }}
               >
                 Description
@@ -307,6 +334,14 @@ const CreatePlaylist = () => {
                   fontWeight: "900",
                   fontFamily: "Calibri",
                   fontSize: "20px",
+                  width: "80%",
+                  textAlign: "end",
+                  "@media (max-width: 600px)": {
+                    fontSize: "16px",
+                    gap: "5px",
+                    width: "100%",
+                    textAlign: "start",
+                  },
                 }}
               >
                 {playlistData.playlist_description}
@@ -343,11 +378,21 @@ const CreatePlaylist = () => {
             <br />
             {playlistData.playlist_thumbnail && (
               <div>
-                <Typography variant="h6">Thumbnail image:</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "900",
+                    color: "#909090",
+                    fontFamily: "Calibri",
+                    fontSize: "18px",
+                  }}
+                >
+                  Thumbnail image:
+                </Typography>
                 {playlistData.playlist_thumbnail.type.startsWith("image/") ? (
                   <img
                     width="100%"
                     height="auto"
+                    style={{borderRadius:"10px"}}
                     src={URL.createObjectURL(playlistData.playlist_thumbnail)}
                   />
                 ) : (
@@ -359,12 +404,22 @@ const CreatePlaylist = () => {
             )}
             {playlistData.preview_video && (
               <div>
-                <Typography variant="h6">Preview Video:</Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "900",
+                    color: "#909090",
+                    fontFamily: "Calibri",
+                    fontSize: "18px",
+                  }}
+                >
+                  Preview Video:
+                </Typography>
                 {playlistData.preview_video.type.startsWith("video/") ? (
                   <video
                     controls
                     width="100%"
                     height="auto"
+                    style={{borderRadius:"10px"}}
                     src={URL.createObjectURL(playlistData.preview_video)}
                   />
                 ) : (

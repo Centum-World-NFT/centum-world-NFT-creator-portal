@@ -10,3 +10,4 @@ export const PageTitle = styled(Typography)({
     fontFamily: "Poppins, sans-serif",
     fontSize: "2rem"
 })
+

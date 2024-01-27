@@ -4,6 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import { addToPlaylistAPI, publishPlaylistAPI } from "../apis/playlistVideo";
+import toast from "react-hot-toast";
 
 export const addToPlaylist = createAsyncThunk(
   "playlist/addToPlaylist",
@@ -12,8 +13,11 @@ export const addToPlaylist = createAsyncThunk(
       const response = await addToPlaylistAPI(videoId);
       return response.data;
     } catch (error) {
-      console.log("Error");
-      console.log(error.message);
+      if (error.response.status === 401) {
+        toast.error("Session expired! Please log in again.");
+      } else {
+        toast.error(error.response.data.message);
+      }
     }
   }
 );
@@ -47,7 +51,7 @@ export const playlistSlice = createSlice({
     playlistPreviewVideo: null,
     price: "",
     playlistDescription: "",
-    courseId: ""
+    courseId: "",
   },
   reducers: {
     setPlaylistTitle: (state, action) => {
@@ -65,9 +69,9 @@ export const playlistSlice = createSlice({
     setPlaylistPreviewVideo: (state, action) => {
       state.playlistPreviewVideo = action.payload;
     },
-    setPlaylistCourseId: (state , action) => {
+    setPlaylistCourseId: (state, action) => {
       state.courseId = action.payload;
-    }
+    },
   },
 });
 

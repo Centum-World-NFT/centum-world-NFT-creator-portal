@@ -1,4 +1,4 @@
-import { Dialog, Modal, TextField, Typography } from "@mui/material";
+import { Dialog, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const style = {
@@ -25,7 +25,8 @@ export const PasswordField = styled(TextField)({
   position: "relative",
   background: "rgba(0, 0, 0, .1)",
   borderRadius: "20px",
-
+  // width: "100%", // Ensure the input takes the full width
+  // padding: "14px 20px", // Adjust padding as needed
   ".MuiInputBase-root":{
     borderRadius: "20px"
   },

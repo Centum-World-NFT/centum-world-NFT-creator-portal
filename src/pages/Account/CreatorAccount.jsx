@@ -26,7 +26,6 @@ import { profilepicUpload } from "../../redux/slices/profilepicSlice";
 import { Divider, InputAdornment, TextField } from "@mui/material";
 import { fetchProfileDetails } from "../../redux/slices/profileDetailSlice";
 import { updateProfile } from "../../redux/slices/updateprofile";
-import toast from "react-hot-toast";
 
 const CreatorAccount = () => {
   const dispatch = useDispatch();

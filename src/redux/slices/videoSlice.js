@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export const publishVideo = createAsyncThunk(
   "video",
-  async ({ thumbnail, video, title, description, pdf , course_id}) => {
+  async ({ thumbnail, video, title, description, pdf, course_id }) => {
     try {
       const formData = new FormData();
       formData.append("thumbnail", thumbnail);
@@ -17,7 +17,11 @@ export const publishVideo = createAsyncThunk(
       const response = await createVideoAPI(formData);
       return response.data;
     } catch (error) {
-      throw(error)
+      if (error.response.status === 401) {
+        toast.error("Session expired! Please log in again.");
+      } else {
+        toast.error(error.response.data.message);
+      }
     }
   }
 );

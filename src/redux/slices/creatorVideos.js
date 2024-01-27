@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchCreatorVideoAPI } from "../apis/fetchVideo";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 
 export const fetchCreatorVideo = createAsyncThunk(
   "fetchVideo",
@@ -9,7 +9,11 @@ export const fetchCreatorVideo = createAsyncThunk(
       const response = await fetchCreatorVideoAPI(payload);
       return response.data.data;
     } catch (error) {
-      toast.error(error.response.data.message)
+      if (error.response.status === 401) {
+        toast.error("Session expired! Please log in again.");
+      } else {
+        toast.error(error.response.data.message);
+      }
     }
   }
 );
@@ -42,4 +46,4 @@ const fetchVideoSlice = createSlice({
   },
 });
 
-export default fetchVideoSlice.reducer
+export default fetchVideoSlice.reducer;

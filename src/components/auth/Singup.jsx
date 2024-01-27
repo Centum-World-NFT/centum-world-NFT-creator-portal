@@ -3,7 +3,9 @@ import {
   Button,
   DialogActions,
   DialogContent,
+  InputAdornment,
   Typography,
+  TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
@@ -15,9 +17,14 @@ import {
 import { signUp, signIn } from "@/redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import '../../App.css'
+import "../../App.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
+import { EyeInvisibleIcon } from "../../utils/icons";
+import { EyeFillIcon } from "../../utils/icons";
 
 const Signup = ({ open, handleClose }) => {
   const [fieldValues, setFieldValues] = useState({
@@ -33,6 +40,7 @@ const Signup = ({ open, handleClose }) => {
   });
 
   const [isSignInMode, setIsSignInMode] = useState(false);
+  const [isPasswordVisisble, setIsPasswordVisible] = useState(false);
 
   const authState = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -58,34 +66,32 @@ const Signup = ({ open, handleClose }) => {
   };
 
   const handleFieldChanges = (e) => {
-    setFieldValuess(
-      (prev) => (
-        {
-          ...prev,
-          [e.target.name]: e.target.value,
-        }
-      )
-    );
+    setFieldValuess((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     if (isSignInMode) {
-     const response = await dispatch(signUp(fieldValues));
-      if (response.payload.status){
+      const response = await dispatch(signUp(fieldValues));
+      if (response.payload.status) {
         toast.success(response.payload.message);
       }
     } else {
-     const response = await dispatch(signIn(fieldValuess));
+      const response = await dispatch(signIn(fieldValuess));
 
-     if(response.payload.status){
-
-      toast.success(response.payload.message)
-     }
+      if (response.payload.status) {
+        toast.success(response.payload.message);
+      }
     }
   };
 
   const handleToggleMode = () => {
     setIsSignInMode((prevMode) => !prevMode);
+  };
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
   };
 
   const renderFormFields = () => {
@@ -147,12 +153,24 @@ const Signup = ({ open, handleClose }) => {
             margin="dense"
             id="name"
             placeholder="*******"
-            type="password"
+            type={isPasswordVisisble ? "text" : "password"}
             fullWidth
             name="password"
             variant="outlined"
             onChange={handleFieldChange}
-          ></PasswordField>
+          />
+
+          <IconButton
+            style={{
+              position: "absolute",
+              right: "2.5rem",
+              top: "354px", 
+              cursor: "pointer",
+            }}
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisisble ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
         </>
       );
     } else {
@@ -169,17 +187,31 @@ const Signup = ({ open, handleClose }) => {
             name="emailorPhone"
             onChange={handleFieldChanges}
           />
+
           <PasswordField
             autoFocus
             margin="dense"
             id="name"
             placeholder="*******"
-            type="password"
+            type={isPasswordVisisble ? "text" : "password"}
             fullWidth
             name="password"
             variant="outlined"
             onChange={handleFieldChanges}
+            endAdornment={<InputAdornment position="end"></InputAdornment>}
           />
+
+          <IconButton
+            style={{
+              position: "absolute",
+              right: "2.5rem", // Adjust as needed
+              top: "205px", // Adjust as needed
+              cursor: "pointer",
+            }}
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisisble ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
         </>
       );
     }
@@ -195,20 +227,35 @@ const Signup = ({ open, handleClose }) => {
           <Typography sx={{ width: "90%" }}>
             Unlock Your Visual Story:{" "}
             {isSignInMode
-              ? "Sign up and transform your ideas into vibrant reality!" 
-              :"Sign in to access your account"}
+              ? "Sign up and transform your ideas into vibrant reality!"
+              : "Sign in to access your account"}
           </Typography>
           <DialogContent>{renderFormFields()}</DialogContent>
           <DialogActions>
-            <Typography>
+            <Typography sx={{ marginRight: "15px" }}>
               {isSignInMode
-                ? "Don't have an account ?"
-                : "Already have an account ?"}
+                ? "Don't have an account? "
+                : "Already have an account? "}
+              <span
+                onClick={handleToggleMode}
+                style={{
+                  cursor: "pointer",
+                  color: "blue",
+                  textDecoration: "underline",
+                }}
+              >
+                {isSignInMode ? "Sign In" : "Sign Up"}
+              </span>
             </Typography>
-            <Button onClick={handleToggleMode} variant="outlined">
-              {isSignInMode ? "Sign In" : "Sign Up"}
-            </Button>
-            <Button onClick={handleSubmit} variant="outlined">
+            {/* <Button onClick={handleToggleMode} variant="outlined">
+              {isSignInMode ? "Sign In" : "Sign Up"} */}
+            {/* </Button> */}
+
+            <Button
+              style={{ marginLeft: "15px" }}
+              onClick={handleSubmit}
+              variant="outlined"
+            >
               {isSignInMode ? "Sign Up" : "Sign In"}
             </Button>
           </DialogActions>
@@ -219,5 +266,3 @@ const Signup = ({ open, handleClose }) => {
 };
 
 export default Signup;
-
-

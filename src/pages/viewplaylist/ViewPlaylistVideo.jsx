@@ -26,25 +26,32 @@ import {
 } from "./ViewPlaylistVideoStyle.jsx";
 import {
   BackArrow,
+  DeleteCommentIcon,
   DislikeIcon,
   FillIcon,
   LikeIcon,
   // SendIcon,
 } from "../../utils/icons.jsx";
 import { commentInVideo } from "../../redux/slices/commentSlice.js";
-import { toast } from "react-toastify";
+
 import { fetchComment } from "../../redux/slices/getCommentSlice.js";
 import { replyCommentForCreator } from "../../redux/slices/replyCommentSlice.js";
 import { likeVideoForCreator } from "../../redux/slices/likeSlice.js";
 import { singleVideo } from "../../redux/slices/fetchSingleVideoSlice.js";
+import { deletCommentForCreator } from "../../redux/slices/deletCommentSlice.js";
+import toast from "react-hot-toast";
+import { deletRepiesForCreator } from "../../redux/slices/deleteRepliesSlice.js";
 
 const ViewPlaylistVideo = () => {
   const topRef = useRef(null);
+  const replyInputRef = useRef(null);
+  const myuserid = localStorage.getItem("userID");
   const [data, setData] = useState([]);
   const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
   const [replyingTo, setReplyingTo] = useState(null);
   const [repliesVisibility, setRepliesVisibility] = useState({});
+  const [showReplyInput, setShowReplyInput] = useState(false);
   const [repliInputVisibility, setReplyInputVisibility] = useState({});
   const [replyComment, setReplyComment] = useState({
     text: "",
@@ -147,7 +154,9 @@ const ViewPlaylistVideo = () => {
       ...prev,
       [id]: !prev[id],
     }));
+    setShowReplyInput((prev) => !prev);
   };
+
 
   const handleReplySubmit = async (e) => {
     e.preventDefault();
@@ -187,369 +196,456 @@ const ViewPlaylistVideo = () => {
     } catch (error) {}
   };
 
+  const deleteComment = async (id) => {
+    try {
+      const response = await dispatch(deletCommentForCreator(id));
+      console.log(response.payload.message);
+      toast.success(response.payload.message);
+      callApiToFetchComment(vedioConten.videoId || firstVideo.videoId);
+    } catch (error) {}
+  };
+
+  const detletRepies = async (id) => {
+    try {
+      const response = await dispatch(deletRepiesForCreator(id));
+      toast.success(response.payload.message);
+      callApiToFetchComment(vedioConten.videoId || firstVideo.videoId);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (showReplyInput && replyInputRef.current) {
+      replyInputRef.current.focus();
+    }
+  }, [showReplyInput]);
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
-    <div ref={topRef}>
-      <VideoMainContainer>
-        <VideoContainer>
-          <Box sx={{ paddingRight: "2rem" }}>
-            <video
-              controls
-              width="100%"
-              style={{ borderRadius: "10px" }}
-              src={
-                vedioConten.videoUrl
-                  ? vedioConten.videoUrl
-                  : firstVideo.firstUrl
-              }
-              autoPlay
-            />
-            <Box sx={{ backgroundColor: "" }}>
-              <Typography
-                sx={{
-                  fontSize: "18px",
-                  fontWeight: "700",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                {vedioConten.videoTitle
-                  ? vedioConten.videoTitle
-                  : firstVideo.firstTitle}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                {vedioConten.videoDescription
-                  ? vedioConten.videoDescription
-                  : firstVideo.firstDescription}
-              </Typography>
-              <div
-                style={{
-                  width: "80px",
-                  height: "20px",
-                  backgroundColor: "#fff",
-                  border:"1px solid #ccc",
-                  borderRadius: "15px",
-                  padding: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <div onClick={likeVideo}>
-                  {likeColor ? <FillIcon /> : <LikeIcon />}
+      <div ref={topRef}>
+        <VideoMainContainer>
+          <VideoContainer>
+            <Box sx={{ paddingRight: "2rem" }}>
+              <video
+                controls
+                width="100%"
+                style={{ borderRadius: "10px" }}
+                controlsList="nodownload"
+                onContextMenu={handleContextMenu}
+                src={
+                  vedioConten.videoUrl
+                    ? vedioConten.videoUrl
+                    : firstVideo.firstUrl
+                }
+                autoPlay
+              />
+              <Box sx={{ backgroundColor: "" }}>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    fontWeight: "700",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  {vedioConten.videoTitle
+                    ? vedioConten.videoTitle
+                    : firstVideo.firstTitle}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  {vedioConten.videoDescription
+                    ? vedioConten.videoDescription
+                    : firstVideo.firstDescription}
+                </Typography>
+                <div
+                  style={{
+                    width: "80px",
+                    height: "20px",
+                    backgroundColor: "#fff",
+                    border: "1px solid #ccc",
+                    borderRadius: "15px",
+                    padding: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div onClick={likeVideo}>
+                    {likeColor ? <FillIcon /> : <LikeIcon />}
+                  </div>
+                  &nbsp;&nbsp; |&nbsp;&nbsp;
+                  {vedioConten.likeshow
+                    ? vedioConten.like
+                    : firstVideo.like}{" "}
                 </div>
-                &nbsp;&nbsp; |&nbsp;&nbsp;
-                {vedioConten.likeshow ? vedioConten.like : firstVideo.like}{" "}
-              </div>
-              {!hideCommentBox ? (
-                <>
-                  <form onSubmit={handleCommentSubmit}>
-                    <Box>
-                      <TextField
-                        sx={{ width: "100%" }}
-                        placeholder="Add a comment..."
-                        id="standard-size-normal"
-                        variant="standard"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        InputProps={{
-                          endAdornment: (
-                            <IconButton
-                              type="submit"
-                              edge="end"
-                              aria-label="send comment"
-                              sx={{ padding: "13px" }}
-                            >
-                              <SendIcon />
-                            </IconButton>
-                          ),
-                        }}
-                      />
-                    </Box>
-                  </form>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <h3
-                        style={{ fontFamily: "sans-serif", color: "#828792" }}
+                {!hideCommentBox ? (
+                  <>
+                    <form onSubmit={handleCommentSubmit}>
+                      <Box>
+                        <TextField
+                          sx={{ width: "100%" }}
+                          placeholder="Add a comment..."
+                          variant="standard"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                type="submit"
+                                edge="end"
+                                aria-label="send comment"
+                                sx={{ padding: "13px" }}
+                              >
+                                <SendIcon />
+                              </IconButton>
+                            ),
+                          }}
+                        />
+                      </Box>
+                    </form>
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
                       >
-                        Comments {noOfComment}
-                      </h3>
-                    </AccordionSummary>
-                    {commentData.map((item, index) => (
-                      <AccordionDetails key={index}>
-                        <div>
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "2px",
-                              justifyContent: "start",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Avatar sx={{ width: "20px", height: "20px" }}>
-                              <AccountCircleIcon />
-                            </Avatar>
-                            <small
-                              style={{
-                                color: "#20212e",
-                                fontFamily: "calibri",
-                                gap: "5px",
-                                fontSize:"14px"
-                              }}
-                            >
-                              {item.nameOfUser}&nbsp;
-                              {formatRelativeTime(item.createdAt)}
-                            </small>
-                          </div>
+                        <h3
+                          style={{ fontFamily: "sans-serif", color: "#828792" }}
+                        >
+                          Comments {noOfComment}
+                        </h3>
+                      </AccordionSummary>
+                      {commentData.map((item, index) => (
+                        <AccordionDetails key={index}>
                           <div>
-                            <p
-                              style={{
-                                color: "#828792",
-                                fontFamily: "calibri",
-                                fontSize: "16px",
-                              }}
-                            >
-                              {item.text}
-                            </p>
                             <div
                               style={{
                                 display: "flex",
+                                gap: "2px",
+                                justifyContent: "space-between",
                                 alignItems: "center",
-                                gap: "5px",
                               }}
                             >
                               <div
                                 style={{
-                                  fontSize: "10px",
-                                  width: "25px",
-                                  height: "12px",
-                                  backgroundColor: "#4393f4",
-                                  padding: "5px",
-                                  borderRadius: "10px",
-                                  color: "#fff",
-                                  cursor: "pointer",
+                                  display: "flex",
+                                  gap: "2px",
+                                  justifyContent: "start",
+                                  alignItems: "center",
                                 }}
-                                onClick={() =>
-                                  comentReply(
-                                    item.text,
-                                    item._id,
-                                    item.nameOfUser
-                                  )
-                                }
                               >
-                                Reply
+                                <Avatar sx={{ width: "20px", height: "20px" }}>
+                                  <AccountCircleIcon />
+                                </Avatar>
+                                <small
+                                  style={{
+                                    color: "#20212e",
+                                    fontFamily: "calibri",
+                                    gap: "5px",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  {item.nameOfUser}&nbsp;
+                                  {formatRelativeTime(item.createdAt)}
+                                </small>
                               </div>
-                              <small
-                                style={{ color: "#0000ff", cursor: "pointer" }}
-                                onClick={() => showReplies(item._id)}
-                              >
-                                {item.replies.length} Replies
-                              </small>
+                              <div onClick={() => deleteComment(item._id)}>
+                                {myuserid === item.userId ? (
+                                  <DeleteCommentIcon />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             </div>
-                            {repliInputVisibility[item._id] && (
-                              <div>
-                                <form onSubmit={handleReplySubmit}>
-                                  <Box>
-                                    <TextField
-                                      sx={{ width: "100%" }}
-                                      placeholder="Add a reply..."
-                                      id="standard-size-normal"
-                                      variant="standard"
-                                      value={reply}
-                                      onChange={(e) => setReply(e.target.value)}
-                                      InputProps={{
-                                        endAdornment: (
-                                          <IconButton
-                                            type="submit"
-                                            edge="end"
-                                            aria-label="send comment"
-                                            sx={{ padding: "13px" }}
-                                          >
-                                            <SendIcon />
-                                          </IconButton>
-                                        ),
-                                      }}
-                                    />
-                                  </Box>
-                                </form>
+                            <div>
+                              <p
+                                style={{
+                                  color: "#828792",
+                                  fontFamily: "calibri",
+                                  fontSize: "16px",
+                                  marginLeft: "22px",
+                                }}
+                              >
+                                {item.text}
+                              </p>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "5px",
+                                  marginLeft: "22px",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    fontSize: "10px",
+                                    width: "25px",
+                                    height: "12px",
+                                    backgroundColor: "#4393f4",
+                                    padding: "5px",
+                                    borderRadius: "10px",
+                                    color: "#fff",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() =>
+                                    comentReply(
+                                      item.text,
+                                      item._id,
+                                      item.nameOfUser
+                                    )
+                                  }
+                                >
+                                  Reply
+                                </div>
+                                <small
+                                  style={{
+                                    color: "#0000ff",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => showReplies(item._id)}
+                                >
+                                  {item.replies.length} Replies
+                                </small>
                               </div>
-                            )}
-                            {repliesVisibility[item._id] && (
-                              <div>
-                                {item.replies.map((item, index) => (
-                                  <div key={index}>
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        gap: "2px",
-                                        marginTop: "2px",
-                                      }}
-                                    >
-                                      <Avatar
-                                        sx={{ width: "16px", height: "16px" }}
+                              {repliInputVisibility[item._id] && (
+                                <div>
+                                  <form onSubmit={handleReplySubmit}>
+                                    <Box>
+                                      <TextField
+                                        sx={{ width: "100%" }}
+                                        placeholder="Add a reply..."
+                                        id="standard-size-normal"
+                                        variant="standard"
+                                        inputRef={replyInputRef}
+                                        value={reply}
+                                        onChange={(e) =>
+                                          setReply(e.target.value)
+                                        }
+                                        InputProps={{
+                                          endAdornment: (
+                                            <IconButton
+                                              type="submit"
+                                              edge="end"
+                                              aria-label="send comment"
+                                              sx={{ padding: "13px" }}
+                                            >
+                                              <SendIcon />
+                                            </IconButton>
+                                          ),
+                                        }}
+                                      />
+                                    </Box>
+                                  </form>
+                                </div>
+                              )}
+                              {repliesVisibility[item._id] && (
+                                <div>
+                                  {item.replies.map((item, index) => (
+                                    <div key={index}>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          gap: "2px",
+                                          marginTop: "2px",
+                                          marginLeft: "22px",
+                                          justifyContent:"space-between"
+                                        }}
                                       >
-                                        <AccountCircleIcon />
-                                      </Avatar>
-                                      <div>
-                                        <small
-                                          style={{
-                                            display: "flex",
-                                            color: "#828792",
-                                            fontFamily: "calibri",
-                                            fontSize: "14px",
-                                          }}
+                                        <div style={{display:"flex"}}>
+                                        <Avatar
+                                          sx={{ width: "16px", height: "16px" }}
                                         >
-                                          {item.nameOfUser}&nbsp;
-                                          {formatRelativeTime(item.createdAt)}
-                                        </small>
-
-                                        <p
-                                          style={{
-                                            color: "#828792",
-                                            fontFamily: "calibri",
-                                            fontSize: "12px",
-                                          }}
+                                          <AccountCircleIcon />
+                                        </Avatar>
+                                        <div>
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              gap: "10px",
+                                            }}
+                                          >
+                                            <small
+                                              style={{
+                                                display: "flex",
+                                                color: "#828792",
+                                                fontFamily: "calibri",
+                                                fontSize: "14px",
+                                              }}
+                                            >
+                                              {item.nameOfUser}&nbsp;
+                                              {formatRelativeTime(
+                                                item.createdAt
+                                              )}
+                                            </small>
+                                          </div>
+                                          <p
+                                            style={{
+                                              color: "#828792",
+                                              fontFamily: "calibri",
+                                              fontSize: "12px",
+                                            }}
+                                          >
+                                            {item.text}
+                                          </p>
+                                        </div>
+                                        </div>
+                                        <div
+                                          onClick={() => detletRepies(item._id)}
                                         >
-                                          {item.text}
-                                        </p>
+                                          {myuserid === item.userId ? (
+                                            <DeleteCommentIcon />
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
+                                  ))}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </AccordionDetails>
-                    ))}
-                  </Accordion>
-                </>
-              ) : (
-                <div
-                  style={{
-                    backgroundColor: "#fff",
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: "10px",
-                    padding: "10px",
-                  }}
-                >
+                        </AccordionDetails>
+                      ))}
+                    </Accordion>
+                  </>
+                ) : (
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
+                      backgroundColor: "#fff",
+                      width: "100%",
+                      height: "auto",
+                      borderRadius: "10px",
+                      padding: "10px",
                     }}
-                    onClick={() => setHideCommentBox(false)}
                   >
-                    <BackArrow width="20" height="20" />{" "}
-                    <p
+                    <div
                       style={{
-                        fontFamily: "sans-serif",
-                        fontSize: "18px",
-                        fontWeight: "700",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                      onClick={() => setHideCommentBox(false)}
+                    >
+                      <BackArrow width="20" height="20" />{" "}
+                      <p
+                        style={{
+                          fontFamily: "sans-serif",
+                          fontSize: "18px",
+                          fontWeight: "700",
+                        }}
+                      >
+                        Replies
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        paddingLeft: "24px",
+                        gap: "4px",
                       }}
                     >
-                      Replies
-                    </p>
-                  </div>
-                  <div
-                    style={{ display: "flex", paddingLeft: "24px", gap: "4px" }}
-                  >
-                    <Avatar sx={{ width: "16px", height: "16px" }}>
-                      <AccountCircleIcon />
-                    </Avatar>
-                    <div>
-                      <small>{replyComment.name}</small>
-                      <p>{replyComment.text}</p>
-                      <form onSubmit={handleReplySubmit}>
-                        <Box>
-                          <TextField
-                            sx={{ width: "100%" }}
-                            placeholder="Add a reply..."
-                            id="standard-size-normal"
-                            variant="standard"
-                            value={reply}
-                            onChange={(e) => setReply(e.target.value)}
-                            InputProps={{
-                              endAdornment: (
-                                <IconButton
-                                  type="submit"
-                                  edge="end"
-                                  aria-label="send comment"
-                                  sx={{ padding: "13px" }}
-                                >
-                                  <SendIcon />
-                                </IconButton>
-                              ),
-                            }}
-                          />
-                        </Box>
-                      </form>
+                      <Avatar sx={{ width: "16px", height: "16px" }}>
+                        <AccountCircleIcon />
+                      </Avatar>
+                      <div>
+                        <small>{replyComment.name}</small>
+                        <p>{replyComment.text}</p>
+                        <form onSubmit={handleReplySubmit}>
+                          <Box>
+                            <TextField
+                              sx={{ width: "100%" }}
+                              placeholder="Add a reply..."
+                              id="standard-size-normal"
+                              variant="standard"
+                              value={reply}
+                              onChange={(e) => setReply(e.target.value)}
+                              InputProps={{
+                                endAdornment: (
+                                  <IconButton
+                                    type="submit"
+                                    edge="end"
+                                    aria-label="send comment"
+                                    sx={{ padding: "13px" }}
+                                  >
+                                    <SendIcon />
+                                  </IconButton>
+                                ),
+                              }}
+                            />
+                          </Box>
+                        </form>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </Box>
-          </Box>
-        </VideoContainer>
-        <SideThumbnailVideo>
-          {data.map((item, index) => (
-            <Box
-              sx={{
-                display: "flex",
-                width: "auto",
-                paddingRight: "1rem",
-                marginBottom: "5px",
-              }}
-              key={index}
-              onClick={() => handleVideo(item)}
-            >
-              <Box
-                sx={{
-                  width: "50%",
-                  height: "100px",
-                  borderRadius: "8px",
-                  overflow: "hidden",
-                  cursor:"pointer"
-                }}
-              >
-                <img
-                  src={item.thumbnail}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+                )}
               </Box>
+            </Box>
+          </VideoContainer>
+          <SideThumbnailVideo>
+            {data.map((item, index) => (
               <Box
                 sx={{
-                  width: "50%",
-                  height: "100px",
-                  overflow: "hidden",
-                  padding: "2px",
+                  display: "flex",
+                  width: "auto",
+                  paddingRight: "1rem",
+                  marginBottom: "5px",
                 }}
+                key={index}
+                onClick={() => handleVideo(item)}
               >
-                <Typography sx={{ fontWeight: "600", fontSize: "14px" }}>
-                  {/* {item.title} */}
-                  {item.title.substring(0, 55)}
-                </Typography>
-                <Typography
-                  sx={{ fontWeight: "400", fontSize: "10px", color: "#86846d" }}
+                <Box
+                  sx={{
+                    width: "50%",
+                    height: "100px",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    cursor: "pointer",
+                  }}
                 >
-                  {item.description.substring(0, 70)}
-                </Typography>
+                  <img
+                    src={item.thumbnail}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    width: "50%",
+                    height: "100px",
+                    overflow: "hidden",
+                    padding: "2px",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "600", fontSize: "14px" }}>
+                    {/* {item.title} */}
+                    {item.title.substring(0, 55)}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "10px",
+                      color: "#86846d",
+                    }}
+                  >
+                    {item.description.substring(0, 70)}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          ))}
-        </SideThumbnailVideo>
-      </VideoMainContainer>
+            ))}
+          </SideThumbnailVideo>
+        </VideoMainContainer>
       </div>
     </>
   );

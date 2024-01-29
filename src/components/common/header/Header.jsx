@@ -5,6 +5,7 @@ import {
   HeaderWrapper,
   HomePageLink,
   LogoBox,
+  VerticalLine
 } from "./HeaderStyle";
 import CentumWorldLogo from "@/assets/png/centum-logo.png";
 import { Button } from "@mui/material";
@@ -24,6 +25,7 @@ const Header = () => {
           <HomePageLink href="/" underline="none">
             <LogoBox>
               <img src={CentumWorldLogo} alt="centum_world_logo" />
+              <VerticalLine/>
               <CompanyName>CENTUMO NFT’S</CompanyName>
             </LogoBox>
           </HomePageLink>

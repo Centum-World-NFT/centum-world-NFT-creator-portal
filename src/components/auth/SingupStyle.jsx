@@ -35,13 +35,14 @@ export const PasswordField = styled(TextField)({
 export const DialogWrapper = styled(Dialog)({
   ".MuiDialog-paper": {
     border: "1px solid rgba(255, 255, 255, .25)",
-    bordeeRadius: "20px",
+    borderRadius: "20px",
     boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.25)",
     backdropFilter: "blur(15px)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    // width: "25%",
+    // width: "28%",
+    // height: "70%",
   },
 });
 

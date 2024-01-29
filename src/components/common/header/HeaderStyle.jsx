@@ -22,14 +22,15 @@ export const HeaderWrapper = styled("div")({
 export const LogoBox = styled("div")({
   display: "flex",
   alignItems: "center",
-  borderRight: "1px solid white",
+ 
   padding: "0px 10px 0px 0px",
 });
 
 export const CompanyName = styled(Typography)({
-  fontWeight: "600",
+  fontWeight: "500",
   fontFamily: "'Poppins', sans-serif",
   width: "100%",
+  fontSize: "1.3rem"
 });
 
 export const HeaderLeftContainer = styled("div")({
@@ -154,4 +155,12 @@ export const LinkText = styled(Typography)({
 
 export const HomePageLink = styled(Link)({
   color: "#fff",
-})
+}) 
+
+
+export const VerticalLine = styled("div")({
+  height: "20px", 
+  width: "1px",
+  backgroundColor: "white", 
+  margin: "0 15px",
+});

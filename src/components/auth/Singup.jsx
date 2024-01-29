@@ -5,7 +5,6 @@ import {
   DialogContent,
   InputAdornment,
   Typography,
-  TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
@@ -23,8 +22,6 @@ import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 
-import { EyeInvisibleIcon } from "../../utils/icons";
-import { EyeFillIcon } from "../../utils/icons";
 
 const Signup = ({ open, handleClose }) => {
   const [fieldValues, setFieldValues] = useState({
@@ -95,6 +92,9 @@ const Signup = ({ open, handleClose }) => {
   };
 
   const renderFormFields = () => {
+    const inputHeight = "-80px"; // Adjust this value based on your design
+    const iconTopPosition = `calc(50% - ${parseInt(inputHeight) / 2}px)`;
+
     if (isSignInMode) {
       return (
         <>
@@ -164,7 +164,7 @@ const Signup = ({ open, handleClose }) => {
             style={{
               position: "absolute",
               right: "2.5rem",
-              top: "354px", 
+              top: "354px",
               cursor: "pointer",
             }}
             onClick={togglePasswordVisibility}
@@ -206,6 +206,8 @@ const Signup = ({ open, handleClose }) => {
               position: "absolute",
               right: "2.5rem", // Adjust as needed
               top: "205px", // Adjust as needed
+              top: iconTopPosition,
+
               cursor: "pointer",
             }}
             onClick={togglePasswordVisibility}
@@ -230,26 +232,36 @@ const Signup = ({ open, handleClose }) => {
               ? "Sign up and transform your ideas into vibrant reality!"
               : "Sign in to access your account"}
           </Typography>
-          <DialogContent>{renderFormFields()}</DialogContent>
+          <DialogContent sx={{ positon: "relative" }}>
+            {renderFormFields()}
+          </DialogContent>
+
           <DialogActions>
-            <Typography sx={{ marginRight: "15px" }}>
-              {isSignInMode
+
+
+            <div>
+            <Typography sx={{ marginRight: "15px", display: "block" }}>
+              {/* {isSignInMode
                 ? "Don't have an account? "
-                : "Already have an account? "}
-              <span
+                : "Already have an account? "} */}
+              <Link
+                to="#"
                 onClick={handleToggleMode}
                 style={{
                   cursor: "pointer",
                   color: "blue",
-                  textDecoration: "underline",
+                  textDecoration: "none",
                 }}
               >
-                {isSignInMode ? "Sign In" : "Sign Up"}
-              </span>
+                {isSignInMode
+                  ? "Don't have an account? "
+                  : "Already have an account? "}
+              </Link>
             </Typography>
-            {/* <Button onClick={handleToggleMode} variant="outlined">
-              {isSignInMode ? "Sign In" : "Sign Up"} */}
-            {/* </Button> */}
+            </div>
+        
+
+            <div>
 
             <Button
               style={{ marginLeft: "15px" }}
@@ -258,6 +270,8 @@ const Signup = ({ open, handleClose }) => {
             >
               {isSignInMode ? "Sign Up" : "Sign In"}
             </Button>
+            </div>
+
           </DialogActions>
         </DialogWrapper>
       )}
